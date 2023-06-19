@@ -17,11 +17,11 @@ dir=$(pwd)/$(dirname $(echo $0))
 cp $dir/../docker-compose.yml.dev ~/docker-compose.yml
 if [ $(uname) = 'Linux' ]
 then
-    git clone $branch git@github.com:io7-dev3/io7-management-web ~/data/io7-management-web
-    git clone $branch git@github.com:io7-dev3/io7-api-server.git ~/data/io7-api-server
+    git clone $branch git@github.com:io7lab/io7-management-web ~/data/io7-management-web
+    git clone $branch git@github.com:io7lab/io7-api-server.git ~/data/io7-api-server
 else
-    git clone $branch https://github.com/io7-dev3/io7-management-web.git ~/data/io7-management-web
-    git clone $branch https://github.com/io7-dev3/io7-api-server.git ~/data/io7-api-server
+    git clone $branch https://github.com/io7lab/io7-management-web.git ~/data/io7-management-web
+    git clone $branch https://github.com/io7lab/io7-api-server.git ~/data/io7-api-server
 fi
 cp -R $dir/../data ~/
 
