@@ -1,0 +1,12 @@
+# A full description of the configuration file is at
+# /usr/share/doc/mosquitto/examples/mosquitto.conf.example
+
+#pid_file /var/run/mosquitto.pid
+listener 1883
+allow_anonymous true
+
+persistence true
+persistence_location /var/lib/mosquitto/
+
+log_dest file /mosquitto/mosquitto.log
+

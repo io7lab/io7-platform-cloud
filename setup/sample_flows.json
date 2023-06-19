@@ -1,0 +1,1412 @@
+[
+    {
+        "id": "9f69e74f9b3826f7",
+        "type": "tab",
+        "label": "dynsec",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "55293b9541f8929c",
+        "type": "tab",
+        "label": "client1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e4df5d9c4a4a810c",
+        "type": "group",
+        "z": "55293b9541f8929c",
+        "name": "Logging",
+        "style": {
+            "stroke": "#ffcf3f",
+            "fill": "#ffefbf",
+            "label": true,
+            "color": "#3f3f3f"
+        },
+        "nodes": [
+            "0194f511f13bbb87",
+            "faeb76abadbd53db",
+            "1ba2c261e50569f5",
+            "67ee6c89729660b9"
+        ],
+        "x": 54,
+        "y": 599,
+        "w": 952,
+        "h": 82
+    },
+    {
+        "id": "82cf8808b06a055d",
+        "type": "group",
+        "z": "55293b9541f8929c",
+        "name": "client 1 device",
+        "style": {
+            "stroke": "#92d04f",
+            "fill": "#c8e7a7",
+            "label": true,
+            "color": "#3f3f3f"
+        },
+        "nodes": [
+            "ae2582c9c1dd97e0",
+            "f8a416757eba1334",
+            "2f4173b1244dd41f",
+            "2456a99f35b56a0a",
+            "674d2c2507aac4c9",
+            "e45383b7889afd11",
+            "f3cf09374b5fd910",
+            "86dc36e966813364",
+            "c09b4722bdae0da2",
+            "9234bdef5999199c",
+            "90e88390d78c4b93",
+            "a897bd7de58243b8",
+            "51695b122d28301f",
+            "f6b1db031fa05f3f",
+            "c432515374db04ce",
+            "13ad23ead094a725",
+            "324b6da35b2b7b04",
+            "d867df6de92c6ed8"
+        ],
+        "x": 54,
+        "y": 79,
+        "w": 952,
+        "h": 482
+    },
+    {
+        "id": "613bdd315e59f673",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "iothub.crt",
+        "keyname": "",
+        "caname": "",
+        "servername": "iothub",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "db1cc1deaa262e9c",
+        "type": "mqtt-broker",
+        "name": "allApp",
+        "broker": "mqtt",
+        "port": "1883",
+        "tls": "613bdd315e59f673",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "52c236d9f13d3c60",
+        "type": "mqtt-broker",
+        "name": "admin",
+        "broker": "mqtt",
+        "port": "1883",
+        "tls": "613bdd315e59f673",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "7699b04ef27cc7b3",
+        "type": "mqtt-broker",
+        "name": "client1",
+        "broker": "mqtt",
+        "port": "1883",
+        "tls": "613bdd315e59f673",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "15545729bb305035",
+        "type": "inject",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 240,
+        "wires": [
+            [
+                "70b1ae4014495f8d"
+            ]
+        ]
+    },
+    {
+        "id": "5dd7efd8419bea6f",
+        "type": "debug",
+        "z": "9f69e74f9b3826f7",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "39719c788527d0d1",
+        "type": "function",
+        "z": "9f69e74f9b3826f7",
+        "name": "Redis Init",
+        "func": "//\n// This function node initialize the Redis client\n//\nconst redis = global.get('redis');\nconst client = redis.createClient( { url: 'redis://redis' } );\n\nclient.jget = async k => {\n    return {\n        d:\n            JSON.parse(await client.get(k)),\n        time: await client.get(k + ':time')\n    };\n}\n\nclient.connect();\nglobal.set('redisClient', client);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "70b1ae4014495f8d",
+        "type": "function",
+        "z": "9f69e74f9b3826f7",
+        "name": "get",
+        "func": "const client = global.get('redisClient');\n\nmsg.payload = (await client.get('vvv'));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 240,
+        "wires": [
+            [
+                "5dd7efd8419bea6f"
+            ]
+        ]
+    },
+    {
+        "id": "40c32c40e82198c9",
+        "type": "inject",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 200,
+        "wires": [
+            [
+                "1a72b8f841478856"
+            ]
+        ]
+    },
+    {
+        "id": "1a72b8f841478856",
+        "type": "function",
+        "z": "9f69e74f9b3826f7",
+        "name": "set",
+        "func": "const client = global.get('redisClient');\n\nmsg.payload = (await client.set('vvv','111222'));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c2e53dad631b8a91",
+        "type": "inject",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "39719c788527d0d1"
+            ]
+        ]
+    },
+    {
+        "id": "cdbd15878c5a323f",
+        "type": "debug",
+        "z": "9f69e74f9b3826f7",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "2acb6f31370fb524",
+        "type": "mqtt in",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "topic": "iot3/+/evt/#",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "db1cc1deaa262e9c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 600,
+        "wires": [
+            [
+                "cdbd15878c5a323f"
+            ]
+        ]
+    },
+    {
+        "id": "5a9599f594054070",
+        "type": "mqtt out",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "topic": "test",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "db1cc1deaa262e9c",
+        "x": 530,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "463a5e9f689fb54c",
+        "type": "inject",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 860,
+        "wires": [
+            [
+                "5a9599f594054070"
+            ]
+        ]
+    },
+    {
+        "id": "0f96689ac2ee4a27",
+        "type": "debug",
+        "z": "9f69e74f9b3826f7",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "0b99e1bb5163bd19",
+        "type": "mqtt in",
+        "z": "9f69e74f9b3826f7",
+        "name": "admin",
+        "topic": "$CONTROL/#",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "52c236d9f13d3c60",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 480,
+        "wires": [
+            [
+                "0f96689ac2ee4a27"
+            ]
+        ]
+    },
+    {
+        "id": "1f274170c9101ea9",
+        "type": "mqtt out",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "topic": "$CONTROL/dynamic-security/v1",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "52c236d9f13d3c60",
+        "x": 620,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "c3924bd0b054388c",
+        "type": "inject",
+        "z": "9f69e74f9b3826f7",
+        "name": "listClients",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"commands\":[{\"command\":\"listClients\"}]}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "1f274170c9101ea9"
+            ]
+        ]
+    },
+    {
+        "id": "aa9d75945ba02de3",
+        "type": "debug",
+        "z": "9f69e74f9b3826f7",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "9c37a6e13ff48452",
+        "type": "mqtt in",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "topic": "iot3/client1/cmd/+/fmt/+",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "7699b04ef27cc7b3",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 740,
+        "wires": [
+            [
+                "aa9d75945ba02de3"
+            ]
+        ]
+    },
+    {
+        "id": "d4cf27c230cca940",
+        "type": "mqtt out",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "topic": "iot3/client1/cmd/status/fmt/json",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "db1cc1deaa262e9c",
+        "x": 590,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "b4f49c743a1b01c6",
+        "type": "inject",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 680,
+        "wires": [
+            [
+                "d4cf27c230cca940"
+            ]
+        ]
+    },
+    {
+        "id": "e0c9b5efbd0abff1",
+        "type": "mqtt out",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "topic": "iot3/client1/cmd/lamp/fmt/json",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "db1cc1deaa262e9c",
+        "x": 610,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "84c42dfc302cadb9",
+        "type": "inject",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 820,
+        "wires": [
+            [
+                "e0c9b5efbd0abff1"
+            ]
+        ]
+    },
+    {
+        "id": "8eb22252ceacbda2",
+        "type": "inject",
+        "z": "9f69e74f9b3826f7",
+        "name": "add admin role",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"commands\":[{\"command\":\"addClientRole\",\"username\":\"root\",\"rolename\":\"admin\",\"priority\":-1}]}",
+        "payloadType": "json",
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "1f274170c9101ea9"
+            ]
+        ]
+    },
+    {
+        "id": "86627fc8809dfb4e",
+        "type": "inject",
+        "z": "9f69e74f9b3826f7",
+        "name": "remove admin role from root",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"commands\":[{\"command\":\"removeClientRole\",\"username\":\"root\",\"rolename\":\"root\"}]}",
+        "payloadType": "json",
+        "x": 220,
+        "y": 420,
+        "wires": [
+            [
+                "1f274170c9101ea9"
+            ]
+        ]
+    },
+    {
+        "id": "c84ebbd975c02ff3",
+        "type": "inject",
+        "z": "9f69e74f9b3826f7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 540,
+        "y": 160,
+        "wires": [
+            [
+                "fdd62ef36210f8e6"
+            ]
+        ]
+    },
+    {
+        "id": "fdd62ef36210f8e6",
+        "type": "debug",
+        "z": "9f69e74f9b3826f7",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ae2582c9c1dd97e0",
+        "type": "mqtt out",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "topic": "iot3/client1/evt/status/fmt/json",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7699b04ef27cc7b3",
+        "x": 750,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "f8a416757eba1334",
+        "type": "inject",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [
+                "2f4173b1244dd41f"
+            ]
+        ]
+    },
+    {
+        "id": "2f4173b1244dd41f",
+        "type": "function",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "function 2",
+        "func": "let evt1 = {\n    \"d\": {\n        \"temperature\": Math.floor(Math.random() * 35)\n    }\n}\nreturn {payload: JSON.stringify(evt1)};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 120,
+        "wires": [
+            [
+                "ae2582c9c1dd97e0"
+            ]
+        ]
+    },
+    {
+        "id": "0194f511f13bbb87",
+        "type": "mqtt in",
+        "z": "55293b9541f8929c",
+        "g": "e4df5d9c4a4a810c",
+        "name": "",
+        "topic": "iot3/+/evt/status/fmt/json",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "db1cc1deaa262e9c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 640,
+        "wires": [
+            [
+                "1ba2c261e50569f5"
+            ]
+        ]
+    },
+    {
+        "id": "faeb76abadbd53db",
+        "type": "debug",
+        "z": "55293b9541f8929c",
+        "g": "e4df5d9c4a4a810c",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "1ba2c261e50569f5",
+        "type": "function",
+        "z": "55293b9541f8929c",
+        "g": "e4df5d9c4a4a810c",
+        "name": "function 3",
+        "func": "var id = 'client1';\nvar ql;\n\nif (msg.payload.d === undefined || msg.payload.d.temperature === undefined) {\n    return null;\n} else {\n    ql = 'temperature,location=' + id;\n    ql += ' degrees=' + parseFloat(msg.payload.d.temperature);\n}\n\nmsg.payload = ql;\n\nmsg.headers = {};\nmsg.headers['Authorization'] = 'Token 6SRTTgS0jKSVhhgmiTthLH9EJLCEGZNYcSNY8J1PPI4TsC4zhIQWtW3N55cwM038-gFm2oqfPkga_id7k6zosw==';\nmsg.headers['Content-Type'] = 'text/plain; charset=utf-8';\nmsg.headers['Accept'] = 'application/json';\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 640,
+        "wires": [
+            [
+                "67ee6c89729660b9"
+            ]
+        ]
+    },
+    {
+        "id": "67ee6c89729660b9",
+        "type": "http request",
+        "z": "55293b9541f8929c",
+        "g": "e4df5d9c4a4a810c",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://influxdb:8086/api/v2/write?org=io7&bucket=iot&precision=ns",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 650,
+        "y": 640,
+        "wires": [
+            [
+                "faeb76abadbd53db"
+            ]
+        ]
+    },
+    {
+        "id": "2456a99f35b56a0a",
+        "type": "mqtt out",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "topic": "iot3/client1/mgmt/device/update",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "52c236d9f13d3c60",
+        "x": 760,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "674d2c2507aac4c9",
+        "type": "inject",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"d\":{\"fields\":[{\"field\":\"metadata\",\"value\":{\"pubInterval\":35000}}]}}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 340,
+        "wires": [
+            [
+                "2456a99f35b56a0a"
+            ]
+        ]
+    },
+    {
+        "id": "e45383b7889afd11",
+        "type": "mqtt out",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "topic": "iot3/client1/cmd/power/fmt/json",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "db1cc1deaa262e9c",
+        "x": 750,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f3cf09374b5fd910",
+        "type": "inject",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"d\":{\"config\":\"?\"}}",
+        "payloadType": "json",
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "e45383b7889afd11"
+            ]
+        ]
+    },
+    {
+        "id": "86dc36e966813364",
+        "type": "mqtt out",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "topic": "iot3/client1/mgmt/initiate/device/reboot",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "52c236d9f13d3c60",
+        "x": 780,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "c09b4722bdae0da2",
+        "type": "inject",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 400,
+        "wires": [
+            [
+                "86dc36e966813364"
+            ]
+        ]
+    },
+    {
+        "id": "9234bdef5999199c",
+        "type": "mqtt out",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "topic": "iot3/client1/mgmt/initiate/device/factory_reset",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "52c236d9f13d3c60",
+        "x": 800,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "90e88390d78c4b93",
+        "type": "inject",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 460,
+        "wires": [
+            [
+                "9234bdef5999199c"
+            ]
+        ]
+    },
+    {
+        "id": "a897bd7de58243b8",
+        "type": "mqtt out",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "topic": "iot3/client1/mgmt/initiate/firmware/update",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "52c236d9f13d3c60",
+        "x": 780,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "51695b122d28301f",
+        "type": "inject",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 520,
+        "wires": [
+            [
+                "f6b1db031fa05f3f"
+            ]
+        ]
+    },
+    {
+        "id": "f6b1db031fa05f3f",
+        "type": "function",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "function 1",
+        "func": "var evt1 = {'d':{}};\n\nevt1.d.upgrade = { 'fw_url': 'http://192.168.82.113:2999/file/firmware.bin'}\n\nreturn {payload:JSON.stringify(evt1)};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 520,
+        "wires": [
+            [
+                "a897bd7de58243b8"
+            ]
+        ]
+    },
+    {
+        "id": "c432515374db04ce",
+        "type": "mqtt in",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "topic": "iot3/client1/mgmt/device/status",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "db1cc1deaa262e9c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 280,
+        "wires": [
+            [
+                "13ad23ead094a725"
+            ]
+        ]
+    },
+    {
+        "id": "13ad23ead094a725",
+        "type": "debug",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "324b6da35b2b7b04",
+        "type": "inject",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"d\":{\"valve\":\"on\"}}",
+        "payloadType": "json",
+        "x": 190,
+        "y": 200,
+        "wires": [
+            [
+                "e45383b7889afd11"
+            ]
+        ]
+    },
+    {
+        "id": "b06e85e8d6c3ec97",
+        "type": "mqtt in",
+        "z": "55293b9541f8929c",
+        "name": "",
+        "topic": "iot3/+/evt/+/fmt/json",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "db1cc1deaa262e9c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 800,
+        "wires": [
+            [
+                "f5f3769fbb8ff2aa"
+            ]
+        ]
+    },
+    {
+        "id": "f5f3769fbb8ff2aa",
+        "type": "debug",
+        "z": "55293b9541f8929c",
+        "name": "debug 6",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "3a4e1fb09ea62217",
+        "type": "mqtt in",
+        "z": "55293b9541f8929c",
+        "name": "",
+        "topic": "iot3/+/mgmt/#",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "52c236d9f13d3c60",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 740,
+        "wires": [
+            [
+                "40f2ac2e8ed777d6"
+            ]
+        ]
+    },
+    {
+        "id": "40f2ac2e8ed777d6",
+        "type": "debug",
+        "z": "55293b9541f8929c",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "d867df6de92c6ed8",
+        "type": "inject",
+        "z": "55293b9541f8929c",
+        "g": "82cf8808b06a055d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"d\":{\"valve\":\"off\"}}",
+        "payloadType": "json",
+        "x": 190,
+        "y": 240,
+        "wires": [
+            [
+                "e45383b7889afd11"
+            ]
+        ]
+    },
+    {
+        "id": "ca35af0a2f564d4d",
+        "type": "inject",
+        "z": "55293b9541f8929c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"d\":{\"status\":\"online\"}}",
+        "payloadType": "json",
+        "x": 130,
+        "y": 880,
+        "wires": [
+            [
+                "bcee654347f971f7"
+            ]
+        ]
+    },
+    {
+        "id": "bcee654347f971f7",
+        "type": "mqtt out",
+        "z": "55293b9541f8929c",
+        "name": "",
+        "topic": "iot3/client1/evt/connection/fmt/json",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7699b04ef27cc7b3",
+        "x": 760,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "70c89664162f520f",
+        "type": "inject",
+        "z": "55293b9541f8929c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"d\":{\"status\":\"offline\"}}",
+        "payloadType": "json",
+        "x": 130,
+        "y": 920,
+        "wires": [
+            [
+                "bcee654347f971f7"
+            ]
+        ]
+    }
+]

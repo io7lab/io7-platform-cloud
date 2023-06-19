@@ -1,0 +1,13 @@
+{
+    "cloud" : "mqtt://iotlab101.io7lab.com",
+
+    "bridge" : "mqtt://127.0.0.1",
+
+    "clientOption" : {
+        "username" : "gateway1",
+        "password" : "gateway1",
+        "clientId" : "gateway1",
+        "clean" : false,
+        "rejectUnauthorized": false
+    }
+}
