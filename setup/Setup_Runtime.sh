@@ -2,31 +2,50 @@
 #
 # This script installs and sets the Runtime environment of the HomeOS
 #
+if [ $(uname) = 'Linux' ]
+then
+    if [ $(uname -m) = 'x86_64' ]
+    then
+        nodejs_url='https://nodejs.org/dist/v18.16.1/node-v18.16.1-linux-x64.tar.xz'
+    else
+        nodejs_url='https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-arm64.tar.xz'
+    fi
+else
+    echo "This script is for Linux only"
+    echo "If you are using Windows or Mac, then install and configure the following"
+    echo -e "\t1. nodejs"
+    echo -e "\t2. docker"
+    echo -e "\t3. docker-compose"
+    exit 1
+fi
 
-echo Visit https://nodejs.org/en/download/ and get the link to the nodejs tarball
-echo enter the link here
-read url 
+echo "nodejs will be installed for the link =>"
+echo "        https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-arm64.tar.xz"
+echo "if you you want to install a different version or the latest if any"
+echo "then visit https://nodejs.org/en/download/ and get the link to the nodejs tarball"
+echo "paste the link here, otherwise just hit enter"
+
+read url
 if [ -z "$url" ]
 then
-    echo Skipping the nodejs installation
+    url=$nodejs_url
+fi
+
+fname=$(echo $url|awk -F'/' '{ print $NF }')
+rm $fname
+wget $url
+if [ $? -eq 0 ] 
+then
+    tar xvf $fname
+    cd $(echo $fname|sed 's/.tar.xz$//' | sed 's/.tar.gz$//')
+    rm CHANGELOG.md LICENSE README.md
+    sudo cp -R * /usr/local
+    cd -
+    rm -rf $(echo $fname|sed 's/.tar.xz$//' | sed 's/.tar.gz$//')
+    sudo npm -g i mqtt basic-auth body-parser cron-parser 
+    sudo npm -g i express fs loader node-schedule redis request
 else
-    #wget https://nodejs.org/dist/v18.12.1/node-v18.12.1-linux-arm64.tar.xz
-    fname=$(echo $url|awk -F'/' '{ print $NF }')
-    rm $fname
-    wget $url
-    if [ $? -eq 0 ] 
-    then
-        tar xvf $fname
-        cd $(echo $fname|sed 's/.tar.xz$//' | sed 's/.tar.gz$//')
-        rm CHANGELOG.md LICENSE README.md
-        sudo cp -R * /usr/local
-        cd -
-        rm -rf $(echo $fname|sed 's/.tar.xz$//' | sed 's/.tar.gz$//')
-        sudo npm -g i mqtt basic-auth body-parser cron-parser 
-        sudo npm -g i express fs loader node-schedule redis request
-    else
-        echo check the url for the nodejs
-    fi
+    echo check the url for the nodejs
 fi
 
 curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
