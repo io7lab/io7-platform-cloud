@@ -5,7 +5,7 @@ sudo mv ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto
 mv ~/docker-compose.yml ~/docker-compose.yml.nossl
 mv ~/data/nodered/settings.js ~/data/nodered/settings.js.nossl
 
-cp $dir/secure/docker-compose.yml ~/
+cp $dir/secure/docker-compose.yml.ssl ~/docker-compose.yml
 sudo cp -p $dir/secure/settings.js ~/data/nodered
 sudo cp -p $dir/secure/mosquitto.conf ~/data/mosquitto/config
 sedOpt=
@@ -13,14 +13,7 @@ if [ $(uname) = 'Darwin' ]
 then
     sedOpt=".bak"
 fi
-sed -i $sedOpt 's/ws:/wss:/' ~/data/io7-management-web/src/pages/mqtt_user.js
-cd ~/data/io7-management-web && npm run build
-
-grep -v '^#' ~/data/io7-management-web/docker.run | grep 'ssl-cert' > /dev/null
-if [ "$?" -eq 1 ]
-then
-    sed -i $sedOpt 's/^npx serve -s build/npx serve -s build --ssl-cert ".\/certs\/iothub.crt" --ssl-key ".\/certs\/iothub.key"/'  ~/data/io7-management-web/docker.run
-fi
+sed -i $sedOpt 's/ws:/wss:/' ~/data/io7-management-web/public/runtime-config.js
 
 mkdir ~/data/certs
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ~/data/certs/iothub.key -out ~/data/certs/iothub.crt

@@ -36,7 +36,6 @@ then
   else
     docker exec -it mqtt rm /mosquitto/config/dynamic-security.json
     rm -rf ~/data/io7-api-server/db
-    rm ~/data/io7-management-web/src/pages/mqtt_user.js
     echo Restarting io7api and mqtt. Wait for a few minutes.
     docker-compose down
   fi
