@@ -30,11 +30,8 @@ then
 fi
 sed -i $sedOpt 's/ws:/wss:/' ~/data/io7-management-web/public/runtime-config.js
 
-mkdir -p ~/data/io7-management-web/certs
-cp ~/data/certs/* ~/data/io7-management-web/certs || sudo cp ~/data/certs/* ~/data/io7-management-web/certs
-# if the ownership of the cert files has changed, then sudo cp
-mkdir -p ~/data/io7-api-server/certs
-cp ~/data/certs/* ~/data/io7-api-server/certs || sudo cp ~/data/certs/* ~/data/io7-api-server/certs
+# if the ownership of the cert files has changed, then try sudo cp
+cp ~/data/certs/* ~/data/mosquitto/config/certs || sudo cp ~/data/certs/* ~/data/mosquitto/config/certs
 mkdir -p ~/data/nodered/certs
 cp ~/data/certs/* ~/data/nodered/certs || sudo cp ~/data/certs/* ~/data/nodered/certs
 mkdir -p ~/data/influxdb/certs || sudo mkdir -p ~/data/influxdb/certs

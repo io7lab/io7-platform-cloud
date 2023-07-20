@@ -5,7 +5,6 @@ services:
     image: eclipse-mosquitto
     volumes:
       - ./data/mosquitto:/mosquitto
-      - ./data/certs:/mosquitto/config/certs
     ports:
       - "8883:8883"
       - "9001:9001"
