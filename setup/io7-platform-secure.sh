@@ -29,12 +29,13 @@ else
     cp $ssl_file_base.key ~/data/certs/iothub.key
 fi
 
-mkdir ~/data/io7-management-web/certs
-cp ~/data/certs/* ~/data/io7-management-web/certs
-mkdir ~/data/io7-api-server/certs
-cp ~/data/certs/* ~/data/io7-api-server/certs
-mkdir ~/data/nodered/certs
-cp ~/data/certs/* ~/data/nodered/certs
-sudo mkdir ~/data/influxdb/certs
-sudo cp ~/data/certs/* ~/data/influxdb/certs
+mkdir -p ~/data/io7-management-web/certs
+cp ~/data/certs/* ~/data/io7-management-web/certs || sudo cp ~/data/certs/* ~/data/io7-management-web/certs
+# if the ownership of the cert files has changed, then sudo cp
+mkdir -p ~/data/io7-api-server/certs
+cp ~/data/certs/* ~/data/io7-api-server/certs || sudo cp ~/data/certs/* ~/data/io7-api-server/certs
+mkdir -p ~/data/nodered/certs
+cp ~/data/certs/* ~/data/nodered/certs || sudo cp ~/data/certs/* ~/data/nodered/certs
+mkdir -p ~/data/influxdb/certs
+cp ~/data/certs/* ~/data/influxdb/certs || sudo cp ~/data/certs/* ~/data/influxdb/certs
 docker-compose -f ~/docker-compose.yml up -d

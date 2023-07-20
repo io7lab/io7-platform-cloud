@@ -56,7 +56,12 @@ services:
     image: io7lab/io7-api
     environment:
       - MQTT_CONN=mqtts://mqtt
+      - SSL_CERT=./certs/iothub.crt
+      - SSL_KEY=./certs/iothub.key
+      - MQTT_SSL_CERT=./certs/iothub.crt
+      - MQTT_PORT=8883
     volumes:
+      - ./data/certs:/app/certs
       - ./data/io7-api-server/data:/app/data
       - ./data/mosquitto/config:/app/mqtt
     ports:
