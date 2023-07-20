@@ -73,11 +73,8 @@ services:
   io7web:
     container_name: io7web
     image: io7lab/io7-web
-    environment:
-      - HTTPS=true
-      - SSL_CRT_FILE=./certs/iothub.crt
-      - SSL_KEY_FILE=./certs/iothub.key
     volumes:
+      - ./data/certs:/home/node/app/certs
       - ./data/io7-management-web/public/runtime-config.js:/home/node/app/build/runtime-config.js
     ports:
       - "3000:3000"
