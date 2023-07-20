@@ -25,8 +25,8 @@ if [ "$ssl_file_base" = "" ]
 then
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ~/data/certs/iothub.key -out ~/data/certs/iothub.crt
 else
-    echo cp $ssl_file_base.crt ~/data/certs/iothub.crt
-    echo cp $ssl_file_base.key ~/data/certs/iothub.key
+    cp $ssl_file_base.crt ~/data/certs/iothub.crt
+    cp $ssl_file_base.key ~/data/certs/iothub.key
 fi
 
 mkdir ~/data/io7-management-web/certs
