@@ -1,5 +1,7 @@
 #!/bin/bash
 set -x
+sedOpt=
+[ $(uname) = 'Darwin' ] && sedOpt=".bak"
 LINE=$*
 myopt() {
     pname=$1
@@ -36,13 +38,16 @@ mv ~/docker-compose.yml ~/docker-compose.yml.nossl
 mv ~/data/nodered/settings.js ~/data/nodered/settings.js.nossl
 
 cp $dir/secure/docker-compose.yml.ssl ~/docker-compose.yml
+if [ "$ca" = "" ]
+then
+    sed -i $sedOpt 's/MQTT_SSL_CERT=\.\/certs\/.*$/MQTT_SSL_CERT=\.\/certs\/iothub.crt/' ~/docker-compose.yml
+else
+    sed -i $sedOpt "s/MQTT_SSL_CERT=\.\/certs\/.*$/MQTT_SSL_CERT=\.\/certs\/$ca/" ~/docker-compose.yml
+fi
+
+
 sudo cp -p $dir/secure/settings.js ~/data/nodered
 sudo cp -p $dir/secure/mosquitto.conf ~/data/mosquitto/config
-sedOpt=
-if [ $(uname) = 'Darwin' ]
-then
-    sedOpt=".bak"
-fi
 sed -i $sedOpt 's/ws:/wss:/' ~/data/io7-management-web/public/runtime-config.js
 
 # if the ownership of the cert files has changed, then try sudo cp

@@ -57,8 +57,7 @@ services:
       - MQTT_CONN=mqtts://mqtt
       - SSL_CERT=./certs/iothub.crt
       - SSL_KEY=./certs/iothub.key
-      #- MQTT_SSL_CERT=./certs/iothub.crt
-      - MQTT_SSL_CERT=./certs/io7lab.pem
+      - MQTT_SSL_CERT=./certs/iothub.crt
       - MQTT_PORT=8883
     volumes:
       - ./data/certs:/app/certs
