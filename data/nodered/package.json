@@ -4,6 +4,7 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
+        "node-red-contrib-io7": "github:io7lab/node-red-contrib-io7",
         "redis": "^4.5.1"
     }
 }
