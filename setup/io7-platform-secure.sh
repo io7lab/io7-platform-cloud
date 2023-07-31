@@ -42,7 +42,8 @@ if [ "$ca" = "" ]
 then
     sed -i $sedOpt 's/MQTT_SSL_CERT=\.\/certs\/.*$/MQTT_SSL_CERT=\.\/certs\/iothub.crt/' ~/docker-compose.yml
 else
-    sed -i $sedOpt "s/MQTT_SSL_CERT=\.\/certs\/.*$/MQTT_SSL_CERT=\.\/certs\/$ca/" ~/docker-compose.yml
+    cafile=$(basename $ca)
+    sed -i $sedOpt "s/MQTT_SSL_CERT=\.\/certs\/.*$/MQTT_SSL_CERT=\.\/certs\/$cafile/" ~/docker-compose.yml
 fi
 
 
