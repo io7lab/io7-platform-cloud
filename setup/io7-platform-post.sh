@@ -67,7 +67,8 @@ sed -i $sedOpt "s/^DynSecUser=.*/DynSecUser=$admin_id/" ~/data/io7-api-server/da
 sed -i $sedOpt "s/^DynSecPass=.*/DynSecPass=$admin_pw/" ~/data/io7-api-server/data/.env
 docker-compose up -d io7api
 sleep 5
-docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt
+docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt > runtime-config.js
+mv runtime-config.js ~/data/io7-management-web/public
 
 # Web Admin id generation in the dynamic-security.json
 api_user_create
