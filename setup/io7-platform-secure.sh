@@ -56,5 +56,5 @@ sudo cp ~/data/certs/* ~/data/mosquitto/config/certs
 mkdir -p ~/data/nodered/certs
 cp ~/data/certs/* ~/data/nodered/certs || sudo cp ~/data/certs/* ~/data/nodered/certs
 mkdir -p ~/data/influxdb/certs || sudo mkdir -p ~/data/influxdb/certs
-cp ~/data/certs/* ~/data/influxdb/certs || sudo cp ~/data/certs/* ~/data/influxdb/certs
+cp ~/data/certs/iothub.* ~/data/influxdb/certs || sudo cp ~/data/certs/iothub.* ~/data/influxdb/certs
 docker-compose -f ~/docker-compose.yml up -d
