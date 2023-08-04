@@ -1,11 +1,11 @@
-# ======================= io7 IOT Platform Introduction ========================
+# ===== io7 IOT Platform Introduction =====
 I have been using the IBM Watson IOT Foundation to teach the students the Internet of Things at a University. It has been quite comprehensive and concise for the IOT subject, so I really enjoyed it. 
 
 But since it's unfortunetly decided that the IBM Watson IOT Foundation got sunset and no more available, I developed this io7 IOT Platform of a minimum set of IOT platform.
 
 Archtecture and Usage will be documented here soon.
 
-# ======================= Installation ========================
+# ===== Installation =====
 
 ## setup_docker_nodejs.sh
 This sets up couple of settings, installs docker and nodejs
