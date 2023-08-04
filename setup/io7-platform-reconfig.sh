@@ -41,7 +41,7 @@ fi
 [ -z $3 ]  &&  echo Enter the API server user email address && read api_user_email || api_user_email=$3
 [ -z $4 ]  &&  echo Enter the API server user password && read api_user_pw || api_user_pw=$4
 
-docker exec -it io7api rm -rf /app/data/db/*
+docker exec -it io7api rm -rf /app/data/db
 echo Restarting io7api and mqtt. Wait for a few minutes.
 docker-compose down
 
