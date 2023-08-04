@@ -2,6 +2,23 @@
 #
 # This script installs and sets the Runtime environment of the HomeOS
 #
+echo set tabstop=4 > ~/.vimrc
+echo set shiftwidth=4 >> ~/.vimrc
+echo set expandtab >> ~/.vimrc
+# timezone and ssh related
+sed 's/#UseDNS/UseDNS/' /etc/ssh/sshd_config | sudo tee /etc/ssh/sshd_config
+sed 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config | sudo tee /etc/ssh/sshd_config
+grep 'set -o vi' ~/.bashrc > /dev/null || echo 'set -o vi' >> ~/.bashrc
+#sudo apt update && sudo apt upgrade -y
+echo Enter the hostname for the machine
+read newName
+if [  "$newName" ]
+then
+    sudo hostname $newName
+    echo logout and login again to have the new PS1 in effect
+fi
+# end of environment setup
+# start of docker and nodejs setup
 if [ $(uname) = 'Linux' ]
 then
     if [ $(uname -m) = 'x86_64' ]
