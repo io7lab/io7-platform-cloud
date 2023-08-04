@@ -51,7 +51,7 @@ sudo cp -p $dir/secure/settings.js ~/data/nodered
 sudo cp -p $dir/secure/mosquitto.conf ~/data/mosquitto/config
 sed -i $sedOpt 's/ws:/wss:/' ~/data/io7-management-web/public/runtime-config.js
 
-[ -d ~/data/mosquitto/config/certs ] || mkdir -p ~/data/mosquitto/config/certs
+[ -d ~/data/mosquitto/config/certs ] || sudo mkdir -p ~/data/mosquitto/config/certs
 sudo cp ~/data/certs/* ~/data/mosquitto/config/certs
 # if the ownership of the cert files has changed, then try sudo cp
 [ -d ~/data/nodered/certs ] || mkdir -p ~/data/nodered/certs

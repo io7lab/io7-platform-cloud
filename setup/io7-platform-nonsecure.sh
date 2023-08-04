@@ -12,7 +12,7 @@ dir=$(pwd)/$(dirname $(echo $0))
 cp $dir/../docker-compose.yml.prod ~/docker-compose.yml
 
 cp ~/data/nodered/settings.js.nossl ~/data/nodered/settings.js
-cp ~/data/mosquitto/config/mosquitto.conf.nossl ~/data/mosquitto/config/mosquitto.conf
+sudo cp ~/data/mosquitto/config/mosquitto.conf.nossl ~/data/mosquitto/config/mosquitto.conf
 
-for d in `find ~/data -type d -name certs`; do rm -rf $d/*; done
+for d in `find ~/data -type d -name certs`; do sudo rm -rf $d/*; done
 docker-compose -f ~/docker-compose.yml up -d
