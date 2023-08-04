@@ -20,31 +20,30 @@ function api_user_create {
 }
 
 #main script
-if [ $1 == '-h' ]
+if [ "$1" = '-h' ]
 then
     echo -e "\n\tUsage: $0 [mqtt_admin_id] [mqtt_admin_pw] [api_user_email] [api_user_pw]\n"
     exit 0
 fi
-if [ -d ~/data/io7-api-server/db ]
+if [ -d ~/data/io7-api-server/data/db ]
 then
-  echo "Do you want to reset the configuration? (n/y)"
-  read reset
-  if [ "$reset" != "y" ] && [ "$reset" != "Y" ]
-  then
-    echo Post Configuration Cancelled.
-    exit
-  else
-    docker exec -it mqtt rm /mosquitto/config/dynamic-security.json
-    rm -rf ~/data/io7-api-server/db
-    echo Restarting io7api and mqtt. Wait for a few minutes.
-    docker-compose down
-  fi
+    echo "Do you want to reset the configuration? (n/y)"
+    read reset
+    if [ "$reset" != "y" ] && [ "$reset" != "Y" ]
+    then
+        echo Post Configuration Cancelled.
+        exit
+    fi
 fi
 
 [ -z $1 ]  &&  echo Enter the mqtt dynsec admin id && read admin_id || admin_id=$1
 [ -z $2 ]  &&  echo Enter the mqtt dynsec admin password && read admin_pw || admin_pw=$2
 [ -z $3 ]  &&  echo Enter the API server user email address && read api_user_email || api_user_email=$3
 [ -z $4 ]  &&  echo Enter the API server user password && read api_user_pw || api_user_pw=$4
+
+rm -rf ~/data/io7-api-server/data/db
+echo Restarting io7api and mqtt. Wait for a few minutes.
+docker-compose down
 
 insecure=''
 proto='http'
@@ -57,6 +56,7 @@ fi
 cd ~
 docker-compose up -d mqtt
 sleep 5
+docker exec -it mqtt rm /mosquitto/config/dynamic-security.json
 docker exec -it mqtt mosquitto_ctrl dynsec init /mosquitto/config/dynamic-security.json $admin_id $admin_pw
 docker restart mqtt
 if [ ! -f ~/data/io7-api-server/data/.env ]
@@ -67,7 +67,14 @@ sed -i $sedOpt "s/^DynSecUser=.*/DynSecUser=$admin_id/" ~/data/io7-api-server/da
 sed -i $sedOpt "s/^DynSecPass=.*/DynSecPass=$admin_pw/" ~/data/io7-api-server/data/.env
 docker-compose up -d io7api
 sleep 5
-docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt > runtime-config.js
+
+docker inspect --format='{{.Config.ExposedPorts}}' mqtt|grep 8883 > /dev/null
+if [ "$?" -eq 0 ] ; then
+    docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt -c /app/certs/io7lab.pem > runtime-config.js
+else
+    docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt > runtime-config.js
+fi
+
 mv runtime-config.js ~/data/io7-management-web/public
 
 # Web Admin id generation in the dynamic-security.json

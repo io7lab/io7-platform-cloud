@@ -21,4 +21,4 @@ cd ~/data/nodered
 npm i
 
 cd ~
-bash $dir/io7-platform-post.sh $admin_id $admin_pw $api_user_email $api_user_pw
+bash $dir/io7-platform-reconfig.sh $admin_id $admin_pw $api_user_email $api_user_pw
