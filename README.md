@@ -58,7 +58,7 @@ It may be run many times after removing the existing io7 Platform instance. The 
 
 
 ## io7-platform-reconfig.sh
-This sets the required intitial data such as the admin id, mqttws id and so on. If the io7 Platform instance needs to be clean up, then this script can be run again, then this will reset the data to the initial state.
+This sets the required intitial data such as the admin id, mqttws id and so on. If the io7 Platform instance needs to be clean up without the reinstallation, then this script can be run again, then it will reset the data to the initial state.
 
 ## io7-platform-secure.sh
 This converts the existing non secure io7 Platform instance into TLS protected instance.
