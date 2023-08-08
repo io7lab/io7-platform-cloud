@@ -5,7 +5,7 @@ But since it's unfortunetly decided that the IBM Watson IOT Foundation got sunse
 
 The main purpose of developing this platform and the submodules is to take the essential concepts from the IBM Watson IOT and to come up with a minimum but all required features with which the students can learn and practice the Internet of Things.
 
-**It's been an one man shop development, so it is not a corporate quality and contents, but I hope it is good enough for teaching and learning. And I would welcome any suggestion, adoption, and possiblly collaboration and contribution.**
+**It's been an one man shop development, so it is not a corporate quality and contents, but I hope it is good enough for teaching and learning. And I would welcome any suggestion, adoption, and possibly collaboration and contribution.**
 
 *Archtecture and Usage will be further documented here soon.*
 
