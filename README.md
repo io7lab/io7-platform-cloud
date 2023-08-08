@@ -19,6 +19,9 @@ The main purpose of developing this platform and the submodules is to take the e
 6. https://github.com/io7lab/IO7FuPython : ESP32 Micropython Library which helps develop the Micropython io7 device easily.
 7. https://github.com/io7lab/io7-platform-edge : this repository is for the Edge Server with a Raspberry Pi. This implements an io7 gateway that sits between the local mosquitto broker on the RPi and the io7 Cloud broker and represents the local io7 edge devices by requesting automatic registration and relaying the mqtt events and commands.
 
+<img width="800" alt="Screenshot 2023-08-08 at 8 12 51 PM" src="https://github.com/io7lab/io7-platform-cloud/assets/13171662/279e44bc-265c-4149-9b36-d10a3ace046f">
+
+
 # Quick Installation
 
 Create a linux instance like AWS EC2 and run the following.
