@@ -13,7 +13,7 @@ The main purpose of developing this platform and the submodules is to take the e
 *Archtecture and Usage will be further documented here soon.*
 
 # Github repositories for the io7 Platform
-Brief diagram of the io7 Platform components.
+**Brief diagram of the io7 Platform components.**
 <img width="800" alt="Screenshot 2023-08-08 at 8 17 33 PM" src="https://github.com/io7lab/io7-platform-cloud/assets/13171662/13dcad6c-941e-4ff6-a836-8d27e1067aa9">
 
 1. https://github.com/io7lab/io7-platform-cloud : the current Repository
