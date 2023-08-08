@@ -1,11 +1,42 @@
-# ===== io7 IOT Platform Introduction =====
+# io7 IOT Platform Introduction
 I have been using the IBM Watson IOT Foundation to teach the students the Internet of Things at a University. It has been quite comprehensive and concise for the IOT subject, so I really enjoyed it. 
 
 But since it's unfortunetly decided that the IBM Watson IOT Foundation got sunset and no more available, I developed this io7 IOT Platform of a minimum set of IOT platform.
 
-Archtecture and Usage will be documented here soon.
+The main purpose of developing this platform and the submodules is to take the essential concepts from the IBM Watson IOT and to come up with a minimum but all required features with which the students can learn and practice the Internet of Things.
 
-# ===== Installation =====
+*Archtecture and Usage will be further documented here soon.*
+
+# Github repositories for the io7 Platform
+
+1. io7-platform-cloud : the current Repository
+2. io7-api-server : the REST API Server which handles the Device registration and deregistration as well as the Application Key.
+3. io7-management-web : the Web frontend to the io7 Platform.
+4. node-red-contrib-io7 : NodeRED node that makes it easy to develop the NodeRED flow with. It's the equivalent to node-red-contrib-scx-ibmiotapp for the io7.
+5. IO7F8266 : ESP8266 Arduino Library which helps develop the Arduino io7 device easily.
+6. IO7FuPython : ESP32 Micropython Library which helps develop the Micropython io7 device easily.
+7. io7-platform-edge : this repository is for the Edge Server with a Raspberry Pi. This implements an io7 gateway that sits between the local mosquitto broker on the RPi and the io7 Cloud broker and represents the local io7 edge devices by requesting automatic registration and relaying the mqtt events and commands.
+
+# Quick Installation
+
+Create a linux instance like AWS EC2 and run the following.
+```
+git clone git@github.com:io7lab/io7-platform-cloud.git
+bash io7-platform-cloud/setup/setup_docker_nodejs.sh
+sudo reboot
+```
+login again and run the following. You will need to provide
+* mqtt id  : mosquitto dynamic security id
+* mqtt pw  : mosquitto dynamic security password
+* admin id : admin id in the form of email address. This is the management web login id.
+* admin pw : admin password.
+
+```
+bash io7-platform-cloud/setup/io7-platform-setup.sh
+```
+and you can access http://yourserver:3000 to register the deivces and the application key.
+
+# Installation and Utility scripts
 
 ## setup_docker_nodejs.sh
 This sets up couple of settings, installs docker and nodejs
