@@ -47,7 +47,7 @@ and you can access http://yourserver:3000 to register the deivces and the applic
 # Installation and Utility scripts
 
 ## setup_docker_nodejs.sh
-This sets up couple of settings, installs docker and nodejs
+This sets up couple of settings, installs docker and nodejs.
 It needs to run just once for the Operating system such as AWS EC2 instance or your Linux/Windows.
 
 ## io7-platform-setup.sh
