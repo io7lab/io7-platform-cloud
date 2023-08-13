@@ -41,8 +41,12 @@ fi
 [ -z $3 ]  &&  echo Enter the API server user email address && read api_user_email || api_user_email=$3
 [ -z $4 ]  &&  echo Enter the API server user password && read api_user_pw || api_user_pw=$4
 
-docker exec -it io7api rm -rf /app/data/db
-echo Restarting io7api and mqtt. Wait for a few minutes.
+docker ps | grep io7api > /dev/null
+if [ "$?" -eq 0 ]
+then
+    docker exec -it io7api rm -rf /app/data/db
+    echo Restarting io7api and mqtt. Wait for a few minutes.
+fi
 docker-compose down
 
 insecure=''
@@ -56,7 +60,9 @@ fi
 cd ~
 docker-compose up -d mqtt
 sleep 5
-docker exec -it mqtt rm /mosquitto/config/dynamic-security.json
+if [ -f ~/data/mosquitto/config/dynamic-security.json ]; then
+    docker exec -it mqtt rm /mosquitto/config/dynamic-security.json
+fi
 docker exec -it mqtt mosquitto_ctrl dynsec init /mosquitto/config/dynamic-security.json $admin_id $admin_pw
 docker restart mqtt
 if [ ! -f ~/data/io7-api-server/data/.env ]

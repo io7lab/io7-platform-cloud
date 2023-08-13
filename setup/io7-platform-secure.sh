@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 sedOpt=
 [ $(uname) = 'Darwin' ] && sedOpt=".bak"
 LINE=$*
@@ -53,9 +52,11 @@ sed -i $sedOpt 's/ws:/wss:/' ~/data/io7-management-web/public/runtime-config.js
 
 [ -d ~/data/mosquitto/config/certs ] || sudo mkdir -p ~/data/mosquitto/config/certs
 sudo cp ~/data/certs/* ~/data/mosquitto/config/certs
+sudo chown -R 1883:1883 ~/data/mosquitto/config/certs
 # if the ownership of the cert files has changed, then try sudo cp
 [ -d ~/data/nodered/certs ] || mkdir -p ~/data/nodered/certs
 cp ~/data/certs/* ~/data/nodered/certs || sudo cp ~/data/certs/* ~/data/nodered/certs
-mkdir -p ~/data/influxdb/certs || sudo mkdir -p ~/data/influxdb/certs
-cp ~/data/certs/iothub.* ~/data/influxdb/certs || sudo cp ~/data/certs/iothub.* ~/data/influxdb/certs
+[ -d ~/data/influxdb/certs ] || sudo mkdir -p ~/data/influxdb/certs
+sudo chown -R 1000:1000 ~/data/influxdb/certs
+cp ~/data/certs/iothub.* ~/data/influxdb/certs
 docker-compose -f ~/docker-compose.yml up -d
