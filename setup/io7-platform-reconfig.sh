@@ -81,7 +81,24 @@ else
     docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt
 fi
 
-echo window[\"runtime\"] = {\"ws_protocol\":\"ws://\"} > ~/data/io7-management-web/public/runtime-config.js
+cat <<EOF > ~/data/io7-management-web/public/runtime-config.js
+/*
+ * Update this file to set the following variables if you want
+ *     API_URL_ROOT
+ *     WS_SERVER_URL
+ * 
+ */
+window["runtime"] = {
+     "ws_protocol":"ws://",
+     "mqtt_options" : {
+        "clientId": "io7web",
+        "username": "\$web",
+        "clean_session": true,
+        "tls_insecure": true,
+        "rejectUnauthorized": false
+    }
+}
+EOF
 
 # Web Admin id generation in the dynamic-security.json
 api_user_create
