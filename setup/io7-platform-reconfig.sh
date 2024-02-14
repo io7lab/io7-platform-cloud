@@ -76,12 +76,12 @@ sleep 5
 
 docker inspect --format='{{.Config.ExposedPorts}}' mqtt|grep 8883 > /dev/null
 if [ "$?" -eq 0 ] ; then
-    docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt -c /app/certs/io7lab.pem > runtime-config.js
+    docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt -c /app/certs/io7lab.pem
 else
-    docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt > runtime-config.js
+    docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt
 fi
 
-mv runtime-config.js ~/data/io7-management-web/public
+echo window[\"runtime\"] = {\"ws_protocol\":\"ws://\"} > ~/data/io7-management-web/public/runtime-config.js
 
 # Web Admin id generation in the dynamic-security.json
 api_user_create
