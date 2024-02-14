@@ -72,7 +72,7 @@ fi
 sed -i $sedOpt "s/^DynSecUser=.*/DynSecUser=$admin_id/" ~/data/io7-api-server/data/.env
 sed -i $sedOpt "s/^DynSecPass=.*/DynSecPass=$admin_pw/" ~/data/io7-api-server/data/.env
 docker-compose up -d io7api
-sleep 5
+sleep 7
 
 docker inspect --format='{{.Config.ExposedPorts}}' mqtt|grep 8883 > /dev/null
 if [ "$?" -eq 0 ] ; then
