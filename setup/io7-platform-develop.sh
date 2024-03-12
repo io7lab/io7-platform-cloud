@@ -24,6 +24,7 @@ else
     git clone $branch https://github.com/io7lab/io7-api-server.git ~/data/io7-api-server
 fi
 cp -R $dir/../data ~/
+[ $(uname) = 'Darwin' ] || sudo chown -R 472:472 ~/data/grafana
 
 cd ~/data/nodered
 npm i

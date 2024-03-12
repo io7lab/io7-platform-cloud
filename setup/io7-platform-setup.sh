@@ -16,6 +16,7 @@ fi
 dir=$(pwd)/$(dirname $(echo $0))
 cp $dir/../docker-compose.yml.prod ~/docker-compose.yml
 cp -R $dir/../data ~/
+[ $(uname) = 'Darwin' ] || sudo chown -R 472:472 ~/data/grafana
 
 cd ~/data/nodered
 npm i
