@@ -52,7 +52,7 @@ It needs to run just once for the Operating system such as AWS EC2 instance or y
 ## io7-platform-setup.sh
 This sets up the intial io7 IOT Platform directory structure and calls `io7-platform-reconfig.sh`.
 It may be run many times after removing the existing io7 Platform instance. The remving procedure is 
-* docker-compose down
+* docker compose down
 * sudo rm -rf ~/data ~/docker-compose.*
 
 

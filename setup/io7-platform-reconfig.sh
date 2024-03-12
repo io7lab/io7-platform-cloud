@@ -47,7 +47,7 @@ then
     docker exec -it io7api rm -rf /app/data/db
     echo Restarting io7api and mqtt. Wait for a few minutes.
 fi
-docker-compose down
+docker compose down
 
 insecure=''
 proto='http'
@@ -58,7 +58,7 @@ then
 fi
 
 cd ~
-docker-compose up -d mqtt
+docker compose up -d mqtt
 sleep 5
 if [ -f ~/data/mosquitto/config/dynamic-security.json ]; then
     docker exec -it mqtt rm /mosquitto/config/dynamic-security.json
@@ -71,7 +71,7 @@ then
 fi
 sed -i $sedOpt "s/^DynSecUser=.*/DynSecUser=$admin_id/" ~/data/io7-api-server/data/.env
 sed -i $sedOpt "s/^DynSecPass=.*/DynSecPass=$admin_pw/" ~/data/io7-api-server/data/.env
-docker-compose up -d io7api
+docker compose up -d io7api
 sleep 7
 
 docker inspect --format='{{.Config.ExposedPorts}}' mqtt|grep 8883 > /dev/null
@@ -113,6 +113,6 @@ then
     fi
 fi
 
-docker-compose down
-docker-compose up -d
+docker compose down
+docker compose up -d
 echo All Installatin/Configuration Finished! Happy IOT!!!

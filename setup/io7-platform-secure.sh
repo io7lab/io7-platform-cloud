@@ -31,7 +31,7 @@ fi
 
 dir=$(dirname $(echo $0))
 
-docker-compose -f ~/docker-compose.yml down
+docker compose -f ~/docker-compose.yml down
 sudo mv ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.nossl
 mv ~/docker-compose.yml ~/docker-compose.yml.nossl
 mv ~/data/nodered/settings.js ~/data/nodered/settings.js.nossl
@@ -59,4 +59,4 @@ cp ~/data/certs/* ~/data/nodered/certs || sudo cp ~/data/certs/* ~/data/nodered/
 [ -d ~/data/influxdb/certs ] || sudo mkdir -p ~/data/influxdb/certs
 sudo chown -R $(id -u):$(id -g) ~/data/influxdb/certs
 cp ~/data/certs/iothub.* ~/data/influxdb/certs
-docker-compose -f ~/docker-compose.yml up -d
+docker compose -f ~/docker-compose.yml up -d
