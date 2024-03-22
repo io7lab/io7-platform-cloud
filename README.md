@@ -16,23 +16,24 @@ The main purpose of developing this platform and the submodules is to take the e
 **Brief diagram of the io7 Platform components.**
 <img width="1350" alt="Screenshot 2024-03-22 at 2 42 40 PM" src="https://github.com/io7lab/io7-platform-cloud/assets/13171662/a279d954-6b43-421d-8588-b54fccc5e3a6">
 
-1. https://github.com/io7lab/io7-platform-cloud : the current Repository
-2. https://github.com/io7lab/io7-api-server : the REST API Server which handles the Device registration and deregistration as well as the Application Key.
-3. https://github.com/io7lab/io7-management-web : the Web frontend to the io7 Platform.
-4. https://github.com/io7lab/node-red-contrib-io7 : NodeRED node that makes it easy to develop the NodeRED flow with. It's the equivalent to node-red-contrib-scx-ibmiotapp for the io7.
-5. https://github.com/io7lab/IO7F8266 : ESP8266 Arduino Library which helps develop the Arduino io7 device easily.
-6. https://github.com/io7lab/IO7FuPython : ESP32 Micropython Library which helps develop the Micropython io7 device easily.
-7. https://github.com/io7lab/io7-platform-edge : this repository is for the Edge Server with a Raspberry Pi. This implements an io7 gateway that sits between the local mosquitto broker on the RPi and the io7 Cloud broker and represents the local io7 edge devices by requesting automatic registration and relaying the mqtt events and commands. This prvodes the Edge Server level NodeRED so the Edge level intelligence can be implemented there.
+1. https://github.com/io7lab/io7-platform-cloud : the current Repository. This has the installation shell scripts which will install the following components onto the io7 IOT Platform server on an EC2 instance or a dedicated server.
+    1. https://github.com/io7lab/io7-api-server : the REST API Server which handles the Device registration and deregistration as well as the Application Key. This is a part of the io7 IOT Platform server.
+    2. https://github.com/io7lab/io7-management-web : the Web frontend to the io7 Platform. This is a part of the io7 IOT Platform server.
+    3. https://github.com/io7lab/node-red-contrib-io7 : NodeRED node that makes it easy to develop the NodeRED flow with. It's the equivalent to node-red-contrib-scx-ibmiotapp for the io7. This is a part of the io7 IOT Platform server.
+2. https://github.com/io7lab/IO7F8266 : ESP8266 Arduino Library which helps develop the Arduino io7 device easily.
+3. https://github.com/io7lab/IO7F32 : ESP32 Arduino Library which helps develop the Arduino io7 device easily.
+4. https://github.com/io7lab/IO7FuPython : ESP32 Micropython Library which helps develop the Micropython io7 device easily.
+5. https://github.com/io7lab/io7-platform-edge : this repository is for the Edge Server with a Raspberry Pi. This implements an io7 gateway that sits between the local mosquitto broker on the RPi and the io7 Cloud broker and represents the local io7 edge devices by requesting automatic registration and relaying the mqtt events and commands. This prvodes the Edge Server level NodeRED so the Edge level intelligence can be implemented there.
 
 # Quick Installation
 
 Create a linux instance like AWS EC2 and run the following.
 ```
-git clone git@github.com:io7lab/io7-platform-cloud.git
+git clone https://github.com/io7lab/io7-platform-cloud.git
 bash io7-platform-cloud/setup/setup_docker_nodejs.sh
-sudo reboot
+exit
 ```
-login again and run the following. You will need to provide
+login again and run the following to install io7 platform server. You will need to provide
 * mqtt id  : mosquitto dynamic security id
 * mqtt pw  : mosquitto dynamic security password
 * admin id : admin id in the form of email address. This is the management web login id.
