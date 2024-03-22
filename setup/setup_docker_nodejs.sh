@@ -21,13 +21,47 @@ fi
 # start of docker and nodejs setup
 if [ $(uname) = 'Linux' ]
 then
-    sudo apt install nodejs npm
+    if [ $(uname -m) = 'x86_64' ]
+    then
+        nodejs_url='https://nodejs.org/dist/v20.11.1/node-v20.11.1-linux-x64.tar.xz'
+    else
+        nodejs_url='https://nodejs.org/dist/v20.11.1/node-v20.11.1-linux-arm64.tar.xz'
+    fi
 else
     echo "This script is for Linux only"
     echo "If you are using Windows or Mac, then install and configure the following"
     echo -e "\t1. nodejs and npm"
     echo -e "\t2. docker"
     exit 1
+fi
+
+echo "nodejs will be installed for the link =>"
+echo "        " $nodejs_url
+echo "if you you want to install a different version or the latest if any"
+echo "then visit https://nodejs.org/en/download/ and get the link to the nodejs tarball"
+echo "paste the link here, otherwise just hit enter"
+
+read url
+if [ -z "$url" ]
+then
+    url=$nodejs_url
+fi
+
+fname=$(echo $url|awk -F'/' '{ print $NF }')
+test -f $fname && rm $fname
+wget $url
+if [ $? -eq 0 ] 
+then
+    tar xvf $fname
+    cd $(echo $fname|sed 's/.tar.xz$//' | sed 's/.tar.gz$//')
+    rm CHANGELOG.md LICENSE README.md
+    sudo cp -R * /usr/local
+    cd -
+    rm -rf $(echo $fname|sed 's/.tar.xz$//' | sed 's/.tar.gz$//')
+    sudo npm -g i mqtt basic-auth body-parser cron-parser 
+    sudo npm -g i express fs loader node-schedule redis request
+else
+    echo check the url for the nodejs
 fi
 
 curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
