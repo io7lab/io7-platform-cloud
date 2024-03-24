@@ -2,10 +2,21 @@
 #
 # This script installs the docker container images for the io7 Cloud Server
 # It should run after making sure the Docker engine is running
-echo Enter the mqtt dynsec admin id && read admin_id
-echo Enter the mqtt dynsec admin password && read admin_pw
-echo Enter the API server user email address && read api_user_email
-echo Enter the API server user password && read api_user_pw
+if [ "$#" -eq 0 ]; then
+    echo Enter the mqtt dynsec admin id && read admin_id
+    echo Enter the mqtt dynsec admin password && read admin_pw
+    echo Enter the API server user email address && read api_user_email
+    echo Enter the API server user password && read api_user_pw
+elif [ "$#" -eq 4 ]; then
+    admin_id=$1
+    admin_pw=$2
+    api_user_email=$3
+    api_user_pw=$4
+else
+    echo -e "\n\tUsage: $0 [mqtt_admin_id mqtt_admin_pw api_user_email api_user_pw]"
+    echo -e "\nRun this command either with all 4 parameters or without any of them\n"
+    exit 1
+fi
 
 branch=""
 if [ "$1" != "" ]
