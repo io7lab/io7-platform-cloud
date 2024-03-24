@@ -16,6 +16,7 @@ services:
       - TZ=Asia/Seoul
     volumes:
       - ./data/nodered:/data
+      - ./data/certs:/data/certs
     ports:
       - "1880:1880"
     links:
@@ -48,7 +49,7 @@ services:
     volumes:
       # Data persistency
       - ./data/influxdb/data:/data
-      - ./data/influxdb/certs:/data/certs
+      - ./data/certs:/data/certs
     restart: always
   io7api:
     container_name: io7api
