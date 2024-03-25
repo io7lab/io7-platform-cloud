@@ -7,8 +7,7 @@ The main purpose of developing this platform and the submodules is to take the e
 
 **It's been an one man shop development, so it is not a corporate quality and contents, but I hope it is good enough for teaching and learning. And I would welcome any suggestion, adoption, and possibly collaboration and contribution.**
 
-
-<img width="800" alt="Screenshot 2023-08-08 at 8 12 51 PM" src="https://github.com/io7lab/io7-platform-cloud/assets/13171662/279e44bc-265c-4149-9b36-d10a3ace046f">
+![259081527-279e44bc-265c-4149-9b36-d10a3ace046f](https://github.com/io7lab/io7-platform-cloud/assets/13171662/e07132d7-ed5b-4601-953b-e88481724b1c)
 
 *Archtecture and Usage will be further documented here soon.*
 
