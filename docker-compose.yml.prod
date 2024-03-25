@@ -14,6 +14,7 @@ services:
     image: nodered/node-red
     environment:
       - TZ=Asia/Seoul
+      - NODE_RED_ENABLE_PROJECTS=true
     volumes:
       - ./data/nodered:/data
     ports:

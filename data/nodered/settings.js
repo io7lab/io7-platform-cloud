@@ -466,7 +466,6 @@ module.exports = {
      *    global.get("os")
      */
     functionGlobalContext: {
-        redis:require('redis')
         // os:require('os'),
     },
 
