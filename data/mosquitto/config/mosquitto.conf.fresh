@@ -8,5 +8,7 @@ allow_anonymous true
 persistence true
 persistence_location /var/lib/mosquitto/
 
-log_dest file /mosquitto/mosquitto.log
+#log_dest file /mosquitto/mosquitto.log
+log_dest stdout
+log_type all
 
