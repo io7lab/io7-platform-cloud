@@ -9,10 +9,12 @@ else
     d=$1
 fi
 
-docker run -it --rm  -v ~/certificate:/etc/letsencrypt/ -p 80:80 certbot/certbot certonly --standalone -d $d | grep 'challenges have failed'
-if [ "$?" -eq 0 ] ; then
-    echo Failed to get the certificate
-    exit 1
+docker run -it --rm  -v ~/certificate:/etc/letsencrypt/ -p 80:80 certbot/certbot certonly --standalone -d $d
+
+echo 'Has the certificated issued successfully? (y/n)'
+read a
+if [ "$a" != "y" ] ; then
+    exit 0
 fi
 
 sudo cp certificate/live/$d/chain.pem ~/ca.pem
