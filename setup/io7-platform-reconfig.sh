@@ -97,6 +97,7 @@ EOF
 
 docker compose down
 docker compose up -d
+sleep 5
 # Web Admin id generation in the dynamic-security.json
 api_user_create
 if [ "$?" -ne "0" ]; then
