@@ -8,6 +8,8 @@ services:
     ports:
       - "1883:1883"
       - "9001:9001"
+    links:
+      - io7api
     restart: always
   nodered:
     container_name: nodered
@@ -59,7 +61,6 @@ services:
       - "2009:2009"
     links:
       - redis
-      - mqtt
     restart: always
   io7web:
     container_name: io7web
