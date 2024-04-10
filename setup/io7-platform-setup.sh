@@ -27,7 +27,16 @@ fi
 dir=$(pwd)/$(dirname $(echo $0))
 cp $dir/../docker-compose.yml.prod ~/docker-compose.yml
 cp -R $dir/../data ~/
-[ $(uname) = 'Darwin' ] || sudo chown -R 472:472 ~/data/grafana
+if [ $(uname) = 'Linux' ]; then
+    sudo chown -R 472:472 ~/data/grafana
+    if [ $(uname -a|awk '{print $(NF-1)}') == 'x86_64' ]; then
+        (cd ~/data/mosquitto/lib ; ln -s io7_jwt_security.so.amd64 io7_jwt_security.so)
+    elif [ $(uname -a|awk '{print $(NF-1)}') == 'aarch64' ]; then
+        (cd ~/data/mosquitto/lib ; ln -s io7_jwt_security.so.aarch64 io7_jwt_security.so)
+    fi
+elif [ $(uname -m) == 'arm64' ]; then
+    (cd ~/data/mosquitto/lib; ln -s io7_jwt_security.so.aarch64 io7_jwt_security.so)
+fi
 
 cd ~/data/nodered
 npm i
