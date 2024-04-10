@@ -42,8 +42,7 @@ fi
 [ -z $4 ]  &&  echo Enter the API server user password && read api_user_pw || api_user_pw=$4
 
 docker ps | grep io7api > /dev/null
-if [ "$?" -eq 0 ]
-then
+if [ "$?" -eq 0 ]; then
     docker exec -it io7api rm -rf /app/data/db
     echo Restarting io7api and mqtt. Wait for a few minutes.
 fi
@@ -51,8 +50,7 @@ docker compose down
 
 insecure=''
 proto='http'
-if [ -f ~/data/certs/iothub.crt ]
-then
+if [ -f ~/data/certs/iothub.crt ]; then
   insecure='--insecure'
   proto='https'
 fi
@@ -65,14 +63,11 @@ if [ -f ~/data/mosquitto/config/dynamic-security.json ]; then
 fi
 docker exec -it mqtt mosquitto_ctrl dynsec init /mosquitto/config/dynamic-security.json $admin_id $admin_pw
 docker restart mqtt
-if [ ! -f ~/data/io7-api-server/data/.env ]
-then
+if [ ! -f ~/data/io7-api-server/data/.env ]; then
   cp ~/data/io7-api-server/data/sample.env ~/data/io7-api-server/data/.env
 fi
 sed -i $sedOpt "s/^DynSecUser=.*/DynSecUser=$admin_id/" ~/data/io7-api-server/data/.env
 sed -i $sedOpt "s/^DynSecPass=.*/DynSecPass=$admin_pw/" ~/data/io7-api-server/data/.env
-docker compose up -d io7api
-sleep 7
 
 docker inspect --format='{{.Config.ExposedPorts}}' mqtt|grep 8883 > /dev/null
 if [ "$?" -eq 0 ] ; then
@@ -100,19 +95,17 @@ window["runtime"] = {
 }
 EOF
 
+docker compose down
+docker compose up -d
 # Web Admin id generation in the dynamic-security.json
 api_user_create
-if [ "$?" -eq "52" ]
-then
+if [ "$?" -ne "0" ]; then
     sleep 10
     api_user_create
-    if [ "$?" -eq "52" ]
-    then
+    if [ "$?" -ne "0" ]; then
         echo "API Server is not running. Please check the logs."
         exit 1
     fi
 fi
 
-docker compose down
-docker compose up -d
 echo All Installatin/Configuration Finished! Happy IOT!!!
