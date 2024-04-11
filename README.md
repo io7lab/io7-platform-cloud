@@ -74,4 +74,4 @@ This converts the existing non secure io7 Platform instance into TLS protected i
 This converts back the existing secure io7 Platform instance into non secure instance, ie. no TLS.
 
 ## io7-platform-develop.sh
-This script is only for development. If you want to develop further on this io7 Platform and to contribute, then use this script in stead of `io7-platform-setup.sh` . This setups the io7 Platform with the source code as well.
+This script is only for development. If you want to develop further on this io7 Platform and to contribute, then use this script in stead of `io7-platform-setup.sh` . This sets up the io7 Platform with the source code as well, so you can learn the code and/or improve on your own.
