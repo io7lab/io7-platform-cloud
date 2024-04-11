@@ -5,15 +5,22 @@ But since it's unfortunetly decided that the IBM Watson IOT Foundation got sunse
 
 The main purpose of developing this platform and the submodules is to take the essential concepts from the IBM Watson IOT and to come up with a minimum but all required features with which the students can learn and practice the Internet of Things.
 
-**It's been an one man shop development, so it is not a corporate quality and contents, but I hope it is good enough for teaching and learning. And I would welcome any suggestion, adoption, and possibly collaboration and contribution.**
+*It's been an one man shop development, so it is not a corporate level quality and contents, but I hope it is good enough for teaching and learning. And I would welcome any suggestion, adoption, and possibly collaboration and contribution.*
 
 ![259081527-279e44bc-265c-4149-9b36-d10a3ace046f](https://github.com/io7lab/io7-platform-cloud/assets/13171662/e07132d7-ed5b-4601-953b-e88481724b1c)
+
+### This is the message subscription and publication authorization for the devices and the application id.
+
+<img width="863" alt="Screenshot 2024-04-11 at 11 22 40 AM" src="https://github.com/io7lab/io7-platform-cloud/assets/13171662/98edff3c-e60e-41b1-a9e0-d20fea8ffcaf">
+
+### This is the architecture diagram.
+
+<img width="1350" alt="Screenshot 2024-03-22 at 2 42 40 PM" src="https://github.com/io7lab/io7-platform-cloud/assets/13171662/a279d954-6b43-421d-8588-b54fccc5e3a6">
 
 *Archtecture and Usage will be further documented here soon.*
 
 # Github repositories for the io7 Platform
 **Brief diagram of the io7 Platform components.**
-<img width="1350" alt="Screenshot 2024-03-22 at 2 42 40 PM" src="https://github.com/io7lab/io7-platform-cloud/assets/13171662/a279d954-6b43-421d-8588-b54fccc5e3a6">
 
 1. https://github.com/io7lab/io7-platform-cloud : the current Repository. This has the installation shell scripts which will install the following components onto the io7 IOT Platform server on an EC2 instance or a dedicated server.
     1. https://github.com/io7lab/io7-api-server : the REST API Server which handles the Device registration and deregistration as well as the Application Key. This is a part of the io7 IOT Platform server.
