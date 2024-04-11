@@ -10,8 +10,7 @@ The main purpose of developing this platform and the submodules is to take the e
 ![259081527-279e44bc-265c-4149-9b36-d10a3ace046f](https://github.com/io7lab/io7-platform-cloud/assets/13171662/e07132d7-ed5b-4601-953b-e88481724b1c)
 
 ### This is the message subscription and publication authorization for the devices and the application id.
-
-<img width="863" alt="Screenshot 2024-04-11 at 11 22 40 AM" src="https://github.com/io7lab/io7-platform-cloud/assets/13171662/98edff3c-e60e-41b1-a9e0-d20fea8ffcaf">
+<img width="877" alt="Screenshot 2024-04-11 at 11 35 40 AM" src="https://github.com/io7lab/io7-platform-cloud/assets/13171662/64be96bc-676c-4917-b71d-ef1ffbba493b">
 
 ### This is the architecture diagram.
 
