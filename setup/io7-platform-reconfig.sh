@@ -63,6 +63,7 @@ if [ -f ~/data/mosquitto/config/dynamic-security.json ]; then
 fi
 docker exec -it mqtt mosquitto_ctrl dynsec init /mosquitto/config/dynamic-security.json $admin_id $admin_pw
 docker restart mqtt
+sleep 12
 if [ ! -f ~/data/io7-api-server/data/.env ]; then
   cp ~/data/io7-api-server/data/sample.env ~/data/io7-api-server/data/.env
 fi
@@ -86,7 +87,6 @@ cat <<EOF > ~/data/io7-management-web/public/runtime-config.js
 window["runtime"] = {
      "ws_protocol":"ws://",
      "mqtt_options" : {
-        "clientId": "io7web",
         "username": "\$web",
         "clean_session": true,
         "tls_insecure": true,
