@@ -56,14 +56,14 @@ if [ -f ~/data/certs/iothub.crt ]; then
 fi
 
 cd ~
-docker compose up -d mqtt
-sleep 5
+docker compose up -d mqtt io7api
+sleep 10
 if [ -f ~/data/mosquitto/config/dynamic-security.json ]; then
     docker exec -it mqtt rm /mosquitto/config/dynamic-security.json
 fi
 docker exec -it mqtt mosquitto_ctrl dynsec init /mosquitto/config/dynamic-security.json $admin_id $admin_pw
 docker restart mqtt
-sleep 12
+echo "MQTT Server is restarting. Wait for a few minutes."
 if [ ! -f ~/data/io7-api-server/data/.env ]; then
   cp ~/data/io7-api-server/data/sample.env ~/data/io7-api-server/data/.env
 fi

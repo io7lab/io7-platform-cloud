@@ -8,8 +8,6 @@ services:
     ports:
       - "8883:8883"
       - "9001:9001"
-    links:
-      - io7api
     restart: always
   nodered:
     container_name: nodered
