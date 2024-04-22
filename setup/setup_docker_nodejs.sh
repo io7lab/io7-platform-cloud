@@ -58,7 +58,7 @@ then
     sudo cp -R * /usr/local
     cd -
     rm -rf $(echo $fname|sed 's/.tar.xz$//' | sed 's/.tar.gz$//')
-    sudo npm -g i mqtt basic-auth body-parser cron-parser 
+    sudo npm -g i mqtt basic-auth body-parser cron-parser yaml
     sudo npm -g i express fs loader node-schedule redis request
 else
     echo check the url for the nodejs
