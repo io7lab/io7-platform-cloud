@@ -74,8 +74,6 @@ services:
     container_name: grafana
     ports:
       - "3003:3000"
-    env_file:
-      - 'data/grafana/env.grafana'
     links:
       - influxdb
     environment:
