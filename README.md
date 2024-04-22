@@ -27,6 +27,7 @@ The main purpose of developing this platform and the submodules is to take the e
     2. https://github.com/io7lab/io7-management-web : the Web frontend to the io7 Platform. This is a part of the io7 IOT Platform server.
     3. https://github.com/io7lab/node-red-contrib-io7 : NodeRED node that makes it easy to develop the NodeRED flow with. It's the equivalent to node-red-contrib-scx-ibmiotapp for the io7. This is a part of the io7 IOT Platform server.
     4. https://github.com/io7lab/io7_jwt_security : the Mosquitto plugin to reuse the Management Web's JWT as the MQTT over WebSocket connection credential.
+    5. https://github.com/io7lab/io7-nodered-auth : the node package for the NodeRED admin authentication against io7 API server.
 2. https://github.com/io7lab/IO7F8266 : ESP8266 Arduino Library which helps develop the Arduino io7 device easily.
 3. https://github.com/io7lab/IO7F32 : ESP32 Arduino Library which helps develop the Arduino io7 device easily.
 4. https://github.com/io7lab/IO7FuPython : ESP32 Micropython Library which helps develop the Micropython io7 device easily.
