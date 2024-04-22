@@ -36,7 +36,7 @@ sudo mv ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto
 mv ~/data/nodered/settings.js ~/data/nodered/settings.js.nossl
 
 cp ~/docker-compose.yml ~/docker-compose.yml.nossl
-[ "$ca" = "" ] || ca='iothub.crt'
+[ "$ca" = "" ] && ca='iothub.crt'
 node $dir/modify-docker-compose.js ~/docker-compose.yml $ca
 
 sudo cp -p $dir/secure/settings.js ~/data/nodered
