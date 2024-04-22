@@ -9,6 +9,7 @@ echo set expandtab >> ~/.vimrc
 sed 's/#UseDNS/UseDNS/' /etc/ssh/sshd_config | sudo tee /etc/ssh/sshd_config
 sed 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config | sudo tee /etc/ssh/sshd_config
 grep 'set -o vi' ~/.bashrc > /dev/null || echo 'set -o vi' >> ~/.bashrc
+echo NODE_PATH=\$NODE_PATH:/usr/local/lib/node_modules >> ~/.bashrc
 #sudo apt update && sudo apt upgrade -y
 echo Enter the hostname for the machine
 read newName
