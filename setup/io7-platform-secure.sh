@@ -33,18 +33,11 @@ dir=$(dirname $(echo $0))
 
 docker compose -f ~/docker-compose.yml down
 sudo mv ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.nossl
-mv ~/docker-compose.yml ~/docker-compose.yml.nossl
 mv ~/data/nodered/settings.js ~/data/nodered/settings.js.nossl
 
-cp $dir/secure/docker-compose.yml.ssl ~/docker-compose.yml
-if [ "$ca" = "" ]
-then
-    sed -i $sedOpt 's/MQTT_SSL_CERT=\.\/certs\/.*$/MQTT_SSL_CERT=\.\/certs\/iothub.crt/' ~/docker-compose.yml
-else
-    cafile=$(basename $ca)
-    sed -i $sedOpt "s/MQTT_SSL_CERT=\.\/certs\/.*$/MQTT_SSL_CERT=\.\/certs\/$cafile/" ~/docker-compose.yml
-fi
-
+cp ~/docker-compose.yml ~/docker-compose.yml.nossl
+[ "$ca" = "" ] || ca='iothub.crt'
+node $dir/modify-docker-compose.js ~/docker-compose.yml $ca
 
 sudo cp -p $dir/secure/settings.js ~/data/nodered
 sudo cp -p $dir/secure/mosquitto.conf ~/data/mosquitto/config
