@@ -27,6 +27,7 @@ fi
 dir=$(pwd)/$(dirname $(echo $0))
 cp $dir/../docker-compose.yml.prod ~/docker-compose.yml
 cp -R $dir/../data ~/
+[ -d ~/data/grafana ] || mkdir -p ~/data/grafana
 if [ $(uname) = 'Linux' ]; then
     sudo chown -R 472:472 ~/data/grafana
     if [ $(uname -a|awk '{print $(NF-1)}') == 'x86_64' ]; then

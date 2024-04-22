@@ -54,4 +54,8 @@ sed -i $sedOpt 's/ws:/wss:/' ~/data/io7-management-web/public/runtime-config.js
 sudo cp ~/data/certs/* ~/data/mosquitto/config/certs
 sudo chown -R 1883:1883 ~/data/mosquitto/config/certs
 
+[ -d ~/data/grafana/certs ] || sudo mkdir -p ~/data/grafana/certs
+sudo cp ~/data/certs/* ~/data/grafana/certs
+sudo chown -R 472:472 ~/data/grafana/certs
+
 docker compose -f ~/docker-compose.yml up -d

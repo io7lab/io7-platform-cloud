@@ -88,6 +88,9 @@ services:
       - influxdb
     environment:
       - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_SERVER_PROTOCOL=https
+      - GF_SERVER_CERT_FILE=/var/lib/grafana/certs/iothub.crt
+      - GF_SERVER_CERT_KEY=/var/lib/grafana/certs/iothub.key
     volumes:
       - ./data/grafana:/var/lib/grafana
     restart: always
