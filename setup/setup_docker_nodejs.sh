@@ -16,6 +16,7 @@ read newName
 if [  "$newName" ]
 then
     sudo hostname $newName
+    echo $newName | sudo tee /etc/hostname
     echo logout and login again to have the new PS1 in effect
 fi
 # end of environment setup
