@@ -38,22 +38,22 @@ mv ~/data/nodered/settings.js ~/data/nodered/settings.js.nossl
 cp ~/docker-compose.yml ~/docker-compose.yml.nossl
 [ "$ca" = "" ] && ca='iothub.crt'
 node $dir/modify-docker-compose.js ~/docker-compose.yml <<EOF
-services.mqtt.ports 1883:1883 -
-services.mqtt.ports 8883:8883
-services.nodered.volumes ./data/certs:/data/certs
-services.influxdb.environment INFLUXD_TLS_CERT=/data/certs/iothub.crt
-services.influxdb.environment INFLUXD_TLS_KEY=/data/certs/iothub.key
-services.influxdb.volumes ./data/certs:/data/certs
-services.io7api.environment MQTT_CONN=mqtts://mqtt
-services.io7api.environment SSL_CERT=./certs/iothub.crt
-services.io7api.environment SSL_KEY=./certs/iothub.key
-services.io7api.environment MQTT_SSL_CERT=./certs/$ca
-services.io7api.environment MQTT_PORT=8883
-services.io7api.volumes ./data/certs:/app/certs
-services.io7web.volumes ./data/certs:/home/node/app/certs
-services.grafana.environment GF_SERVER_PROTOCOL=https
-services.grafana.environment GF_SERVER_CERT_FILE=/var/lib/grafana/certs/iothub.crt
-services.grafana.environment GF_SERVER_CERT_KEY=/var/lib/grafana/certs/iothub.key
+services.mqtt.ports: 1883:1883 -
+services.mqtt.ports: 8883:8883
+services.nodered.volumes: ./data/certs:/data/certs
+services.influxdb.environment: INFLUXD_TLS_CERT=/data/certs/iothub.crt
+services.influxdb.environment: INFLUXD_TLS_KEY=/data/certs/iothub.key
+services.influxdb.volumes: ./data/certs:/data/certs
+services.io7api.environment: MQTT_CONN=mqtts://mqtt
+services.io7api.environment: SSL_CERT=./certs/iothub.crt
+services.io7api.environment: SSL_KEY=./certs/iothub.key
+services.io7api.environment: MQTT_SSL_CERT=./certs/$ca
+services.io7api.environment: MQTT_PORT=8883
+services.io7api.volumes: ./data/certs:/app/certs
+services.io7web.volumes: ./data/certs:/home/node/app/certs
+services.grafana.environment: GF_SERVER_PROTOCOL=https
+services.grafana.environment: GF_SERVER_CERT_FILE=/var/lib/grafana/certs/iothub.crt
+services.grafana.environment: GF_SERVER_CERT_KEY=/var/lib/grafana/certs/iothub.key
 EOF
 
 sudo cp -p $dir/secure/settings.js ~/data/nodered

@@ -25,7 +25,7 @@ then
 fi
 
 dir=$(pwd)/$(dirname $(echo $0))
-cp $dir/../docker-compose.yml.prod ~/docker-compose.yml
+cp $dir/../docker-compose.yml ~/docker-compose.yml
 cp -R $dir/../data ~/
 [ -d ~/data/grafana ] || mkdir -p ~/data/grafana
 if [ $(uname) = 'Linux' ]; then
