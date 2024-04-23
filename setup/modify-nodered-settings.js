@@ -7,7 +7,7 @@ if (process.argv.length < 3) {
 }
 
 let data_file = process.argv[2];
-const cfg = require(data_file);
+const cfg = require(data_file);     // require the settings.js file to get the configuration json
 let rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
 let data = fs.readFileSync(data_file, 'utf8');
