@@ -35,7 +35,7 @@ cp ~/docker-compose.yml ~/docker-compose.yml.nossl
 [ "$ca" = "" ] && ca='iothub.crt'
 
 node $dir/modify-docker-compose.js ~/docker-compose.yml <<EOF
-services.mqtt.ports: 1883:1883 -
+- services.mqtt.ports: 1883:1883
 services.mqtt.ports: 8883:8883
 services.nodered.volumes: ./data/certs:/data/certs
 services.influxdb.environment: INFLUXD_TLS_CERT=/data/certs/iothub.crt

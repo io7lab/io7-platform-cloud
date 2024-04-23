@@ -8,7 +8,7 @@ if (process.argv.length < 3) {
     console.log("services.mqtt.ports: 8883:8883");
     console.log("\t// this adds a new port mapping 8883:8883");
     console.log("\t// the colon means the key object is a block or an array");
-    console.log("services.mqtt.ports: 1883:1883 -");
+    console.log("- services.mqtt.ports: 1883:1883");
     console.log("\t// here '-' means remove this key value pair");
     console.log("services.io7api.command ['uvicorn', 'api:app'] ");
     console.log("\t// this assigns a block or an array to the key");
@@ -25,13 +25,18 @@ let cmd ='';
 let key = '';
 let value = '';
 
+
+
 rl.on('line', line => {
 
     line = line.trim();
     if (line.length > 1) {              // if line is empty, ignore
         let isBlock = false;
-        let remove = line[line.length - 1] === '-' ? true : false;
-        line = remove ? line.slice(0, -1).trim() : line;
+        let remove = false;
+        if (line.trim()[0] === '-') {
+            remove = true;
+            line = line.slice(1).trim();
+        }
         let blank = line.indexOf(' ');
         if(blank < 0) {
             key = line;
