@@ -6,6 +6,14 @@ sedOpt=
 [ $(uname) = 'Darwin' ] && sedOpt=".bak"
 sed -i $sedOpt 's/wss:/ws:/' ~/data/io7-management-web/public/runtime-config.js
 
+cp ~/data/nodered/settings.js ~/data/nodered/settings.js.ssl
+docker exec -i nodered /usr/local/bin/node /data/check.js /data/settings.js  << EOF
+- https: {
+  key: require("fs").readFileSync("/data/certs/iothub.key"),
+  cert: require("fs").readFileSync("/data/certs/iothub.key")
+},
+EOF
+
 docker compose -f ~/docker-compose.yml down
 
 dir=$(pwd)/$(dirname $(echo $0))
@@ -29,7 +37,6 @@ services.grafana.environment: GF_SERVER_CERT_FILE -
 services.grafana.environment: GF_SERVER_CERT_KEY -
 EOF
 
-cp $dir/../data/nodered/settings.js ~/data/nodered/settings.js
 sudo cp $dir/../data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf
 
 for d in `find ~/data -type d -name certs`; do sudo rm -rf $d/*; done

@@ -24,9 +24,14 @@ function matchFrom(d, pattern, from = 0) {
 
 let newData = [];
 let target = '';
+let remove = false;
 rl.on('line', data => {
     newData.push(data);
     if (newData.length === 1) {
+        if (data.trim()[0] === '-') {
+            remove = true;
+            data = data.slice(1).trim();
+        }
         target = data.split(':')[0].trim();
     }
 });
@@ -53,11 +58,14 @@ rl.on('close', function() {
         }
         loc = end + 1;
     }
-    let addLines = '';
-    for (let l of newData) {
-        addLines += " ".repeat(indentSpaces) + l + '\n';
-    }
+    if (!remove) {
+        let addLines = '';
+        for (let l of newData) {
+            addLines += " ".repeat(indentSpaces) + l + '\n';
+        }
+        addLines = addLines.slice(0, -1);
 
-    lines.splice(loc, 0, addLines);
+        lines.splice(loc, 0, addLines);
+    }
     fs.writeFileSync(data_file, lines.join('\n'));
 });
