@@ -31,12 +31,9 @@ fi
 
 dir=$(dirname $(echo $0))
 
-docker compose -f ~/docker-compose.yml down
-sudo mv ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.nossl
-mv ~/data/nodered/settings.js ~/data/nodered/settings.js.nossl
-
 cp ~/docker-compose.yml ~/docker-compose.yml.nossl
 [ "$ca" = "" ] && ca='iothub.crt'
+
 node $dir/modify-docker-compose.js ~/docker-compose.yml <<EOF
 services.mqtt.ports: 1883:1883 -
 services.mqtt.ports: 8883:8883
@@ -56,7 +53,16 @@ services.grafana.environment: GF_SERVER_CERT_FILE=/var/lib/grafana/certs/iothub.
 services.grafana.environment: GF_SERVER_CERT_KEY=/var/lib/grafana/certs/iothub.key
 EOF
 
-sudo cp -p $dir/secure/settings.js ~/data/nodered
+sudo cp -p ~/data/nodered/settings.js ~/data/nodered/settings.js.nossl
+docker exec -i nodered /usr/local/bin/node /data/check.js /data/settings.js  << EOF
+https: {
+  key: require("fs").readFileSync("/data/certs/iothub.key"),
+  cert: require("fs").readFileSync("/data/certs/iothub.key")
+},
+EOF
+
+docker compose -f ~/docker-compose.yml down
+sudo mv ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.nossl
 sudo cp -p $dir/secure/mosquitto.conf ~/data/mosquitto/config
 sed -i $sedOpt 's/ws:/wss:/' ~/data/io7-management-web/public/runtime-config.js
 

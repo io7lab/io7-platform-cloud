@@ -97,10 +97,6 @@ module.exports = {
     //  key: require("fs").readFileSync('privkey.pem'),
     //  cert: require("fs").readFileSync('cert.pem')
     //},
-    //https: {
-    //  key: require("fs").readFileSync('/data/iothub.key'),
-    //  cert: require("fs").readFileSync('/data/iothub.crt')
-    //},
 
     /** Option 2: function that returns the HTTP configuration object */
     // https: function() {
