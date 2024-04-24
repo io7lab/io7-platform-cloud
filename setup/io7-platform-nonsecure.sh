@@ -39,6 +39,7 @@ EOF
 
 sudo cp ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.ssl
 sudo node $dir/modify-mosquitto-conf.js ~/data/mosquitto/config/mosquitto.conf <<EOF
+listener.8883.port 1883
 - listener.1883.keyfile /mosquitto/config/certs/iothub.key
 - listener.1883.certfile /mosquitto/config/certs/iothub.crt
 - listener.9001.keyfile /mosquitto/config/certs/iothub.key

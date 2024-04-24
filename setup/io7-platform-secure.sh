@@ -64,8 +64,9 @@ EOF
 docker compose -f ~/docker-compose.yml down
 sudo cp ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.nossl
 sudo node $dir/modify-mosquitto-conf.js ~/data/mosquitto/config/mosquitto.conf <<EOF
-listener.1883.keyfile /mosquitto/config/certs/iothub.key
-listener.1883.certfile /mosquitto/config/certs/iothub.crt
+listener.1883.port 8883
+listener.8883.keyfile /mosquitto/config/certs/iothub.key
+listener.8883.certfile /mosquitto/config/certs/iothub.crt
 listener.9001.keyfile /mosquitto/config/certs/iothub.key
 listener.9001.certfile /mosquitto/config/certs/iothub.crt
 EOF
