@@ -1,3 +1,15 @@
+// Usage: node modify-nodered-settings.js <settings.js>
+//
+// This tool is used to modify settings.js file for the NodeRED.
+//
+// The following is the way to add, remove or modify key value pairs.
+//      docker exec -i nodered /usr/local/bin/node /data/check.js /data/settings.js  << EOF
+//      https: {
+//        key: require("fs").readFileSync("/data/certs/iothub.key"),
+//        cert: require("fs").readFileSync("/data/certs/iothub.key")
+//      },
+//      EOF
+//
 const fs = require('fs');
 const readline = require('readline');
 

@@ -1,3 +1,14 @@
+// Usage: node modify-docker-compose.js <docker-compose.yml>
+//
+// This tool is used to modify docker-compose.yml file.
+//
+// The following are the rules to add, remove or modify key value pairs in the dictionary:
+//      - services.mqtt.ports: 1883:1883
+//      services.mqtt.ports: 8883:8883
+//      services.nodered.volumes: ./data/certs:/data/certs
+//      services.influxdb.environment: INFLUXD_TLS_CERT=/data/certs/iothub.crt
+//      services.influxdb.environment: INFLUXD_TLS_KEY=/data/certs/iothub.key
+//
 const { parse, stringify } = require('yaml')
 const fs = require('fs');
 const readline = require('readline');
