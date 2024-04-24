@@ -37,7 +37,13 @@ services.mqtt.ports: 1883:1883
 - services.grafana.environment: GF_SERVER_CERT_KEY
 EOF
 
-sudo cp $dir/../data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf
+sudo cp ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.ssl
+sudo node $dir/modify-mosquitto-conf.js ~/data/mosquitto/config/mosquitto.conf <<EOF
+- listener.1883.keyfile /mosquitto/config/certs/iothub.key
+- listener.1883.certfile /mosquitto/config/certs/iothub.crt
+- listener.9001.keyfile /mosquitto/config/certs/iothub.key
+- listener.9001.certfile /mosquitto/config/certs/iothub.crt
+EOF
 
 for d in `find ~/data -type d -name certs`; do sudo rm -rf $d/*; done
 docker compose -f ~/docker-compose.yml up -d

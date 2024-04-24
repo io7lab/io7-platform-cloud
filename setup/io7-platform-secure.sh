@@ -62,8 +62,14 @@ https: {
 EOF
 
 docker compose -f ~/docker-compose.yml down
-sudo mv ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.nossl
-sudo cp -p $dir/secure/mosquitto.conf ~/data/mosquitto/config
+sudo cp ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.nossl
+sudo node $dir/modify-mosquitto-conf.js ~/data/mosquitto/config/mosquitto.conf <<EOF
+listener.1883.keyfile /mosquitto/config/certs/iothub.key
+listener.1883.certfile /mosquitto/config/certs/iothub.crt
+listener.9001.keyfile /mosquitto/config/certs/iothub.key
+listener.9001.certfile /mosquitto/config/certs/iothub.crt
+EOF
+
 sed -i $sedOpt 's/ws:/wss:/' ~/data/io7-management-web/public/runtime-config.js
 
 [ -d ~/data/mosquitto/config/certs ] || sudo mkdir -p ~/data/mosquitto/config/certs
