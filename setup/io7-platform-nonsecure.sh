@@ -7,7 +7,8 @@ sedOpt=
 sed -i $sedOpt 's/wss:/ws:/' ~/data/io7-management-web/public/runtime-config.js
 
 cp ~/data/nodered/settings.js ~/data/nodered/settings.js.ssl
-docker exec -i nodered /usr/local/bin/node /data/check.js /data/settings.js  << EOF
+docker cp $dir/modify-nodered-settings.js nodered:/tmp
+docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
 - https: {
   key: require("fs").readFileSync("/data/certs/iothub.key"),
   cert: require("fs").readFileSync("/data/certs/iothub.key")

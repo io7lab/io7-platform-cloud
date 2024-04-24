@@ -61,6 +61,14 @@ https: {
   cert: require("fs").readFileSync("/data/certs/iothub.crt")
 },
 EOF
+docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
+- adminAuth: {
+EOF
+docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
+adminAuth: require('io7-nodered-auth/io7-authentication')({
+  AUTH_SERVER: 'https://io7api:2009/users/login'
+}),
+EOF
 
 docker compose -f ~/docker-compose.yml down
 sudo cp ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.nossl
