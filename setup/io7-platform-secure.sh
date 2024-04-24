@@ -58,7 +58,7 @@ docker cp $dir/modify-nodered-settings.js nodered:/tmp
 docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
 https: {
   key: require("fs").readFileSync("/data/certs/iothub.key"),
-  cert: require("fs").readFileSync("/data/certs/iothub.key")
+  cert: require("fs").readFileSync("/data/certs/iothub.crt")
 },
 EOF
 
