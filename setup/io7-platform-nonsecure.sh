@@ -2,6 +2,8 @@
 #
 # This script reverts the currently protected io7 platform back to non-secure mode
 # all data are kept intact
+dir=$(pwd)/$(dirname $(echo $0))
+
 sedOpt=
 [ $(uname) = 'Darwin' ] && sedOpt=".bak"
 sed -i $sedOpt 's/wss:/ws:/' ~/data/io7-management-web/public/runtime-config.js
@@ -19,7 +21,6 @@ EOF
 
 docker compose -f ~/docker-compose.yml down
 
-dir=$(pwd)/$(dirname $(echo $0))
 cp ~/docker-compose.yml ~/docker-compose.yml.ssl
 node $dir/modify-docker-compose.js ~/docker-compose.yml <<EOF
 - services.mqtt.ports: 8883:8883
