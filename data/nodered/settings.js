@@ -82,7 +82,7 @@ module.exports = {
     //    }]
     //},
     adminAuth: require('io7-nodered-auth/io7-authentication')({
-        AUTH_SERVER: 'http://io7api:2009/users/login'
+        AUTH_SERVER_URL: 'http://io7api:2009/users/login'
     }),
 
     /** The following property can be used to enable HTTPS
