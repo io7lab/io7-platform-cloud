@@ -9,12 +9,21 @@ myopt() {
 
 echo $LINE | grep -e '-h ' -e '-help ' > /dev/null
 if [ "$?" -eq 0 ] ; then
-    printf "\n\t Usage : \n\n\t\tbash $0 [-cert certfile] [-ca cafile] [-help /-h ]\n\n"
-    exit 0
+    printf "\n\t Usage : \n\n\t\tbash $0 [-cert certfile] [-ca cafile] [-fqdn fqdn] [-help /-h ]\n\n"
+    printf "-cert certfile : the host's certification file"
+    printf "-ca cafile : Certificate Authority wihch certified the above certfile"
+    printf "-fqdn fqdn : Fully Qualified Domain Name of the host that mathces the certfile"
+    exit 1
 fi
 
 cert=$(myopt cert)
 ca=$(myopt ca)
+fqdn=$(myopt fqdn)
+
+if [ "$ca" != "" -a "$fqdn" == "" ] ; then
+    printf "FQDN is required for public CAed SSL"
+    exit 1
+fi
 
 ssl_file_base=""
 [ "$cert" = "" ] ||  ssl_file_base=$(echo $cert| awk -F"." '{print $1}')
@@ -57,7 +66,7 @@ sudo cp -p ~/data/nodered/settings.js ~/data/nodered/settings.js.nossl
 docker cp $dir/modify-nodered-settings.js nodered:/tmp
 docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
 adminAuth: require('io7-nodered-auth/io7-authentication')({
-    AUTH_SERVER_URL: 'https://io7api:2009/users/login'
+    AUTH_SERVER_URL: 'https://$fqdn:2009/users/login'
 }),
 EOF
 ## this should run after above commands
