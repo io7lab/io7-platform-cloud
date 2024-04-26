@@ -89,8 +89,8 @@ window["runtime"] = {
      "mqtt_options" : {
         "username": "\$web",
         "clean_session": true,
-        "tls_insecure": true,
-        "rejectUnauthorized": false
+        "tls_insecure": false,
+        "rejectUnauthorized": true
     }
 }
 EOF
