@@ -1,6 +1,7 @@
 // Usage: node modify-nodered-settings.js <settings.js>
 //
 // This tool is used to modify settings.js file for the NodeRED.
+// It reads the configuration from a file and the pattern from the stdin to be added, removed or modified.
 //
 // The following is the way to add, remove or modify key value pairs.
 //      docker exec -i nodered /usr/local/bin/node /data/check.js /data/settings.js  << EOF
@@ -26,9 +27,9 @@ if (process.argv.length < 3) {
 }
 
 let data_file = process.argv[2];
-const cfg = require(data_file);     // require the settings.js file to get the configuration json
+const cfg = require(data_file);     // use require to get the configuration json object to check if the key exists.
 let rl = readline.createInterface({input: process.stdin, output: process.stdout});
-let data = fs.readFileSync(data_file, 'utf8');
+let data = fs.readFileSync(data_file, 'utf8');  // read the configuration file
 
 function escapeRegExp(str) {
     return str.replace(/[\-\/\(\)\?\.\\\^\$\|]/g, "\\$&");
@@ -50,7 +51,7 @@ let target = '';
 let endTarget;
 let targetValue;
 let remove = false;
-rl.on('line', data => {
+rl.on('line', data => {         // read the pattern from the stdin
     newData.push(data);
     if (newData.length === 1) {
         if (data.trim()[0] === '-') {
@@ -81,10 +82,14 @@ rl.on('close', function() {
                                                     // ie. http: { or adminAuth: { or adminAuth: require 
         if (out > 0 && out < lines.length) {
             indentSpaces = lines[out].search(/\S/);
-            end = matchFrom(lines, `[ \t]+${endTarget}`, out);
-            if (end >= lines.length) {
-                console.log(`Error: block for ${target} and ${endTarget} not found in the file.`);
-                process.exit(1);
+            if (remove && lines[out].endsWith(endTarget)) {
+                end = out;
+            } else {
+                end = matchFrom(lines, `[ \t]+${endTarget}`, out);
+                if (end >= lines.length) {
+                    console.log(`Error: block for ${target} and ${endTarget} not found in the file.`);
+                    process.exit(1);
+                }
             }
             lines.splice(out, end - out + 1);
         }
