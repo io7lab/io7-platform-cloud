@@ -57,7 +57,7 @@ sudo cp -p ~/data/nodered/settings.js ~/data/nodered/settings.js.nossl
 docker cp $dir/modify-nodered-settings.js nodered:/tmp
 docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
 adminAuth: require('io7-nodered-auth/io7-authentication')({
-    AUTH_SERVER: 'https://io7api:2009/users/login'
+    AUTH_SERVER_URL: 'https://io7api:2009/users/login'
 }),
 EOF
 ## this should run after above commands
