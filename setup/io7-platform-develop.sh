@@ -2,6 +2,17 @@
 #
 # This script installs the docker container images for the io7 Cloud Server
 # It should run after making sure the Docker engine is running
+node -v > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Please install Node.js before running this script"
+    exit 1
+fi
+docker --version > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Please install Docker before running this script"
+    exit 1
+fi
+
 echo Enter the mqtt dynsec admin id && read admin_id
 echo Enter the mqtt dynsec admin password && read admin_pw
 echo Enter the API server user email address && read api_user_email
@@ -11,6 +22,10 @@ branch=""
 if [ "$1" != "" ]
 then
     branch="-b $1"
+fi
+
+if [ -z $NODE_PATH ] ; then
+    export NODE_PATH=$(dirname $(which node))/../lib/node_modules
 fi
 
 dir=$(pwd)/$(dirname $(echo $0))
