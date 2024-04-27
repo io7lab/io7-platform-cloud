@@ -8,6 +8,10 @@ sedOpt=
 [ $(uname) = 'Darwin' ] && sedOpt=".bak"
 sed -i $sedOpt 's/wss:/ws:/' ~/data/io7-management-web/public/runtime-config.js
 
+if [ -z $NODE_PATH ] ; then
+    export NODE_PATH=$(dirname $(which node))/../lib/node_modules
+fi
+
 cp ~/data/nodered/settings.js ~/data/nodered/settings.js.ssl
 docker cp $dir/modify-nodered-settings.js nodered:/tmp
 docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF

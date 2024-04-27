@@ -16,6 +16,10 @@ if [ "$?" -eq 0 ] ; then
     exit 1
 fi
 
+if [ -z $NODE_PATH ] ; then
+    export NODE_PATH=$(dirname $(which node))/../lib/node_modules
+fi
+
 cert=$(myopt cert)
 ca=$(myopt ca)
 fqdn=$(myopt fqdn)
