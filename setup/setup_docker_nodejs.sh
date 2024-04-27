@@ -9,12 +9,14 @@ echo set expandtab >> ~/.vimrc
 sed 's/#UseDNS/UseDNS/' /etc/ssh/sshd_config | sudo tee /etc/ssh/sshd_config
 sed 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config | sudo tee /etc/ssh/sshd_config
 grep 'set -o vi' ~/.bashrc > /dev/null || echo 'set -o vi' >> ~/.bashrc
+echo export NODE_PATH=/usr/local/lib/node_modules:\$NODE_PATH >> ~/.bashrc
 #sudo apt update && sudo apt upgrade -y
 echo Enter the hostname for the machine
 read newName
 if [  "$newName" ]
 then
     sudo hostname $newName
+    echo $newName | sudo tee /etc/hostname
     echo logout and login again to have the new PS1 in effect
 fi
 # end of environment setup
@@ -58,7 +60,7 @@ then
     sudo cp -R * /usr/local
     cd -
     rm -rf $(echo $fname|sed 's/.tar.xz$//' | sed 's/.tar.gz$//')
-    sudo npm -g i mqtt basic-auth body-parser cron-parser 
+    sudo npm -g i mqtt basic-auth body-parser cron-parser yaml
     sudo npm -g i express fs loader node-schedule redis request
 else
     echo check the url for the nodejs

@@ -2,6 +2,17 @@
 #
 # This script installs the docker container images for the io7 Cloud Server
 # It should run after making sure the Docker engine is running
+node -v > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Please install Node.js before running this script"
+    exit 1
+fi
+docker --version > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Please install Docker before running this script"
+    exit 1
+fi
+
 echo Enter the mqtt dynsec admin id && read admin_id
 echo Enter the mqtt dynsec admin password && read admin_pw
 echo Enter the API server user email address && read api_user_email
@@ -13,8 +24,22 @@ then
     branch="-b $1"
 fi
 
+if [ -z $NODE_PATH ] ; then
+    export NODE_PATH=$(dirname $(which node))/../lib/node_modules
+fi
+
 dir=$(pwd)/$(dirname $(echo $0))
-cp $dir/../docker-compose.yml.dev ~/docker-compose.yml
+cp $dir/../docker-compose.yml ~/docker-compose.yml
+node $dir/modify-docker-compose.js ~/docker-compose.yml <<EOF
+services.io7api.volumes: ./data/io7-api-server/data:/app/data -
+services.io7api.volumes: ./data/io7-api-server:/app
+services.io7api.command [ "uvicorn", "api:app", "--port=2009", "--host=0.0.0.0", "--reload" ]
+services.io7web.command [ "npm", "start" ]
+services.io7web.volumes: ./data/io7-management-web/public/runtime-config.js:/home/node/app/build/runtime-config.js -
+services.io7web.volumes: ./data/io7-management-web:/home/node/app
+EOF
+
+
 if [ $(uname) = 'Linux' ]
 then
     git clone $branch git@github.com:io7lab/io7-management-web ~/data/io7-management-web

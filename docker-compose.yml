@@ -6,7 +6,7 @@ services:
     volumes:
       - ./data/mosquitto:/mosquitto
     ports:
-      - "8883:8883"
+      - "1883:1883"
       - "9001:9001"
     restart: always
   nodered:
@@ -17,7 +17,6 @@ services:
       - NODE_RED_ENABLE_PROJECTS=true
     volumes:
       - ./data/nodered:/data
-      - ./data/certs:/data/certs
     ports:
       - "1880:1880"
     links:
@@ -45,24 +44,14 @@ services:
       - INFLUXDB_REPORTING_DISABLED=false
       - INFLUXD_ENGINE_PATH=/data/engine
       - INFLUXD_BOLT_PATH=/data/influxd.bolt
-      - INFLUXD_TLS_CERT=/data/certs/iothub.crt
-      - INFLUXD_TLS_KEY=/data/certs/iothub.key
     volumes:
       # Data persistency
       - ./data/influxdb/data:/data
-      - ./data/certs:/data/certs
     restart: always
   io7api:
     container_name: io7api
     image: io7lab/io7-api
-    environment:
-      - MQTT_CONN=mqtts://mqtt
-      - SSL_CERT=./certs/iothub.crt
-      - SSL_KEY=./certs/iothub.key
-      - MQTT_SSL_CERT=./certs/iothub.crt
-      - MQTT_PORT=8883
     volumes:
-      - ./data/certs:/app/certs
       - ./data/io7-api-server/data:/app/data
       - ./data/mosquitto/config:/app/mqtt
     ports:
@@ -74,7 +63,6 @@ services:
     container_name: io7web
     image: io7lab/io7-web
     volumes:
-      - ./data/certs:/home/node/app/certs
       - ./data/io7-management-web/public/runtime-config.js:/home/node/app/build/runtime-config.js
     ports:
       - "3000:3000"
@@ -84,8 +72,6 @@ services:
     container_name: grafana
     ports:
       - "3003:3000"
-    env_file:
-      - 'data/grafana/env.grafana'
     links:
       - influxdb
     environment:

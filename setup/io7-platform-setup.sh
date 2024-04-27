@@ -2,6 +2,16 @@
 #
 # This script installs the docker container images for the io7 Cloud Server
 # It should run after making sure the Docker engine is running
+node -v > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Please install Node.js before running this script"
+    exit 1
+fi
+docker --version > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Please install Docker before running this script"
+    exit 1
+fi
 if [ "$#" -eq 0 ]; then
     echo Enter the mqtt dynsec admin id && read admin_id
     echo Enter the mqtt dynsec admin password && read admin_pw
@@ -15,7 +25,7 @@ elif [ "$#" -eq 4 ]; then
 else
     echo -e "\n\tUsage: $0 [mqtt_admin_id mqtt_admin_pw api_user_email api_user_pw]"
     echo -e "\nRun this command either with all 4 parameters or without any of them\n"
-    exit 1
+    exit 2
 fi
 
 branch=""
@@ -25,8 +35,9 @@ then
 fi
 
 dir=$(pwd)/$(dirname $(echo $0))
-cp $dir/../docker-compose.yml.prod ~/docker-compose.yml
+cp $dir/../docker-compose.yml ~/docker-compose.yml
 cp -R $dir/../data ~/
+[ -d ~/data/grafana ] || mkdir -p ~/data/grafana
 if [ $(uname) = 'Linux' ]; then
     sudo chown -R 472:472 ~/data/grafana
     if [ $(uname -a|awk '{print $(NF-1)}') == 'x86_64' ]; then

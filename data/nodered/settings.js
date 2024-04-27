@@ -81,6 +81,9 @@ module.exports = {
     //        permissions: "*"
     //    }]
     //},
+    adminAuth: require('io7-nodered-auth/io7-authentication')({
+        AUTH_SERVER_URL: 'http://io7api:2009/users/login'
+    }),
 
     /** The following property can be used to enable HTTPS
      * This property can be either an object, containing both a (private) key
@@ -93,10 +96,6 @@ module.exports = {
     //https: {
     //  key: require("fs").readFileSync('privkey.pem'),
     //  cert: require("fs").readFileSync('cert.pem')
-    //},
-    //https: {
-    //  key: require("fs").readFileSync('/data/iothub.key'),
-    //  cert: require("fs").readFileSync('/data/iothub.crt')
     //},
 
     /** Option 2: function that returns the HTTP configuration object */
