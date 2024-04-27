@@ -76,3 +76,6 @@ This converts back the existing secure io7 Platform instance into non secure ins
 
 ## io7-platform-develop.sh
 This script is only for development. If you want to develop further on this io7 Platform and to contribute, then use this script in stead of `io7-platform-setup.sh` . This sets up the io7 Platform with the source code as well, so you can learn the code and/or improve on your own.
+
+## get_letsencrypt_cert.sh
+This scripts gets the CA trusted certificates for your fully qualified domain name, create cert.crt/cert.key for the subject host and the ca.pem for the CA chain. After getting the certificates with this script, run `io7-platform-secure.sh -ca ca.pem -cert cert.crt -fqdn your.domain.com` to harden the security with the SSL.
