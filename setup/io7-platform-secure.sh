@@ -29,6 +29,8 @@ if [ "$ca" != "" -a "$fqdn" == "" ] ; then
     exit 1
 fi
 
+fqdn=${fqdn:-localhost}
+
 ssl_file_base=""
 [ "$cert" = "" ] ||  ssl_file_base=$(echo $cert| awk -F"." '{print $1}')
 
@@ -44,6 +46,7 @@ fi
 
 dir=$(dirname $(echo $0))
 
+echo Processing docker-compose.yml
 cp ~/docker-compose.yml ~/docker-compose.yml.nossl
 [ "$ca" = "" ] && ca='iothub.crt'
 
@@ -66,6 +69,7 @@ services.grafana.environment: GF_SERVER_CERT_FILE=/var/lib/grafana/certs/iothub.
 services.grafana.environment: GF_SERVER_CERT_KEY=/var/lib/grafana/certs/iothub.key
 EOF
 
+echo Processing nodered settings.js 
 sudo cp -p ~/data/nodered/settings.js ~/data/nodered/settings.js.nossl
 docker cp $dir/modify-nodered-settings.js nodered:/tmp
 docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
@@ -82,6 +86,8 @@ https: {
 EOF
 
 docker compose -f ~/docker-compose.yml down
+
+echo Processing mosquitto.conf
 sudo cp ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.nossl
 sudo node $dir/modify-mosquitto-conf.js ~/data/mosquitto/config/mosquitto.conf <<EOF
 listener.1883.port 8883

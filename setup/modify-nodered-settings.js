@@ -1,6 +1,10 @@
 // Usage: node modify-nodered-settings.js <settings.js>
 //
-// This tool is used to modify settings.js file for the NodeRED.
+// This tool is used to modify settings.js file for the NodeRED. And its purpose is to try to maintain
+// the original settings.js file as much as possible, in order to help the user to understand the changes.
+// So they can know what has to be done for the purpose of the changes, ie for the SSL protection inforcement
+// of the system or to a plain non SSL system. 
+//
 // It reads the configuration from a file and the pattern from the stdin to be added, removed or modified.
 //
 // The following is the way to add, remove or modify key value pairs.
@@ -91,6 +95,11 @@ rl.on('close', function() {
                     process.exit(1);
                 }
             }
+            if (remove) {
+                for (let l of newData) {
+                    console.log(l);
+                }
+            }
             lines.splice(out, end - out + 1);
         }
         loc = out;
@@ -112,6 +121,7 @@ rl.on('close', function() {
     if (!remove) {
         let addLines = '';
         for (let l of newData) {
+            console.log(l);
             addLines += " ".repeat(indentSpaces) + l + '\n';
         }
         addLines = addLines.slice(0, -1);

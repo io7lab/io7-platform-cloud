@@ -12,6 +12,7 @@ if [ -z $NODE_PATH ] ; then
     export NODE_PATH=$(dirname $(which node))/../lib/node_modules
 fi
 
+echo Processing nodered settings.js 
 cp ~/data/nodered/settings.js ~/data/nodered/settings.js.ssl
 docker cp $dir/modify-nodered-settings.js nodered:/tmp
 docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
@@ -25,6 +26,7 @@ EOF
 
 docker compose -f ~/docker-compose.yml down
 
+echo Processing docker-compose.yml
 cp ~/docker-compose.yml ~/docker-compose.yml.ssl
 node $dir/modify-docker-compose.js ~/docker-compose.yml <<EOF
 - services.mqtt.ports: 8883:8883
@@ -45,6 +47,7 @@ services.mqtt.ports: 1883:1883
 - services.grafana.environment: GF_SERVER_CERT_KEY
 EOF
 
+echo Processing mosquitto.conf
 sudo cp ~/data/mosquitto/config/mosquitto.conf ~/data/mosquitto/config/mosquitto.conf.ssl
 sudo node $dir/modify-mosquitto-conf.js ~/data/mosquitto/config/mosquitto.conf <<EOF
 listener.8883.port 1883
