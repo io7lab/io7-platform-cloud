@@ -1,8 +1,8 @@
 # io7 IOT Platform Introduction
 ---
-I have been using the IBM Watson IOT Foundation to teach the students the Internet of Things at a University. It has been quite comprehensive and concise for the IOT subject, so I really enjoyed it. 
+The IBM Watson IOT Foundation had been my choice of platform to teach the students the Internet of Things at a University. It was a quite comprehensive and concise for the IOT subject, so it was much appreciated and enjoyed. 
 
-But since it's unfortunetly decided that the IBM Watson IOT Foundation got sunset and no more available, I developed this io7 IOT Platform of a minimum set of IOT platform.
+But it's unfortunetly decided that the IBM Watson IOT Foundation got sunset and no more available, so this io7 IOT Platform of a minimum set of IOT platform has been developed.
 
 The main purpose of developing this platform and the submodules is to take the essential concepts from the IBM Watson IOT and to come up with a minimum but all required features with which the students can learn and practice the Internet of Things.
 
