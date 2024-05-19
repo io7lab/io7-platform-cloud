@@ -70,13 +70,6 @@ fi
 sed -i $sedOpt "s/^DynSecUser=.*/DynSecUser=$admin_id/" ~/data/io7-api-server/data/.env
 sed -i $sedOpt "s/^DynSecPass=.*/DynSecPass=$admin_pw/" ~/data/io7-api-server/data/.env
 
-docker inspect --format='{{.Config.ExposedPorts}}' mqtt|grep 8883 > /dev/null
-if [ "$?" -eq 0 ] ; then
-    docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt -c /app/certs/io7lab.pem
-else
-    docker exec -it io7api python /app/dynsec/create_web_user.py -u $admin_id -P $admin_pw -h mqtt
-fi
-
 cat <<EOF > ~/data/io7-management-web/public/runtime-config.js
 /*
  * Update this file to set the following variables if you want
