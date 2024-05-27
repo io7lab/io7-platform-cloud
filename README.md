@@ -32,6 +32,7 @@ The main purpose of developing this platform and the submodules is to take the e
 3. https://github.com/io7lab/IO7F32 : ESP32 Arduino Library which helps develop the Arduino io7 device easily.
 4. https://github.com/io7lab/IO7FuPython : ESP32 Micropython Library which helps develop the Micropython io7 device easily.
 5. https://github.com/io7lab/io7-platform-edge : this repository is for the Edge Server with a Raspberry Pi. This implements an io7 gateway that sits between the local mosquitto broker on the RPi and the io7 Cloud broker and represents the local io7 edge devices by requesting automatic registration and relaying the mqtt events and commands. This prvodes the Edge Server level NodeRED so the Edge level intelligence can be implemented there.
+6. https://github.com/io7lab/io7dummy-device : io7 dummy IOT Device. This emulates the io7 IOT Device and can be used to do a quick check after the io7 IOT Platform setup.
 
 # Quick Installation
 
