@@ -3,6 +3,13 @@
 // This tool is used to modify settings.js file for the NodeRED.
 // It reads the configuration from a file and the pattern from the stdin to be added, removed or modified.
 //
+// It's built on the assumtion these three types of elements covers most of NodeRED settings.js and to address them
+//
+//      supported matching pattern 
+//          target: {...},                              ex) https: { .... },
+//          target: require....}),                      ex) adminAuth: require('module')(param),
+//          target: "....", or target: '....',          ex) httpAdminRoot: "/admin",
+//
 // The following is the way to add, remove or modify key value pairs.
 //      docker exec -i nodered /usr/local/bin/node /data/check.js /data/settings.js  << EOF
 //      https: {
@@ -32,7 +39,7 @@ let rl = readline.createInterface({input: process.stdin, output: process.stdout}
 let data = fs.readFileSync(data_file, 'utf8');  // read the configuration file
 
 function escapeRegExp(str) {
-    return str.replace(/[\-\/\(\)\?\.\\\^\$\|]/g, "\\$&");
+    return str.replace(/[\-\/\(\)\?\.\\\^\$\|\"\']/g, "\\$&");
 }
 
 function matchFrom(d, pattern, from = 0) {
@@ -64,6 +71,10 @@ rl.on('line', data => {         // read the pattern from the stdin
         if (tvalue[tvalue_loc] === 'r') {
             targetValue = 'r';
             endTarget = '}),';
+        } else if (tvalue[tvalue_loc] === "'") {
+            targetValue = "[\'\"]";
+        } else if (tvalue[tvalue_loc] === '"') {
+            targetValue = '[\"\']';
         } else {
             targetValue = '{';
             endTarget = '},';
@@ -78,9 +89,16 @@ rl.on('close', function() {
     let end = 0;
     let indentSpaces = 4;
     if (cfg.hasOwnProperty(target)) {
-        out = matchFrom(lines, `[ \t]+${target}:[ ]*${targetValue}`)  // target: require => endTarget is '}),'
+        out = matchFrom(lines, `[ \t]+${target}[ \t]*:[ \t]*${targetValue}`)  // target: require => endTarget is '}),'
                                                     // ie. http: { or adminAuth: { or adminAuth: require 
         if (out > 0 && out < lines.length) {
+            const matched = lines[out].match(escapeRegExp(`[ \t]+${target}[ \t]*:[ \t]*${targetValue}`));
+            if (matched) {
+                const last = matched[0][matched[0].length - 1];
+                if (['\'', '\"'].includes(last)) {
+                    endTarget = last + ",";
+                }
+            }
             indentSpaces = lines[out].search(/\S/);
             if (remove && lines[out].endsWith(endTarget)) {
                 end = out;
@@ -95,16 +113,28 @@ rl.on('close', function() {
         }
         loc = out;
     } else if (!remove) {
-        out = matchFrom(lines, `[ \t]+\/\/${target}:[ ]*${targetValue}`)  // target: require => endTarget is '}),'
+        out = matchFrom(lines, `[ \t]+\/\/${target}[ \t]*:[ \t]*${targetValue}`);  // target: require => endTarget is '}),'
         if (out < lines.length) {
+            const matched = lines[out].match(escapeRegExp(`[ \t]+\/\/${target}[ \t]*:[ \t]*${targetValue}`));
+            if (matched) {
+                const last = matched[0][matched[0].length - 1];
+                if (['\'', '\"'].includes(last)) {
+                    endTarget = last + ",";
+                }
+            }
             indentSpaces = lines[out].search(/\S/);
-            end = matchFrom(lines, `[ \t]+\/\/${endTarget}`, out);
+            if (lines[out].endsWith(endTarget)) {
+            // checking the endPattern in the same line
+                end = out;
+            } else {
+                end = matchFrom(lines, `[ \t]+\/\/${endTarget}`, out);      // checking the endPattern in the following lines in the comment 
+            }
             if (end >= lines.length) {
-                console.log(`Warning: comment block for ${target} and ${endTarget} not found in the file. \nSo it will be added at the end of the file.`);
+                console.log(`Warning: comment block for ${target} : ${targetValue} ... ${endTarget} not found in the file. \nSo it will be added at the end of the file.`);
                 end = lines.length - 3;
             }
         } else {
-            console.log(`Warning: comment block for ${target} and ${endTarget} not found in the file. \nSo it will be added at the end of the file.`);
+            console.log(`Warning: comment block for ${target} : ${targetValue} ... ${endTarget} not found in the file. \nSo it will be added at the end of the file.`);
             end = lines.length - 3;
         }
         loc = end + 1;
