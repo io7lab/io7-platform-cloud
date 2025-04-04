@@ -42,15 +42,15 @@ git clone https://github.com/io7lab/io7-platform-cloud.git
 bash io7-platform-cloud/setup/setup_docker_nodejs.sh
 exit
 ```
-login again and run the following to install io7 platform server. You will need to provide
+login again and run the following to install io7 platform server. 
+```
+bash io7-platform-cloud/setup/io7-platform-setup.sh
+```
+You will need to provide with
 * mqtt id  : mosquitto dynamic security id
 * mqtt pw  : mosquitto dynamic security password
 * admin id : admin id in the form of email address. This is the management web login id.
 * admin pw : admin password.
-
-```
-bash io7-platform-cloud/setup/io7-platform-setup.sh
-```
 and you can access http://yourserver:3000 to register the deivces and the application key.
 
 # Installation and Utility scripts
