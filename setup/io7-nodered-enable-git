@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# This script reverts the currently protected io7 platform back to non-secure mode
+# all data are kept intact
+function usage {
+    echo Usage :
+    echo
+    echo bash $0 '[ true | false ]'
+    echo
+}
+if [ $# -le 0 ] ; then
+    usage
+    exit
+fi
+
+dir=$(pwd)/$(dirname $(echo $0))
+if [ "$1" == "true" ] ; then 
+    GIT_PROJECT_SETTING="services.nodered.environment: NODE_RED_ENABLE_PROJECTS=true"
+elif [ "$1" == "false" ] ; then
+    GIT_PROJECT_SETTING="- services.nodered.environment: NODE_RED_ENABLE_PROJECTS"
+else
+    usage
+    exit
+fi
+
+node $dir/modify-docker-compose.js ~/docker-compose.yml <<EOF
+$GIT_PROJECT_SETTING
+EOF
+
+docker compose -f ~/docker-compose.yml restart nodered
+
