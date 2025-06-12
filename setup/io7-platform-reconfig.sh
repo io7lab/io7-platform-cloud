@@ -41,12 +41,24 @@ fi
 [ -z $3 ]  &&  echo Enter the API server user email address && read api_user_email || api_user_email=$3
 [ -z $4 ]  &&  echo Enter the API server user password && read api_user_pw || api_user_pw=$4
 
+if [ $(echo $api_user_pw|wc -c) -lt 9 ] ; then
+    echo -e "\n\tThe admin password is too short(minimum 8)\n"
+    exit 3
+fi
+
 docker ps | grep io7api > /dev/null
 if [ "$?" -eq 0 ]; then
     docker exec -it io7api rm -rf /app/data/db
     echo Restarting io7api and mqtt. Wait for a few minutes.
 fi
 docker compose down
+sudo rm -rf ~/data/grafana/*
+sudo rm -rf ~/data/influxdb/*
+
+docker run -d --rm --name grafana -e GF_SECURITY_ADMIN_USER=$api_user_email \
+    -e GF_SECURITY_ADMIN_PASSWORD=$api_user_pw -v $HOME/data/grafana:/var/lib/grafana grafana/grafana
+sleep 2     # giving time for grafana to finish admin setup
+docker stop grafana
 
 insecure=''
 proto='http'
@@ -101,5 +113,8 @@ if [ "$?" -ne "0" ]; then
         exit 1
     fi
 fi
+
+docker exec -it influxdb influx setup --username $api_user_email --password $api_user_pw --org io7db --bucket bucket01 --retention 0 --force
+docker exec -it influxdb influx auth list
 
 echo All Installatin/Configuration Finished! Happy IOT!!!

@@ -28,6 +28,11 @@ else
     exit 2
 fi
 
+if [ $(echo $api_user_pw|wc -c) -lt 9 ] ; then
+    echo -e "\n\tThe admin password is too short(minimum 8)\n"
+    exit 3
+fi
+
 branch=""
 if [ "$1" != "" ]
 then

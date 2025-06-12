@@ -18,6 +18,11 @@ echo Enter the mqtt dynsec admin password && read admin_pw
 echo Enter the API server user email address && read api_user_email
 echo Enter the API server user password && read api_user_pw
 
+if [ $(echo $api_user_pw|wc -c) -lt 9 ] ; then
+    echo -e "\n\tThe admin password is too short(minimum 8)\n"
+    exit 3
+fi
+
 branch=""
 if [ "$1" != "" ]
 then

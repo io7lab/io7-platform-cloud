@@ -13,6 +13,10 @@ if [ $# -le 0 ] ; then
     exit
 fi
 
+if [ -z $NODE_PATH ] ; then
+    export NODE_PATH=$(dirname $(which node))/../lib/node_modules
+fi
+
 dir=$(pwd)/$(dirname $(echo $0))
 if [ "$1" == "true" ] ; then 
     GIT_PROJECT_SETTING="services.nodered.environment: NODE_RED_ENABLE_PROJECTS=true"
