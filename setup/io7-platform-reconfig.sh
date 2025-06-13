@@ -55,11 +55,6 @@ docker compose down
 sudo rm -rf ~/data/grafana/*
 sudo rm -rf ~/data/influxdb/*
 
-docker run -d --rm --name grafana -e GF_SECURITY_ADMIN_USER=$api_user_email \
-    -e GF_SECURITY_ADMIN_PASSWORD=$api_user_pw -v $HOME/data/grafana:/var/lib/grafana grafana/grafana
-sleep 2     # giving time for grafana to finish admin setup
-docker stop grafana
-
 insecure=''
 proto='http'
 if [ -f ~/data/certs/iothub.crt ]; then
@@ -67,14 +62,15 @@ if [ -f ~/data/certs/iothub.crt ]; then
   proto='https'
 fi
 
-cd ~
-docker compose up -d mqtt io7api
+docker compose up -d
 sleep 10
+
+cd ~
 if [ -f ~/data/mosquitto/config/dynamic-security.json ]; then
     docker exec -it mqtt rm /mosquitto/config/dynamic-security.json
 fi
 docker exec -it mqtt mosquitto_ctrl dynsec init /mosquitto/config/dynamic-security.json $admin_id $admin_pw
-docker restart mqtt
+
 echo "MQTT Server is restarting. Wait for a few minutes."
 if [ ! -f ~/data/io7-api-server/data/.env ]; then
   cp ~/data/io7-api-server/data/sample.env ~/data/io7-api-server/data/.env
@@ -100,8 +96,7 @@ window["runtime"] = {
 }
 EOF
 
-docker compose down
-docker compose up -d
+docker compose restart io7api io7web mqtt
 sleep 5
 # Web Admin id generation in the dynamic-security.json
 api_user_create
@@ -114,6 +109,12 @@ if [ "$?" -ne "0" ]; then
     fi
 fi
 
+# grafana admin id
+docker exec -it grafana grafana cli admin reset-admin-password $api_user_pw
+data="{\"email\":\"$api_user_email\",\"name\":\"Admin\",\"login\":\"admin\"}"
+curl -X PUT "http://admin:$api_user_pw@localhost:3003/api/users/1" -H "Content-Type: application/json" -d $data
+
+# influxdb admin id
 docker exec -it influxdb influx setup --username $api_user_email --password $api_user_pw --org io7db --bucket bucket01 --retention 0 --force
 docker exec -it influxdb influx auth list
 
