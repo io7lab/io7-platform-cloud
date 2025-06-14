@@ -115,7 +115,23 @@ data="{\"email\":\"$api_user_email\",\"name\":\"Admin\",\"login\":\"admin\"}"
 curl -X PUT "http://admin:$api_user_pw@localhost:3003/api/users/1" -H "Content-Type: application/json" -d $data
 
 # influxdb admin id
-docker exec -it influxdb influx setup --username $api_user_email --password $api_user_pw --org io7db --bucket bucket01 --retention 0 --force
-docker exec -it influxdb influx auth list
+docker exec -it influxdb influx setup --username $api_user_email --password $api_user_pw --org io7org --bucket bucket01 --retention 0 --force
+influx_token=$(docker exec -it influxdb influx auth list --json|jq '.[0].token'|tr -d \")
 
-echo All Installatin/Configuration Finished! Happy IOT!!!
+dir=$(dirname $(echo $0))
+$dir/setup_grafana_dashboard.sh $api_user_pw $influx_token
+
+# the setup is completed
+echo
+echo
+echo
+
+if [ $? -eq 0 ] ; then
+    echo All Installatin/Configuration Finished! Happy IOT!!!
+else
+    echo All Installatin/Configuration Finished except the Grafana Dashboard configuration.
+    echo Check the environment and use setup_grafana_dashboard.sh to set it up
+fi
+
+echo "The influxdb access token is as below. Copy and keep it for future use"
+echo $influx_token

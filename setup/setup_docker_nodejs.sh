@@ -77,4 +77,7 @@ sudo systemctl restart containerd
 sudo systemctl restart docker.service
 sudo apt install docker-compose -y
 
+
+echo installing jq
+sudo apt install jq
 echo if you are using the serial port device, you need to enable the serial port
