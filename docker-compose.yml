@@ -18,9 +18,6 @@ services:
       - ./data/nodered:/data
     ports:
       - "1880:1880"
-    links:
-      - redis
-      - mqtt
     restart: always
   redis:
     container_name: redis
@@ -55,8 +52,6 @@ services:
       - ./data/mosquitto/config:/app/mqtt
     ports:
       - "2009:2009"
-    links:
-      - redis
     restart: always
   io7web:
     container_name: io7web
@@ -71,8 +66,6 @@ services:
     container_name: grafana
     ports:
       - "3003:3000"
-    links:
-      - influxdb
     environment:
       - GF_SECURITY_ALLOW_EMBEDDING=true
     volumes:
