@@ -19,6 +19,28 @@ function api_user_create {
     return $?
 }
 
+function gen_web_runtime_config () {
+    [ -f ~/io7_public_dashboard.txt ] || echo "" > ~/io7_public_dashboard.txt
+    cat <<EOF > ~/data/io7-management-web/public/runtime-config.js
+/*
+ * Update this file to set the following variables if you want
+ *     API_URL_ROOT
+ *     WS_SERVER_URL
+ *
+ */
+window["runtime"] = {
+     "ws_protocol":"ws://",
+     "mqtt_options" : {
+        "username": "\$web",
+        "clean_session": true,
+        "tls_insecure": false,
+        "rejectUnauthorized": true
+    },
+    "dashboard" : "$(cat ~/io7_public_dashboard.txt)"
+}
+EOF
+}
+
 #main script
 if [ "$1" = '-h' ]
 then
@@ -78,25 +100,7 @@ fi
 sed -i $sedOpt "s/^DynSecUser=.*/DynSecUser=$admin_id/" ~/data/io7-api-server/data/.env
 sed -i $sedOpt "s/^DynSecPass=.*/DynSecPass=$admin_pw/" ~/data/io7-api-server/data/.env
 
-cat <<EOF > ~/data/io7-management-web/public/runtime-config.js
-/*
- * Update this file to set the following variables if you want
- *     API_URL_ROOT
- *     WS_SERVER_URL
- * 
- */
-window["runtime"] = {
-     "ws_protocol":"ws://",
-     "mqtt_options" : {
-        "username": "\$web",
-        "clean_session": true,
-        "tls_insecure": false,
-        "rejectUnauthorized": true
-    }
-}
-EOF
-
-docker compose restart io7api io7web mqtt
+docker compose restart io7api mqtt
 sleep 5
 # Web Admin id generation in the dynamic-security.json
 api_user_create
@@ -118,20 +122,18 @@ curl -X PUT "http://admin:$api_user_pw@localhost:3003/api/users/1" -H "Content-T
 docker exec -it influxdb influx setup --username $api_user_email --password $api_user_pw --org io7org --bucket bucket01 --retention 0 --force
 influx_token=$(docker exec -it influxdb influx auth list --json|jq '.[0].token'|tr -d \")
 
+# default dashboard setup
 dir=$(dirname $(echo $0))
 $dir/setup_grafana_dashboard.sh $api_user_pw $influx_token
-
-# the setup is completed
-echo
-echo
-echo
-
 if [ $? -eq 0 ] ; then
     echo All Installatin/Configuration Finished! Happy IOT!!!
 else
     echo All Installatin/Configuration Finished except the Grafana Dashboard configuration.
     echo Check the environment and use setup_grafana_dashboard.sh to set it up
 fi
+
+gen_web_runtime_config
+docker compose restart io7web 
 
 echo "The influxdb access token is as below. Copy and keep it for future use"
 echo $influx_token

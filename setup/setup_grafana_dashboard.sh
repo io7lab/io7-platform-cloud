@@ -34,7 +34,7 @@ gf_token=$(curl -X POST -H "Content-Type: application/json"     \
 
 # adding influx datasource to grafana
 echo 'adding influx datasource for grafana'
-curl -X POST http://localhost:3003/api/datasources \
+datasource_uid=$(curl -X POST http://localhost:3003/api/datasources \
 -H "Authorization: Bearer $gf_token" \
 -H "Content-Type: application/json" \
 -d "{
@@ -50,43 +50,80 @@ curl -X POST http://localhost:3003/api/datasources \
     \"secureJsonData\": {
         \"token\":\"$influx_token\"
     }
-}" 2>/dev/null
+}" 2>/dev/null | jq '.datasource.uid')
 
-# adding grafana dashboard
 echo 'adding grafana dashboard'
-
+# adding grafana dashboard
 dashboard_json='{
   "dashboard": {
     "title": "Dashboard 1",
+    "timezone": "browser",
+    "editable": true,
+    "version": 2,
     "panels": [
       {
-        "title": "IOT Data",
-        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 24, "x": 0, "y": 0 },
+        "id": 1,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "hideZeros": false,
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "12.0.1",
         "targets": [
           {
             "datasource": {
-              "type": "influxdb"
+              "type": "influxdb",
+              "uid": DATASOURCE_UID
             },
             "query": "from(bucket: \"bucket01\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"alldevices\")\n  |> yield(name: \"point\")",
-            "refId": "A",
-            "legendFormat": "{{_field}}({{device}})"
+            "refId": "A"
           }
         ],
-        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 0}
+        "title": "IOT Data",
+        "type": "timeseries"
       }
     ],
     "time": {
-      "from": "now-1h",
+      "from": "now-15m",
       "to": "now"
-    },
-    "refresh": "5s"
+    }
   },
   "overwrite": true
 }'
+dashboard_json=${dashboard_json//DATASOURCE_UID/$datasource_uid}
 
-curl -s -X POST "http://localhost:3003/api/dashboards/db" \
+dashboard_uid=$(curl -s -X POST "http://localhost:3003/api/dashboards/db" \
   -H "Authorization: Bearer $gf_token" \
   -H "Content-Type: application/json" \
-  -d "$dashboard_json"
+  -d "$dashboard_json" 2>/dev/null | jq '.uid'|tr -d \")
 
+echo $dashboard_uid
+
+echo Making the default dashboard public
+# making the default dashboard public
+accessToken=$(curl -X POST \
+  "http://localhost:3003/api/dashboards/uid/$dashboard_uid/public-dashboards/" \
+  -H "Authorization: Bearer $gf_token" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "isEnabled": true,
+    "share": "public"
+  }' 2>/dev/null | tee | jq '.accessToken'|tr -d \")
+
+echo
+echo copy keep these tokens for future use
+echo grafana token : $gf_token
+echo
+echo the public dashboard is
+echo http://localhost:3003/public-dashboards/$accessToken
+echo http://localhost:3003/public-dashboards/$accessToken > ~/io7_public_dashboard.txt
 exit 0
