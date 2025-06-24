@@ -19,8 +19,7 @@ function api_user_create {
     return $?
 }
 
-
-#main script
+# ARGUMMENT GATHERING SCRIPT
 if [ "$1" = '-h' ]
 then
     echo -e "\n\tUsage: $0 [mqtt_admin_id] [mqtt_admin_pw] [api_user_email] [api_user_pw]\n"
@@ -47,6 +46,14 @@ if [ $(echo $api_user_pw|wc -c) -lt 9 ] ; then
     exit 3
 fi
 
+# MAIN SETUP SCRIPT 
+insecure=''
+proto='http'
+if [ -f ~/data/certs/iothub.crt ]; then
+  insecure='--insecure'
+  proto='https'
+fi
+
 docker ps | grep io7api > /dev/null
 if [ "$?" -eq 0 ]; then
     docker exec -it io7api rm -rf /app/data/db
@@ -55,13 +62,6 @@ fi
 docker compose down
 sudo rm -rf ~/data/grafana/*
 sudo rm -rf ~/data/influxdb/*
-
-insecure=''
-proto='http'
-if [ -f ~/data/certs/iothub.crt ]; then
-  insecure='--insecure'
-  proto='https'
-fi
 
 docker compose up -d
 sleep 10
@@ -79,7 +79,7 @@ fi
 sed -i $sedOpt "s/^DynSecUser=.*/DynSecUser=$admin_id/" ~/data/io7-api-server/data/.env
 sed -i $sedOpt "s/^DynSecPass=.*/DynSecPass=$admin_pw/" ~/data/io7-api-server/data/.env
 
-docker compose restart io7api mqtt
+docker compose restart io7api mqtt io7web
 sleep 5
 # Web Admin id generation in the dynamic-security.json
 api_user_create
@@ -92,12 +92,12 @@ if [ "$?" -ne "0" ]; then
     fi
 fi
 
-# grafana admin id
+# grafana admin password and email setup
 docker exec -it grafana grafana cli admin reset-admin-password $api_user_pw
 data="{\"email\":\"$api_user_email\",\"name\":\"Admin\",\"login\":\"admin\"}"
 curl -X PUT "http://admin:$api_user_pw@localhost:3003/api/users/1" -H "Content-Type: application/json" -d $data
 
-# influxdb admin id
+# influxdb admin id / password setup
 docker exec -it influxdb influx setup --username $api_user_email --password $api_user_pw --org io7org --bucket bucket01 --retention 0 --force
 influxdb_token=$(docker exec -it influxdb influx auth list --json|jq '.[0].token'|tr -d \")
 
@@ -110,16 +110,4 @@ else
     echo All Installatin/Configuration Finished except the Grafana Dashboard configuration.
     echo Check the environment and use setup_grafana_dashboard.sh to set it up
 fi
-
-docker compose restart io7web 
-
-api_token=$(curl -X POST 'http://localhost:2009/users/login' \
-    -H 'Content-Type: application/json' \
-    -d "{ \"email\": \"$api_user_email\", \"password\": \"$api_user_pw\" }" \
-    |jq '.access_token'|tr -d '"') 2>/dev/null
-
-curl -X 'PUT' "http://localhost:2009/config/influxdb_token" \
-  -H 'accept: application/json' -H "Authorization: Bearer $api_token" \
-  -H 'Content-Type: application/json' \
-  -d "{ \"value\": \"$influxdb_token\" }"
-
+docker restart io7api   # restarting to get the influxdb_token reflected

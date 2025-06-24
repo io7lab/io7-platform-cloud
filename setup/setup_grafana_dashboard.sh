@@ -10,7 +10,14 @@
 
 api_user_email=$1
 api_user_pw=$2
-influx_token=$3
+influxdb_token=$3
+
+insecure=''
+proto='http'
+if [ -f ~/data/certs/iothub.crt ]; then
+  insecure='--insecure'
+  proto='https'
+fi
 
 function add_config_var {
     curl $insecure -X 'PUT' "http://localhost:2009/config/$1" \
@@ -61,7 +68,7 @@ datasource_uid=$(curl -X POST http://localhost:3003/api/datasources \
         \"defaultBucket\":\"bucket01\"
     },
     \"secureJsonData\": {
-        \"token\":\"$influx_token\"
+        \"token\":\"$influxdb_token\"
     }
 }" 2>/dev/null | jq '.datasource.uid')
 
@@ -119,8 +126,9 @@ dashboard_uid=$(curl -s -X POST "http://localhost:3003/api/dashboards/db" \
   -H "Content-Type: application/json" \
   -d "$dashboard_json" 2>/dev/null | jq '.uid'|tr -d \")
 
-echo $dashboard_uid
-
+# adding configuration parameters
+add_config_var influxdb_token "$influxdb_token"
+add_config_var gf_token "$gf_token"
 echo Making the default dashboard public
 # making the default dashboard public
 accessToken=$(curl -X POST \
@@ -131,8 +139,7 @@ accessToken=$(curl -X POST \
     "isEnabled": true,
     "share": "public"
   }' 2>/dev/null | tee | jq '.accessToken'|tr -d \")
-
-add_config_var gf_token "$gf_token"
 add_config_var dashboard "http://localhost:3003/public-dashboards/$accessToken"
+
 echo the public dashboard is configured
 exit 0
