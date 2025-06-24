@@ -8,8 +8,21 @@
 #       service accounts if exists
 #
 
-api_user_pw=$1
-influx_token=$2
+api_user_email=$1
+api_user_pw=$2
+influx_token=$3
+
+function add_config_var {
+    curl $insecure -X 'PUT' "http://localhost:2009/config/$1" \
+        -H 'accept: application/json' -H "Authorization: Bearer $api_token" \
+        -H 'Content-Type: application/json' \
+        -d "{ \"value\": \"$2\" }"
+}
+
+api_token=$(curl -X POST 'http://localhost:2009/users/login' \
+    -H 'Content-Type: application/json' \
+    -d "{ \"email\": \"$api_user_email\", \"password\": \"$api_user_pw\" }" \
+    |jq '.access_token'|tr -d '"') 2>/dev/null
 
 echo 'creating service account'
 gf_auth_header="Authorization: Basic $(echo -n "admin:$api_user_pw" | base64)"
@@ -119,11 +132,7 @@ accessToken=$(curl -X POST \
     "share": "public"
   }' 2>/dev/null | tee | jq '.accessToken'|tr -d \")
 
-echo
-echo copy keep these tokens for future use
-echo grafana token : $gf_token
-echo
-echo the public dashboard is
-echo http://localhost:3003/public-dashboards/$accessToken
-echo http://localhost:3003/public-dashboards/$accessToken > ~/io7_public_dashboard.txt
+add_config_var gf_token "$gf_token"
+add_config_var dashboard "http://localhost:3003/public-dashboards/$accessToken"
+echo the public dashboard is configured
 exit 0

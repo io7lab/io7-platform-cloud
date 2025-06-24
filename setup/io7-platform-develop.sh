@@ -41,7 +41,6 @@ services.io7api.volumes: ./data/io7-api-server:/app
 services.io7api.command [ "uvicorn", "api:app", "--port=2009", "--host=0.0.0.0", "--reload" ]
 services.io7web.command [ "npm", "start" ]
 services.io7web.volumes: ./data/io7-management-web:/home/node/app
-- services.io7web.volumes: ./data/io7-management-web/public/runtime-config.js:/home/node/app/build/runtime-config.js
 EOF
 
 
