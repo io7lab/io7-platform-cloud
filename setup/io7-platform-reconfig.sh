@@ -62,6 +62,7 @@ fi
 docker compose down
 sudo rm -rf ~/data/grafana/*
 sudo rm -rf ~/data/influxdb/*
+sudo rm -rf ~/data/io7-api-server/data/db/*
 
 docker compose up -d
 sleep 10
