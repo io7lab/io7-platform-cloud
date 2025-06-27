@@ -111,4 +111,4 @@ else
     echo All Installatin/Configuration Finished except the Grafana Dashboard configuration.
     echo Check the environment and use setup_grafana_dashboard.sh to set it up
 fi
-docker restart io7api   # restarting to get the influxdb_token reflected
+docker restart mqtt io7api   # restarting to get the influxdb_token reflected
