@@ -130,7 +130,7 @@ dashboard_uid=$(curl -s -X POST "http://localhost:3003/api/dashboards/db" \
 add_config_var influxdb_token "$influxdb_token"
 add_config_var gf_token "$gf_token"
 add_config_var monitored_devices "*"
-add_config_var monitored_fieldsets "humidity, lux"
+add_config_var monitored_fieldsets "temperature, humidity, lux, brightness"
 echo Making the default dashboard public
 # making the default dashboard public
 accessToken=$(curl -X POST \
