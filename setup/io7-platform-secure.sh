@@ -59,6 +59,7 @@ services.io7api.environment: SSL_CERT=./certs/iothub.crt
 services.io7api.environment: SSL_KEY=./certs/iothub.key
 services.io7api.environment: MQTT_SSL_CERT=./certs/$ca
 services.io7api.environment: MQTT_PORT=8883
+services.io7api.environment: INFLUXDB_PROTOCOL=https
 services.io7api.volumes: ./data/certs:/app/certs
 services.io7web.volumes: ./data/certs:/home/node/app/certs
 services.grafana.environment: GF_SERVER_PROTOCOL=https
