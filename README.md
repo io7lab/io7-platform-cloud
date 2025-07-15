@@ -15,9 +15,15 @@ The main purpose of developing this platform and the submodules is to take the e
 
 ### This is the architecture diagram.
 
-<img width="1350" alt="Screenshot 2024-03-22 at 2 42 40 PM" src="https://github.com/io7lab/io7-platform-cloud/assets/13171662/a279d954-6b43-421d-8588-b54fccc5e3a6">
+<p align="center">
+  <img width="1350" alt="Screenshot 2024-03-22 at 2 42 40 PM" src="https://github.com/io7lab/io7-platform-cloud/assets/13171662/a279d954-6b43-421d-8588-b54fccc5e3a6">
+</p>
+<p align="center"><strong>io7 IOT Platform Architecture</strong></p>
 
-*Archtecture and Usage will be further documented here soon.*
+<p align="center">
+<img width="1238" height="1408" alt="Screenshot 2025-07-15 at 5 01 41 PM" src="https://github.com/user-attachments/assets/fea06c7a-e46d-4ca9-b95f-803b1c381dcc" /></p>
+<p align="center"><strong>io7 Management Web Console</strong></p>
+
 
 # Github repositories for the io7 Platform
 **Brief diagram of the io7 Platform components.**
