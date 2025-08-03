@@ -20,10 +20,13 @@ if [ -f ~/data/certs/iothub.crt ]; then
 fi
 
 function add_config_var {
+    echo Adding $1
     curl $insecure -X 'PUT' "http://localhost:2009/config/$1" \
         -H 'accept: application/json' -H "Authorization: Bearer $api_token" \
         -H 'Content-Type: application/json' \
         -d "{ \"value\": \"$2\" }"
+
+    echo
 }
 
 api_token=$(curl -X POST 'http://localhost:2009/users/login' \
