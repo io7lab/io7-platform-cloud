@@ -28,7 +28,7 @@ The main purpose of developing this platform and the submodules is to take the e
 # Github repositories for the io7 Platform
 **Brief diagram of the io7 Platform components.**
 
-1. https://github.com/io7lab/io7-platform-cloud : the current Repository. This has the installation shell scripts which will install the following components of the io7 IOT Platform server on an EC2 instance or a dedicated server.
+1. https://github.com/io7lab/io7-platform-cloud : the current Repository. This has the installation shell scripts which will install the following components of the io7 IOT Platform server on a Linux server such as an AWS EC2 instance or a dedicated server.
     1. https://github.com/io7lab/io7-api-server : the REST API Server which handles the Device registration and deregistration as well as the Application Key. This is a part of the io7 IOT Platform server.
     2. https://github.com/io7lab/io7-management-web : the Web frontend to the io7 Platform. This is a part of the io7 IOT Platform server.
     3. https://github.com/io7lab/node-red-contrib-io7 : NodeRED node that makes it easy to develop the NodeRED flow with. It's the equivalent to node-red-contrib-scx-ibmiotapp for the io7. This is a part of the io7 IOT Platform server.
