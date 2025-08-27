@@ -45,6 +45,8 @@ The main purpose of developing this platform and its submodules is to extract th
 
 
 # Quick Installation
+**This youtube video(https://www.youtube.com/watch?v=18xfq__oo4E) shows the following steps**
+
 
 Create a Linux instance (e.g., AWS EC2) and run the following:
 ```
