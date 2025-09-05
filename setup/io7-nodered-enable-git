@@ -31,5 +31,11 @@ node $dir/modify-docker-compose.js ~/docker-compose.yml <<EOF
 $GIT_PROJECT_SETTING
 EOF
 
-docker compose -f ~/docker-compose.yml restart nodered
+echo 
+echo "The io7 Platform needs to be restarted to have the change applied"
+echo "Run these commands at the home folder"
+echo 
+echo "cd ~"
+echo "docker compose down"
+echo "docker compose up -d"
 
