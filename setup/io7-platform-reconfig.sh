@@ -7,6 +7,12 @@ if [ $(uname) = 'Darwin' ]
 then
     sedOpt=".bak"
 fi
+uname | grep MINGW 
+if [ "$?" -eq 0 ]; then
+    shell="git_scm"
+else
+    shell="shell"
+fi
 
 function api_user_create {
 	curl $insecure -X 'POST' $proto'://localhost:2009/users/signup' -H 'accept: application/json' \
@@ -60,18 +66,33 @@ if [ "$?" -eq 0 ]; then
     echo Restarting io7api and mqtt. Wait for a few minutes.
 fi
 docker compose down
-sudo rm -rf ~/data/grafana/*
-sudo rm -rf ~/data/influxdb/*
-sudo rm -rf ~/data/io7-api-server/data/db/*
+
+if [ "$shell" = "git_scm" ]; then
+    rm -rf ~/data/grafana/*
+    rm -rf ~/data/influxdb/*
+    rm -rf ~/data/io7-api-server/data/db/*
+else
+    sudo rm -rf ~/data/grafana/*
+    sudo rm -rf ~/data/influxdb/*
+    sudo rm -rf ~/data/io7-api-server/data/db/*
+fi
 
 docker compose up -d
 sleep 10
 
 cd ~
 if [ -f ~/data/mosquitto/config/dynamic-security.json ]; then
-    docker exec -it mqtt rm /mosquitto/config/dynamic-security.json
+    if [ "$shell" = "git_scm" ]; then
+        docker exec -it mqtt rm //mosquitto/config/dynamic-security.json
+    else
+        docker exec -it mqtt rm /mosquitto/config/dynamic-security.json
+    fi
 fi
-docker exec -it mqtt mosquitto_ctrl dynsec init /mosquitto/config/dynamic-security.json $admin_id $admin_pw
+if [ "$shell" = "git_scm" ]; then
+    docker exec -it mqtt mosquitto_ctrl dynsec init //mosquitto/config/dynamic-security.json $admin_id $admin_pw
+else
+    docker exec -it mqtt mosquitto_ctrl dynsec init /mosquitto/config/dynamic-security.json $admin_id $admin_pw
+fi
 
 echo "MQTT Server is restarting. Wait for a few minutes."
 if [ ! -f ~/data/io7-api-server/data/.env ]; then
@@ -94,6 +115,9 @@ if [ "$?" -ne "0" ]; then
 fi
 
 # grafana admin password and email setup
+if [ "$shell" = "git_scm" ]; then
+    sleep 20
+fi
 docker exec -it grafana grafana cli admin reset-admin-password $api_user_pw
 data="{\"email\":\"$api_user_email\",\"name\":\"Admin\",\"login\":\"admin\"}"
 curl -X PUT "http://admin:$api_user_pw@localhost:3003/api/users/1" -H "Content-Type: application/json" -d $data

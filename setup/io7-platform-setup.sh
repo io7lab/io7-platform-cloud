@@ -52,6 +52,8 @@ if [ $(uname) = 'Linux' ]; then
     fi
 elif [ $(uname -m) == 'arm64' ]; then
     (cd ~/data/mosquitto/lib; ln -s io7_jwt_security.so.aarch64 io7_jwt_security.so)
+else
+    (cd ~/data/mosquitto/lib; ln -s io7_jwt_security.so.amd64 io7_jwt_security.so)
 fi
 
 cd ~/data/nodered
