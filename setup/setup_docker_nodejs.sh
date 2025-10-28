@@ -25,9 +25,9 @@ if [ $(uname) = 'Linux' ]
 then
     if [ $(uname -m) = 'x86_64' ]
     then
-        nodejs_url='https://nodejs.org/dist/v20.11.1/node-v20.11.1-linux-x64.tar.xz'
+        nodejs_url='https://nodejs.org/dist/v24.10.0/node-v24.10.0-linux-x64.tar.xz'
     else
-        nodejs_url='https://nodejs.org/dist/v20.11.1/node-v20.11.1-linux-arm64.tar.xz'
+        nodejs_url='https://nodejs.org/dist/v24.10.0/node-v24.10.0-linux-arm64.tar.xz'
     fi
 else
     echo "This script is for Linux only"
@@ -66,7 +66,7 @@ else
     echo check the url for the nodejs
 fi
 
-curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
+curl -fsSL get.docker.com | sh
 id pi 2> /dev/null > /dev/null
 if [ $? -eq 0 ] ; then
     sudo usermod -aG docker pi
@@ -75,8 +75,6 @@ else
 fi
 sudo systemctl restart containerd
 sudo systemctl restart docker.service
-sudo apt install docker-compose -y
-
 
 echo installing jq
 sudo apt install jq
