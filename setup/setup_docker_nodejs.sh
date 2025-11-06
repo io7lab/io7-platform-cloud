@@ -67,11 +67,11 @@ else
 fi
 
 curl -fsSL get.docker.com | sh
-id pi 2> /dev/null > /dev/null
-if [ $? -eq 0 ] ; then
-    sudo usermod -aG docker pi
+
+if [ -n "$SUDO_UID" ]; then
+    usermod -aG docker $SUDO_USER
 else
-    sudo usermod -aG docker ubuntu
+    sudo usermod -aG docker $USER
 fi
 sudo systemctl restart containerd
 sudo systemctl restart docker.service
