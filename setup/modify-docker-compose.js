@@ -62,27 +62,31 @@ rl.on('line', line => {
             key = key.slice(0, key.length - 1);
         }
         
-        if (remove) {
-            if(isBlock) {
-                cmd = `try {jo.${key}=jo.${key}.filter((e) => ! e.includes('${value}'));`;
-                cmd += `if (jo.${key}.length === 0) delete jo.${key};`;
-                cmd += '} catch(e) {};'
-            } else {
-                cmd = `try {console.log("delete jo.${key}");delete jo.${key};`;
-                cmd += '} catch(e) {};'
-            }
+        if (key.startsWith('services')) {
+	        if (remove) {
+	            if(isBlock) {
+	                cmd = `try {jo.${key}=jo.${key}.filter((e) => ! e.includes('${value}'));`;
+	                cmd += `if (jo.${key}.length === 0) delete jo.${key};`;
+	                cmd += '} catch(e) {};'
+	            } else {
+	                cmd = `try {console.log("delete jo.${key}");delete jo.${key};`;
+	                cmd += '} catch(e) {};'
+	            }
+	        } else {
+	            if(isBlock) {
+	                cmd = `try { if (jo.${key} === undefined) jo.${key} =[];`;
+	                cmd += `let dup = jo.${key}.filter((e) => e.includes('${value}'));`;
+	                cmd += `if (dup.length === 0) jo.${key}.push('${value}');`;
+	                cmd += '} catch(e) {};'
+	            } else {
+	                cmd = `try {jo.${key} = ${value};`;
+	                cmd += '} catch(e) {};'
+	            }
+	        }
+	        eval(cmd);
         } else {
-            if(isBlock) {
-                cmd = `try { if (jo.${key} === undefined) jo.${key} =[];`;
-                cmd += `let dup = jo.${key}.filter((e) => e.includes('${value}'));`;
-                cmd += `if (dup.length === 0) jo.${key}.push('${value}');`;
-                cmd += '} catch(e) {};'
-            } else {
-                cmd = `try {jo.${key} = ${value};`;
-                cmd += '} catch(e) {};'
-            }
+            console.log('Invalid Services specified');
         }
-        eval(cmd);
     }
 });
 

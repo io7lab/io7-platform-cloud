@@ -1,41 +1,12 @@
 #!/bin/bash
 #
-# This script reverts the currently protected io7 platform back to non-secure mode
-# all data are kept intact
-function usage {
-    echo Usage :
-    echo
-    echo bash $0 '[ true | false ]'
-    echo
-}
-if [ $# -le 0 ] ; then
-    usage
-    exit
-fi
-
-if [ -z $NODE_PATH ] ; then
-    export NODE_PATH=$(dirname $(which node))/../lib/node_modules
-fi
-
-dir=$(pwd)/$(dirname $(echo $0))
-if [ "$1" == "true" ] ; then 
-    GIT_PROJECT_SETTING="services.nodered.environment: NODE_RED_ENABLE_PROJECTS=true"
-elif [ "$1" == "false" ] ; then
-    GIT_PROJECT_SETTING="- services.nodered.environment: NODE_RED_ENABLE_PROJECTS"
-else
-    usage
-    exit
-fi
-
-node $dir/modify-docker-compose.js ~/docker-compose.yml <<EOF
-$GIT_PROJECT_SETTING
-EOF
-
-echo 
-echo "The io7 Platform needs to be restarted to have the change applied"
-echo "Run these commands at the home folder"
-echo 
-echo "cd ~"
-echo "docker compose down"
-echo "docker compose up -d"
-
+# It is replaced with io7-docker-config.sh
+#
+echo
+echo This is replaced with io7-docker-config.sh
+echo
+echo Run this to enable NodeRED github feature
+echo "    io7-platform-cloud/setup/io7-docker-config.sh \"services.nodered.environment: NODE_RED_ENABLE_PROJECTS=true\""
+echo
+echo Or run this to disable NodeRED github feature
+echo "    io7-platform-cloud/setup/io7-docker-config.sh \"- services.nodered.environment: NODE_RED_ENABLE_PROJECTS\""
