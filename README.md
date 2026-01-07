@@ -75,21 +75,68 @@ Run this once for the operating system (e.g., AWS EC2 instance, Linux, or Window
 
 ## io7-platform-setup.sh
 Sets up the initial io7 IoT Platform directory structure and calls `io7-platform-reconfig.sh`.
+```
+io7-platform-cloud/setup/io7-platform-setup.sh mqtt_admin mqtt_admin_pass user01@email.com password
+```
+
 You may run this multiple times after removing the existing io7 Platform instance. To remove the instance:
 * docker compose down
 * sudo rm -rf ~/data ~/docker-compose.*
 
 ## io7-platform-reconfig.sh
 Sets the required initial data, such as the admin ID, mqttws ID, and so on. If you need to reset the io7 Platform instance without reinstalling, run this script again to reset the data to its initial state.
+```
+io7-platform-cloud/setup/io7-platform-reconfig.sh mqtt_admin mqtt_admin_pass user01@email.com password
+```
+Replace mqtt_admin, mqtt_admin_pass, user01@email.com, and password with your own environment.
 
 ## get_letsencrypt_cert.sh
 Obtains CA-trusted certificates for your fully qualified domain name, creating cert.crt/cert.key for the host and ca.pem for the CA chain. After obtaining the certificates, run `io7-platform-secure.sh -ca ca.pem -cert cert.crt -fqdn your.domain.com` to enable SSL security.
-
+```
+io7-platform-cloud/setup/get_letsencrypt_cert.sh iot201.ddns.net
+```
+Replace iot201.ddns.net with your own fully qualified domain name.
 ## io7-platform-secure.sh
 Converts an existing non-secure io7 Platform instance into a TLS-protected instance. To obtain publicly accepted certificates for TLS communication, run `get_letsencrypt_cert.sh` before this script.
+```
+io7-platform-cloud/setup/io7-platform-secure.sh -ca ca.pem -cert cert.crt -fqdn iot201.ddns.net
+```
+Replace iot201.ddns.net with your own fully qualified domain name.
 
 ## io7-platform-nonsecure.sh
 Converts a secure io7 Platform instance back to a non-secure instance (i.e., disables TLS).
 
 ## io7-platform-develop.sh
 This script is for development only. If you want to further develop for your own customization or contribute to the io7 Platform, use this script instead of `io7-platform-setup.sh`. It sets up the io7 Platform with the source code so you can learn and improve it on your own.
+
+## io7-docker-config.sh
+This script adds, updates, or removes settings in a docker-compose.yml file.
+```
+Usage:
+    Run io7-docker-config.sh with the container configuration specified in the following format:
+        "[-] svc_config: key=value"
+    The entire argument must be enclosed in double quotes.
+    Use '-' to remove a setting.
+
+Example (add or modify a setting):
+    io7-docker-config.sh "services.nodered.environment: NODE_RED_ENABLE_PROJECTS=true"
+
+Where:
+    services.nodered.environment  → svc_config
+    NODE_RED_ENABLE_PROJECTS      → key
+    true                          → value
+
+Remove a setting:
+    Prefix the svc_config with '-'. The value can be omitted.
+
+    io7-docker-config.sh "- services.nodered.environment: NODE_RED_ENABLE_PROJECTS"
+
+Argument Examples
+      - services.mqtt.ports: 1883:1883
+      services.mqtt.ports: 8883:8883
+      services.nodered.volumes: ./data/certs:/data/certs
+      services.influxdb.environment: INFLUXD_TLS_CERT=/data/certs/iothub.crt
+      services.influxdb.environment: INFLUXD_TLS_KEY=/data/certs/iothub.key
+      services.grafana.environment: GF_SERVER_ROOT_URL=https://iot201.ddns.net:3003
+      services.nodered.extra_hosts: api.telegram.org:149.154.167.220
+```
