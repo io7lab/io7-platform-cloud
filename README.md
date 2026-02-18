@@ -127,7 +127,7 @@ Where:
     true                          → value
 
 Remove a setting:
-    Prefix the svc_config with '-'. The value can be omitted.
+    Prefix the svc_config with '-'. The entry will be deleted.
 
     io7-docker-config.sh "- services.nodered.environment: NODE_RED_ENABLE_PROJECTS"
 
