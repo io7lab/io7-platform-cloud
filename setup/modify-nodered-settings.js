@@ -73,8 +73,10 @@ rl.on('line', data => {         // read the pattern from the stdin
             endTarget = '}),';
         } else if (tvalue[tvalue_loc] === "'") {
             targetValue = "[\'\"]";
+            endTarget = "',";
         } else if (tvalue[tvalue_loc] === '"') {
             targetValue = '[\"\']';
+            endTarget = '",';
         } else {
             targetValue = '{';
             endTarget = '},';
@@ -100,7 +102,7 @@ rl.on('close', function() {
                 }
             }
             indentSpaces = lines[out].search(/\S/);
-            if (remove && lines[out].endsWith(endTarget)) {
+            if (lines[out].endsWith(endTarget) || endTarget === "'," || endTarget === '",') {
                 end = out;
             } else {
                 end = matchFrom(lines, `[ \t]+${endTarget}`, out);
@@ -123,11 +125,11 @@ rl.on('close', function() {
                 }
             }
             indentSpaces = lines[out].search(/\S/);
-            if (lines[out].endsWith(endTarget)) {
-            // checking the endPattern in the same line
+            if (lines[out].endsWith(endTarget) || endTarget === "'," || endTarget === '",') {
+            // checking the endPattern in the same line (quote values are always single-line)
                 end = out;
             } else {
-                end = matchFrom(lines, `[ \t]+\/\/${endTarget}`, out);      // checking the endPattern in the following lines in the comment 
+                end = matchFrom(lines, `[ \t]+\/\/${endTarget}`, out);      // checking the endPattern in the following lines in the comment
             }
             if (end >= lines.length) {
                 console.log(`Warning: comment block for ${target} : ${targetValue} ... ${endTarget} not found in the file. \nSo it will be added at the end of the file.`);
@@ -140,6 +142,22 @@ rl.on('close', function() {
         loc = end + 1;
     }
     if (!remove) {
+        // Auto-add trailing comma if not present and not the last property
+        let lastNewLine = newData[newData.length - 1].trim();
+        if (!lastNewLine.endsWith(',')) {
+            let isLast = false;
+            for (let i = loc; i < lines.length; i++) {
+                let trimmed = lines[i].trim();
+                if (trimmed === '' || trimmed.startsWith('//') || trimmed.startsWith('/*') || trimmed.startsWith('*')) continue;
+                if (trimmed === '}' || trimmed === '};') {
+                    isLast = true;
+                }
+                break;
+            }
+            if (!isLast) {
+                newData[newData.length - 1] += ',';
+            }
+        }
         let addLines = '';
         for (let l of newData) {
             addLines += " ".repeat(indentSpaces) + l + '\n';
