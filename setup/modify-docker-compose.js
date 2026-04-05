@@ -75,8 +75,14 @@ rl.on('line', line => {
 	        } else {
 	            if(isBlock) {
 	                cmd = `try { if (jo.${key} === undefined) jo.${key} =[];`;
+	                cmd += `if ('${key}'.endsWith('.environment') && '${value}'.includes('=')) {`;
+	                cmd += `let vkey = '${value}'.split('=')[0];`;
+	                cmd += `let idx = jo.${key}.findIndex((e) => e.split('=')[0] === vkey);`;
+	                cmd += `if (idx >= 0) jo.${key}[idx] = '${value}'; else jo.${key}.push('${value}');`;
+	                cmd += `} else {`;
 	                cmd += `let dup = jo.${key}.filter((e) => e.includes('${value}'));`;
 	                cmd += `if (dup.length === 0) jo.${key}.push('${value}');`;
+	                cmd += `}`;
 	                cmd += '} catch(e) {};'
 	            } else {
 	                cmd = `try {jo.${key} = ${value};`;
