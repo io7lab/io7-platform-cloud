@@ -140,3 +140,25 @@ Argument Examples
       services.grafana.environment: GF_SERVER_ROOT_URL=https://iot201.ddns.net:3003
       services.nodered.extra_hosts: api.telegram.org:149.154.167.220
 ```
+## modify-nodered-settings.js
+This nodejs script adds, updates, or removes settings in the nodered settings.js. It needs to run in the docker because it has libray dependencies on the packages in the nodered run time and io7. The samples can be found in the io7-platform-secure.sh and io7-platform-nonsecure.sh
+```
+docker cp modify-nodered-settings.js nodered:/tmp
+docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
+httpStatic: "/data/pub"
+EOF
+```
+And in order to remove a key value, you need to specifiy the beginning of value part. For example the string value case, you need to specify at least the beginning of string quotation mark as below.
+```
+docker cp modify-nodered-settings.js nodered:/tmp
+docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
+- httpStatic: "
+EOF
+```
+You can use this to configure httpNodeAuth as well.
+```
+PASS=$(docker exec -i nodered node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" happyIoT)
+docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
+httpNodeAuth: {user:"user",pass:"$PASS"}
+EOF
+```
