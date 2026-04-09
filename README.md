@@ -142,15 +142,18 @@ Argument Examples
 ```
 ## modify-nodered-settings.js
 This nodejs script adds, updates, or removes settings in the nodered settings.js. It needs to run in the docker because it has libray dependencies on the packages in the nodered run time and io7. The samples can be found in the io7-platform-secure.sh and io7-platform-nonsecure.sh
+* you need prepare the nodered container first
 ```
-docker cp modify-nodered-settings.js nodered:/tmp
+docker cp ~/io7-platform-cloud/setup/modify-nodered-settings.js nodered:/tmp
+```
+For example, you can run this to set the `httpStatic` variable.
+```
 docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
-httpStatic: "/data/pub"
+httpStatic: "/data/public"
 EOF
 ```
 And in order to remove a key value, you need to specifiy the beginning of value part. For example the string value case, you need to specify at least the beginning of string quotation mark as below.
 ```
-docker cp modify-nodered-settings.js nodered:/tmp
 docker exec -i nodered /usr/local/bin/node /tmp/modify-nodered-settings.js /data/settings.js  << EOF
 - httpStatic: "
 EOF
