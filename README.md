@@ -34,7 +34,7 @@ The main purpose of developing this platform and its submodules is to extract th
 1. https://github.com/io7lab/io7-platform-cloud : The current repository. It contains installation shell scripts to install the following components of the io7 IoT Platform server on a Linux server, such as an AWS EC2 instance or a dedicated server.
     1. https://github.com/io7lab/io7-api-server : The REST API server that handles device registration, deregistration, and application keys. Part of the io7 IoT Platform server.
     2. https://github.com/io7lab/io7-management-web : The web frontend for the io7 Platform. Part of the io7 IoT Platform server.
-    3. https://github.com/io7lab/node-red-contrib-io7 : NodeRED node that makes it easy to develop NodeRED flows. Equivalent to node-red-contrib-scx-ibmiotapp for io7. Part of the io7 IoT Platform server.
+    3. https://github.com/io7lab/node-red-contrib-io7 : NodeRED node that makes it easy to develop NodeRED flows. Equivalent to node-red-contrib-scx-ibmiotapp for io7. Part of the io7 IoT Platform server. *(For a code-first Python alternative to NodeRED flows, see [io7app](https://github.com/io7lab/io7app) below.)*
     4. https://github.com/io7lab/io7_jwt_security : Mosquitto plugin to reuse the Management Web's JWT as the MQTT over WebSocket connection credential.
     5. https://github.com/io7lab/io7-nodered-auth : Node package for NodeRED admin authentication against the io7 API server.
 2. https://github.com/io7lab/IO7F8266 : ESP8266 Arduino library to help develop Arduino io7 devices easily.
@@ -42,6 +42,17 @@ The main purpose of developing this platform and its submodules is to extract th
 4. https://github.com/io7lab/IO7FuPython : ESP32 Micropython library to help develop Micropython io7 devices easily.
 5. https://github.com/io7lab/io7-platform-edge : Repository for the Edge Server with a Raspberry Pi. Implements an io7 gateway that sits between the local Mosquitto broker on the RPi and the io7 Cloud broker, representing local io7 edge devices by requesting automatic registration and relaying MQTT events and commands. Provides Edge Server level NodeRED for implementing edge intelligence.
 6. https://github.com/io7lab/io7dummy-device : io7 dummy IoT device. Emulates an io7 IoT device and can be used for quick checks after io7 Platform setup.
+7. https://github.com/io7lab/io7app : Python application-server framework for the io7 IoT Platform — a code-first alternative to NodeRED for building IoT apps. Decorate Python functions with the device events they react to and the schedules they fire on; the framework owns MQTT, topic routing, JSON envelope handling, and scheduling. Installable from PyPI: `pip install io7app`. A typical app is 3–5 lines of business logic:
+    ```python
+    from io7app import App
+    app = App()
+
+    @app.on_event("switch1", "status")
+    def on_switch(data):
+        app.send_cmd("lamp1", "lamp", {"lamp": data["switch"]})
+
+    app.run()
+    ```
 
 
 # Quick Installation
