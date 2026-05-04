@@ -34,7 +34,7 @@ The main purpose of developing this platform and its submodules is to extract th
 1. https://github.com/io7lab/io7-platform-cloud : The current repository. It contains installation shell scripts to install the following components of the io7 IoT Platform server on a Linux server, such as an AWS EC2 instance or a dedicated server.
     1. https://github.com/io7lab/io7-api-server : The REST API server that handles device registration, deregistration, and application keys. Part of the io7 IoT Platform server.
     2. https://github.com/io7lab/io7-management-web : The web frontend for the io7 Platform. Part of the io7 IoT Platform server.
-    3. https://github.com/io7lab/node-red-contrib-io7 : NodeRED node that makes it easy to develop NodeRED flows. Equivalent to node-red-contrib-scx-ibmiotapp for io7. Part of the io7 IoT Platform server. *(For a code-first Python alternative to NodeRED flows, see [io7app](https://github.com/io7lab/io7app) below.)*
+    3. https://github.com/io7lab/node-red-contrib-io7 : NodeRED node that makes it easy to develop NodeRED flows. Equivalent to node-red-contrib-scx-ibmiotapp for io7. Part of the io7 IoT Platform Application server.
     4. https://github.com/io7lab/io7_jwt_security : Mosquitto plugin to reuse the Management Web's JWT as the MQTT over WebSocket connection credential.
     5. https://github.com/io7lab/io7-nodered-auth : Node package for NodeRED admin authentication against the io7 API server.
 2. https://github.com/io7lab/IO7F8266 : ESP8266 Arduino library to help develop Arduino io7 devices easily.
