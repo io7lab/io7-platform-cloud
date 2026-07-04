@@ -19,19 +19,22 @@ if [ "$#" -eq 0 ]; then
     echo Enter the mqtt dynsec admin password && read admin_pw
     echo Enter the API server user email address && read api_user_email
     echo Enter the API server user password && read api_user_pw
+    echo Enter the git branch to work on && read branch
 elif [ "$#" -ge 4 ]; then
     admin_id=$1
     admin_pw=$2
     api_user_email=$3
     api_user_pw=$4
     if [ "$#" -eq 5 ]; then
-        branch="-b $5"
+        branch="$5"
     fi
 else
     echo -e "\n\tUsage: $0 [mqtt_admin_id mqtt_admin_pw api_user_email api_user_pw [branch]]"
     echo -e "\nRun this command either with all 4 parameters or without any of them\n"
     exit 2
 fi
+
+branch=${branch:+-b $branch}
 
 if [ $(echo $api_user_pw|wc -c) -lt 9 ] ; then
     echo -e "\n\tThe admin password is too short(minimum 8)\n"
