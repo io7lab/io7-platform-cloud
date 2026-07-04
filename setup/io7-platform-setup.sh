@@ -33,12 +33,6 @@ if [ $(echo $api_user_pw|wc -c) -lt 9 ] ; then
     exit 3
 fi
 
-branch=""
-if [ "$1" != "" ]
-then
-    branch="-b $1"
-fi
-
 dir=$(pwd)/$(dirname $(echo $0))
 cp $dir/../docker-compose.yml ~/docker-compose.yml
 cp -R $dir/../data ~/
