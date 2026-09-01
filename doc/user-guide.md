@@ -17,8 +17,6 @@ can run on a Raspberry Pi at home, or be written in Python instead of Node-RED.
 
 ## The path
 
-![Write the automation once, then swap the devices under it](diagrams/learning-path.svg)
-
 **Get it running** — no hardware, no commitment.
 
 | Step | What you do |
@@ -412,6 +410,12 @@ Reference flows: [`3.iot-lamp`](https://github.com/io7lab-lab/3.iot-lamp) ·
 
 Now replace the dummy lamp and switch with two ESP32 boards. **Do not change the flow.**
 Register the same device IDs, or reuse `lamp1` and `button1` directly.
+
+This is the moment the topic contract pays off. The flow you wrote in Step 4, the dashboard
+you opened on your phone, the gate you added — none of it knows or cares what is on the other
+end of the broker.
+
+![Write the automation once, then swap the devices under it](diagrams/learning-path.svg)
 
 You need: 2 × ESP32, one relay module, one push button, breadboard and jumpers.
 
