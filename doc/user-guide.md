@@ -23,7 +23,7 @@ can run on a Raspberry Pi at home, or be written in Python instead of Node-RED.
 |---|---|
 | [1](#1--install-the-platform) | Install the platform on Linux or AWS EC2 |
 | [2](#2--verify-with-a-dummy-device) | Watch a simulated device report to it |
-| [3](#3--how-it-fits-together) | Now that you have seen it work, see what the parts are |
+| [3](#3--what-you-just-set-up) | Look back at what just happened |
 
 **The lessons** — build something real.
 
@@ -124,6 +124,16 @@ Then open `http://<your-host>:3000` and log in with the admin account.
 Your platform state lives in `~/data` and the compose file is `~/docker-compose.yml`. Those
 two are the only things worth backing up; the containers are disposable.
 
+
+### What you just did
+
+You did not configure a broker, wire up a database, or write a line of code. Two scripts
+brought up seven containers and one login screen.
+
+Worth remembering: **the containers are disposable, `~/data` is not.** Everything the platform
+knows — your devices, your flows, your history — lives in that one directory. Back it up and
+you have backed up the platform.
+
 ---
 
 ## 2 · Verify with a dummy device
@@ -169,16 +179,27 @@ puts in context:
 docker exec -it redis redis-cli GET lux1
 ```
 
+
+### What you just did
+
+You registered a device that does not exist and watched it report anyway.
+
+That is not a trick, it is how you will work from here on. **A device is whatever connects
+with a registered ID and token and publishes to the right topic.** The dummy is a real device
+as far as the platform is concerned — which is why, in Step 5, an ESP32 can take its place
+without the platform noticing.
+
+Notice also what you never did: you never told the platform *what* `lux1` is. No schema, no
+device type, no driver. You registered a name and it started keeping its data.
+
 ---
 
-## 3 · How it fits together
+## 3 · What you just set up
 
-You just watched a value travel from a program on your laptop to a web page in your browser.
-Here is what it passed through.
-
-io7 is a small set of open-source services wired together by one MQTT broker. They arrive as
-containers and you never edit them — but knowing which is which makes the lessons ahead, and
-any troubleshooting, much easier.
+You watched a value travel from a program on your laptop to a web page in your browser. It
+passed through six services on the way, and you did not have to know any of them to make it
+work. Now that it works, here is what it went through — mostly so that when something breaks,
+you know which door to knock on.
 
 ![io7 platform architecture](images/architecture.png)
 
@@ -404,6 +425,22 @@ Reference flows: [`3.iot-lamp`](https://github.com/io7lab-lab/3.iot-lamp) ·
 [`3.iot-lamp-switch-dashboard`](https://github.com/io7lab-lab/3.iot-lamp-switch-dashboard) ·
 [`3.iot-lamp-switch-dashboard-lux-auto`](https://github.com/io7lab-lab/3.iot-lamp-switch-dashboard-lux-auto)
 
+
+### What you just did
+
+Four passes, four capabilities, and every one of them followed the same shape:
+
+**something reports → the application decides → something is commanded.**
+
+That is the whole of IoT automation. The button did not know about the lamp. The light sensor
+did not know about either. Each device only ever talked to the broker about itself, and all
+the knowing lived in your flow.
+
+Two habits are worth carrying forward. **Show what the device reports, not what you
+commanded** — that is why pass-through came off the switch widget, and why the dashboard is
+still right when someone presses the physical button. And **put a gate on anything automatic**
+— an automation you cannot switch off is one you will end up fighting.
+
 ---
 
 ## 5 · Swap in real devices (MicroPython)
@@ -505,6 +542,18 @@ device.publishEvent('status', json.dumps({'d': {'button': 'pushed'}}))
 Kill the two dummy terminals and power up the boards. The dashboard, the light automation and
 the gate all keep working, untouched. That is the point of the contract.
 
+
+### What you just did
+
+You pulled the dummies out and put hardware in, and nothing above the broker noticed.
+
+Look back at what you did *not* touch: the flow, the dashboard, the gate, the light
+automation, the platform. You changed the two things that were genuinely device-specific — a
+pin number and a config file — and stopped there.
+
+That is the payoff of the topic contract, and it is the reason the next step can swap the
+language too.
+
 ---
 
 ## 6 · Swap in real devices (Arduino C++)
@@ -559,6 +608,19 @@ the real contract between a device and an application.
 
 The lamp needs no change at all — `12.io7Lamp` already speaks `lamp` / `on` / `off` /
 `toggle`.
+
+
+### What you just did
+
+You changed the language the devices are written in, and the system carried on.
+
+But you also hit the limit of what the contract guarantees. The topics matched, so the
+messages arrived — and then the flow ignored them, because this switch says `switch: "on"`
+where the last one said `button: "pushed"`.
+
+**The framework fixes the topics. The words inside the payload are chosen by whoever wrote
+the device.** Those field names are the real agreement between a device and an application,
+and they are what to write down first when two people build the two halves.
 
 ---
 
@@ -622,6 +684,18 @@ Keep the Pi's Node-RED flow to exactly one thing: io7 in(`button1`) → `Push` �
    the house from outside it, through the bridge.
 
 That is the trade in one experiment: local for reliability, cloud for reach.
+
+
+### What you just did
+
+You unplugged the internet and the lamp still worked.
+
+That is the whole argument for edge computing, and you now have it as an experiment rather
+than a slogan. Deciding in the cloud gave you reach, a dashboard, history and one place to
+change policy. Deciding at home gave you a rule that survives an outage.
+
+You did not have to choose between them. **The rule that must never fail runs locally; the
+rest stays in the cloud** — and the gateway keeps both views in sync.
 
 ---
 
@@ -691,6 +765,56 @@ want to a coding assistant, point it at your handlers, and let it write the page
 The device state your handlers already track is the model; the page is a view of it. Ask for
 a lamp toggle, a light gauge, and an auto on/off switch, and you have rebuilt the Step 4
 dashboard in code you own.
+
+
+### What you just did
+
+You wrote the Step 4 automation a second time, in nine lines of Python, and it behaved
+identically.
+
+Which tells you something about the platform: **the application layer is replaceable too.**
+Node-RED is a way to write an io7 application, not a requirement of one. Anything that can
+speak MQTT with an App ID can be the brain — a Python script, a web service, a coding
+assistant's output.
+
+Choose by what you need. Flows are quicker to see and to demonstrate; code is quicker to
+diff, test and deploy.
+
+---
+
+## What you learned
+
+You followed eight steps and built one small system. Along the way you picked up the ideas
+that carry over to any IoT work, whether or not you keep using io7.
+
+**A device is a contract, not a thing.** `iot3/<deviceId>/evt/...` to report,
+`iot3/<deviceId>/cmd/...` to be commanded, `{"d": {...}}` inside. Anything that honours that is
+a device — a Node.js dummy, a MicroPython board, a C++ sketch. That is why you swapped the
+hardware twice and changed the language once without rewriting the application.
+
+**Automation is three moves.** Something reports, the application decides, something is
+commanded. Every flow you built was a variation on it, and nothing in the middle needed to
+know what was on either end.
+
+**Keep the decision out of the device.** You never reflashed a board to change a policy. The
+lamp did not know about the switch; the switch did not know about the light sensor. Changing
+what the system *does* meant editing a flow, not a firmware.
+
+**Report reality, not intention.** The devices published the state of their own pins, not the
+command they received. That single habit is why the dashboard stayed correct no matter who
+pressed what.
+
+**The field names are the real agreement.** The topics are fixed by the framework; the words
+inside the payload are not. `button: "pushed"` and `switch: "on"` cost you a line of code in
+Step 6, and that is the cheap version of a problem that gets expensive between teams.
+
+**Decide where to decide.** Cloud gives you reach, history and one place to change policy;
+local gives you a rule that survives an outage. Step 7 let you have both, and the choice is
+per rule, not per system.
+
+**Both halves are replaceable.** The device layer swapped three ways, and in Step 8 the
+application layer swapped too. What stayed fixed the whole time was the broker and the topic
+convention. Everything else was yours to choose.
 
 ---
 
