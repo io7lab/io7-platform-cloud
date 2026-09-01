@@ -31,11 +31,13 @@ The main purpose of developing this platform and its submodules is to extract th
 
 **New to io7? Start here → [doc/user-guide.md](doc/user-guide.md)**
 
-An eight-step walkthrough that takes you from an empty Linux box to a working system:
-the architecture, installing this platform, verifying it with dummy devices, building a
-lamp / switch / light-sensor automation with a dashboard in Node-RED, then swapping the
-dummies for MicroPython and Arduino devices, moving the rule onto an edge server, and
-rebuilding the whole thing in Python with io7app.
+Two scripts and a simulated device get the platform running; the rest is about using it.
+
+- **[Set it up](doc/user-guide.md)** — install the platform on Linux or AWS EC2, watch a dummy
+  device report to it, and see what the parts are. No hardware, about an hour.
+- **[The lessons](doc/user-guide-labs.md)** — build a lamp / switch / light-sensor automation
+  with a dashboard in Node-RED, then put real MicroPython or Arduino devices under it, move a
+  rule onto an edge server, and rebuild the whole thing in Python with io7app.
 
 # GitHub repositories for the io7 Platform
 **Brief overview of the io7 Platform components:**
