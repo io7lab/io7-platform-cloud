@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<rect width="1000" height="520" fill="#ffffff"/>
+<defs><marker id="ah0" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#1e1e1e"/></marker><marker id="ah1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#e8590c"/></marker></defs>
+<text x="40" y="44.9" font-size="22" fill="#1e1e1e" text-anchor="start">Step 7 — where each part runs</text>
+<text x="40" y="69.3" font-size="14" fill="#5c5c5c" text-anchor="start">The rule runs at home. The dashboard is served from the cloud, so you can still reach it from anywhere.</text>
+<rect x="40" y="100" width="420" height="330" rx="10" fill="none" stroke="#1971c2" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="60" y="125.3" font-size="14" fill="#1971c2" text-anchor="start">AWS EC2  ·  io7 platform (cloud)</text>
+<rect x="70" y="150" width="170" height="54" rx="10" fill="#d0ebff" stroke="#1971c2" stroke-width="2"/>
+<text x="155.0" y="180.35" font-size="13" fill="#1e1e1e" text-anchor="middle">Mosquitto</text>
+<text x="155.0" y="196.6" font-size="13" fill="#1e1e1e" text-anchor="middle">1883 / 9001</text>
+<rect x="262" y="150" width="170" height="54" rx="10" fill="#d0ebff" stroke="#1971c2" stroke-width="2"/>
+<text x="347.0" y="180.35" font-size="13" fill="#1e1e1e" text-anchor="middle">API Server</text>
+<text x="347.0" y="196.6" font-size="13" fill="#1e1e1e" text-anchor="middle">2009</text>
+<rect x="70" y="226" width="170" height="54" rx="10" fill="#d0ebff" stroke="#1971c2" stroke-width="2"/>
+<text x="155.0" y="256.35" font-size="13" fill="#1e1e1e" text-anchor="middle">Management Web</text>
+<text x="155.0" y="272.6" font-size="13" fill="#1e1e1e" text-anchor="middle">3000</text>
+<rect x="262" y="226" width="170" height="54" rx="10" fill="#d3f9d8" stroke="#2f9e44" stroke-width="2"/>
+<text x="347.0" y="250.35" font-size="13" fill="#1e1e1e" text-anchor="middle">Node-RED</text>
+<text x="347.0" y="266.6" font-size="13" fill="#1e1e1e" text-anchor="middle">dashboard  1880</text>
+<text x="251.0" y="311.4" font-size="12" fill="#5c5c5c" text-anchor="middle">the dashboard and the device registry live here</text>
+<rect x="560" y="100" width="400" height="330" rx="10" fill="none" stroke="#e8590c" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="580" y="125.3" font-size="14" fill="#e8590c" text-anchor="start">Raspberry Pi  ·  io7 Edge Server (home LAN)</text>
+<rect x="590" y="150" width="160" height="54" rx="10" fill="#ffe8cc" stroke="#e8590c" stroke-width="2"/>
+<text x="670.0" y="180.35" font-size="13" fill="#1e1e1e" text-anchor="middle">Mosquitto</text>
+<text x="670.0" y="196.6" font-size="13" fill="#1e1e1e" text-anchor="middle">1883</text>
+<rect x="772" y="150" width="160" height="54" rx="10" fill="#ffe8cc" stroke="#e8590c" stroke-width="2"/>
+<text x="852.0" y="180.35" font-size="13" fill="#1e1e1e" text-anchor="middle">gateway.js</text>
+<rect x="590" y="226" width="342" height="58" rx="10" fill="#d3f9d8" stroke="#2f9e44" stroke-width="2"/>
+<text x="761.0" y="250.35" font-size="13" fill="#1e1e1e" text-anchor="middle">Node-RED  ·  switch → lamp rule only</text>
+<text x="761.0" y="269.4" font-size="12" fill="#5c5c5c" text-anchor="middle">runs with no internet</text>
+<rect x="590" y="320" width="160" height="52" rx="10" fill="#f1f3f5" stroke="#1e1e1e" stroke-width="2"/>
+<text x="670.0" y="347.4" font-size="12" fill="#1e1e1e" text-anchor="middle">switch1</text>
+<text x="670.0" y="362.4" font-size="12" fill="#1e1e1e" text-anchor="middle">MicroPython</text>
+<rect x="772" y="320" width="160" height="52" rx="10" fill="#f1f3f5" stroke="#1e1e1e" stroke-width="2"/>
+<text x="852.0" y="347.4" font-size="12" fill="#1e1e1e" text-anchor="middle">lamp1</text>
+<text x="852.0" y="362.4" font-size="12" fill="#1e1e1e" text-anchor="middle">MicroPython</text>
+<line x1="670" y1="320" x2="670" y2="286" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" marker-end="url(#ah0)"/>
+<line x1="852" y1="320" x2="852" y2="286" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" marker-end="url(#ah0)"/>
+<line x1="670" y1="226" x2="670" y2="206" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" marker-end="url(#ah0)"/>
+<line x1="852" y1="226" x2="852" y2="206" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" marker-end="url(#ah0)"/>
+<line x1="560" y1="175" x2="460" y2="175" stroke="#e8590c" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 5" marker-end="url(#ah1)"/>
+<line x1="460" y1="190" x2="560" y2="190" stroke="#e8590c" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 5" marker-end="url(#ah1)"/>
+<text x="510.0" y="122.45" font-size="11" fill="#e8590c" text-anchor="middle">MQTT</text>
+<text x="510.0" y="136.2" font-size="11" fill="#e8590c" text-anchor="middle">bridge</text>
+<text x="510.0" y="149.95" font-size="11" fill="#e8590c" text-anchor="middle">over the</text>
+<text x="510.0" y="163.7" font-size="11" fill="#e8590c" text-anchor="middle">internet</text>
+<text x="40" y="464.35" font-size="13" fill="#1e1e1e" text-anchor="start">1.  Press the switch — the lamp reacts through the Pi. Unplug the internet and it still works.</text>
+<text x="40" y="490.35" font-size="13" fill="#1e1e1e" text-anchor="start">2.  Open the cloud dashboard from your phone — you are controlling the same lamp from outside the house.</text>
+</svg>

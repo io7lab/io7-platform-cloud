@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 622" width="1000" height="622" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<rect width="1000" height="622" fill="#ffffff"/>
+<defs><marker id="ah0" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#2f9e44"/></marker><marker id="ah1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#6741d9"/></marker><marker id="ah2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#e8590c"/></marker></defs>
+<text x="40" y="44.9" font-size="22" fill="#1e1e1e" text-anchor="start">What you build, and what stays the same</text>
+<text x="40" y="69.3" font-size="14" fill="#5c5c5c" text-anchor="start">The Node-RED flow you write in Step 4 never changes. Only the devices under it do.</text>
+<rect x="250" y="100" width="620" height="86" rx="10" fill="#d0ebff" stroke="#1971c2" stroke-width="2"/>
+<text x="560.0" y="132.25" font-size="15" fill="#1971c2" text-anchor="middle">STEP 4  ·  Node-RED flow</text>
+<text x="560.0" y="156.25" font-size="15" fill="#1e1e1e" text-anchor="middle">lamp  →  + switch  →  + lux automation  →  + gate  →  dashboard</text>
+<text x="560.0" y="216.35" font-size="13" fill="#5c5c5c" text-anchor="middle">the contract:   iot3/&lt;deviceId&gt;/evt/status/fmt/json     iot3/&lt;deviceId&gt;/cmd/&lt;cmd&gt;/fmt/json</text>
+<line x1="180" y1="244" x2="900" y2="244" stroke="#5c5c5c" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 5"/>
+<rect x="120" y="286" width="240" height="96" rx="10" fill="#d3f9d8" stroke="#2f9e44" stroke-width="2"/>
+<text x="240.0" y="309.4" font-size="12" fill="#2f9e44" text-anchor="middle">STEP 3</text>
+<text x="240.0" y="333.2" font-size="16" fill="#1e1e1e" text-anchor="middle">Dummy devices</text>
+<text x="240.0" y="353.4" font-size="12" fill="#5c5c5c" text-anchor="middle">npx io7dummy-device</text>
+<text x="240.0" y="368.4" font-size="12" fill="#5c5c5c" text-anchor="middle">no hardware</text>
+<line x1="240" y1="286" x2="240" y2="250" stroke="#2f9e44" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 5" marker-end="url(#ah0)"/>
+<rect x="420" y="286" width="240" height="96" rx="10" fill="#ffe8cc" stroke="#e8590c" stroke-width="2"/>
+<text x="540.0" y="309.4" font-size="12" fill="#e8590c" text-anchor="middle">STEP 5</text>
+<text x="540.0" y="333.2" font-size="16" fill="#1e1e1e" text-anchor="middle">MicroPython</text>
+<text x="540.0" y="353.4" font-size="12" fill="#5c5c5c" text-anchor="middle">IO7FuPython on ESP32</text>
+<text x="540.0" y="368.4" font-size="12" fill="#5c5c5c" text-anchor="middle">relay + push button</text>
+<line x1="540" y1="286" x2="540" y2="250" stroke="#e8590c" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 5" marker-end="url(#ah2)"/>
+<rect x="720" y="286" width="240" height="96" rx="10" fill="#e5dbff" stroke="#6741d9" stroke-width="2"/>
+<text x="840.0" y="309.4" font-size="12" fill="#6741d9" text-anchor="middle">STEP 6</text>
+<text x="840.0" y="333.2" font-size="16" fill="#1e1e1e" text-anchor="middle">Arduino C++</text>
+<text x="840.0" y="353.4" font-size="12" fill="#5c5c5c" text-anchor="middle">IO7F32 on ESP32</text>
+<text x="840.0" y="368.4" font-size="12" fill="#5c5c5c" text-anchor="middle">12.io7Lamp / 12.io7Switch</text>
+<line x1="840" y1="286" x2="840" y2="250" stroke="#6741d9" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 5" marker-end="url(#ah1)"/>
+<text x="540.0" y="412.35" font-size="13" fill="#5c5c5c" text-anchor="middle">swap the hardware — the flow, the topics and the dashboard stay untouched</text>
+<rect x="120" y="442" width="840" height="64" rx="10" fill="#f1f3f5" stroke="#1e1e1e" stroke-width="2"/>
+<text x="140" y="470.25" font-size="15" fill="#1e1e1e" text-anchor="start">STEP 7  ·  Edge Server</text>
+<text x="140" y="490.35" font-size="13" fill="#5c5c5c" text-anchor="start">Move the switch→lamp rule onto a Raspberry Pi so it survives an internet outage. The dashboard stays in the cloud.</text>
+<rect x="120" y="522" width="840" height="64" rx="10" fill="#f1f3f5" stroke="#1e1e1e" stroke-width="2"/>
+<text x="140" y="550.25" font-size="15" fill="#1e1e1e" text-anchor="start">STEP 8  ·  io7app</text>
+<text x="140" y="570.35" font-size="13" fill="#5c5c5c" text-anchor="start">Rebuild the same automation in Python instead of Node-RED, then vibe-code a web control page on top of it.</text>
+</svg>

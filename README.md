@@ -27,6 +27,16 @@ The main purpose of developing this platform and its submodules is to extract th
 
 
 
+# User Guide
+
+**New to io7? Start here → [doc/user-guide.md](doc/user-guide.md)**
+
+An eight-step walkthrough that takes you from an empty Linux box to a working system:
+the architecture, installing this platform, verifying it with dummy devices, building a
+lamp / switch / light-sensor automation with a dashboard in Node-RED, then swapping the
+dummies for MicroPython and Arduino devices, moving the rule onto an edge server, and
+rebuilding the whole thing in Python with io7app.
+
 # GitHub repositories for the io7 Platform
 **Brief overview of the io7 Platform components:**
 
@@ -43,6 +53,8 @@ The main purpose of developing this platform and its submodules is to extract th
 5. https://github.com/io7lab/io7-platform-edge : Repository for the Edge Server with a Raspberry Pi. Implements an io7 gateway that sits between the local Mosquitto broker on the RPi and the io7 Cloud broker, representing local io7 edge devices by requesting automatic registration and relaying MQTT events and commands. Provides Edge Server level NodeRED for implementing edge intelligence.
 6. https://github.com/io7lab/io7dummy-device : io7 dummy IoT device. Emulates an io7 IoT device and can be used for quick checks after io7 Platform setup.
 7. https://github.com/io7lab/io7app : Python application-server framework for the io7 IoT Platform — a code-first alternative to NodeRED for building IoT apps. 
+
+The [user guide](doc/user-guide.md) walks through most of these repositories in the order you would actually meet them.
 
 
 # Quick Installation
