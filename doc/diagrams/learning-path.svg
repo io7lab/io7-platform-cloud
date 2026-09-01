@@ -9,7 +9,7 @@
 <text x="560.0" y="216.35" font-size="13" fill="#5c5c5c" text-anchor="middle">the contract:   iot3/&lt;deviceId&gt;/evt/status/fmt/json     iot3/&lt;deviceId&gt;/cmd/&lt;cmd&gt;/fmt/json</text>
 <line x1="180" y1="244" x2="900" y2="244" stroke="#5c5c5c" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 5"/>
 <rect x="120" y="286" width="240" height="96" rx="10" fill="#d3f9d8" stroke="#2f9e44" stroke-width="2"/>
-<text x="240.0" y="309.4" font-size="12" fill="#2f9e44" text-anchor="middle">STEP 3</text>
+<text x="240.0" y="309.4" font-size="12" fill="#2f9e44" text-anchor="middle">STEP 2</text>
 <text x="240.0" y="333.2" font-size="16" fill="#1e1e1e" text-anchor="middle">Dummy devices</text>
 <text x="240.0" y="353.4" font-size="12" fill="#5c5c5c" text-anchor="middle">npx io7dummy-device</text>
 <text x="240.0" y="368.4" font-size="12" fill="#5c5c5c" text-anchor="middle">no hardware</text>

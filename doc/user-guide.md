@@ -5,8 +5,9 @@ dashboard, the time-series store and the charts are already built and packaged a
 You do not assemble any of that. Two scripts put it on a Linux server, and from then on your
 time goes into the part that is actually yours — your devices and your automations.
 
-This guide is about that second part. Setting the platform up takes one section; the other
-seven are about using it.
+This guide is about that second part. Get the platform running first — it is two scripts and
+a dummy device, and you can do it in an afternoon without buying anything. The lessons start
+after that.
 
 By the end you have a lamp that a switch turns on, a light sensor that turns it on by itself,
 and a dashboard you can open from your phone. If you want to go further, the same automation
@@ -18,15 +19,15 @@ can run on a Raspberry Pi at home, or be written in Python instead of Node-RED.
 
 ![Write the automation once, then swap the devices under it](diagrams/learning-path.svg)
 
-**Set up the platform** — once, no hardware, maybe an hour.
+**Get it running** — no hardware, no commitment.
 
 | Step | What you do |
 |---|---|
-| [1](#1--architecture) | See what the platform is made of, and the one rule everything follows |
-| [2](#2--install-the-platform) | Install it on Linux or AWS EC2 |
-| [3](#3--verify-with-a-dummy-device) | Confirm it works, end to end, with a simulated device |
+| [1](#1--install-the-platform) | Install the platform on Linux or AWS EC2 |
+| [2](#2--verify-with-a-dummy-device) | Watch a simulated device report to it |
+| [3](#3--how-it-fits-together) | Now that you have seen it work, see what the parts are |
 
-**Use it** — this is the guide.
+**The lessons** — build something real.
 
 | Step | What you do | Hardware needed |
 |---|---|---|
@@ -42,59 +43,7 @@ them.
 
 ---
 
-## 1 · Architecture
-
-io7 is a small set of open-source services wired together by one MQTT broker. They arrive as
-containers and you never edit them — but knowing which is which makes the rest of the guide,
-and any troubleshooting, much easier.
-
-![io7 platform architecture](images/architecture.png)
-
-Everything a device does is MQTT publish and subscribe. Everything an application does is
-the same. The broker sits in the middle and nobody talks to anybody directly.
-
-| Service | Port | What it does |
-|---|---|---|
-| Mosquitto | 1883 · 9001 | MQTT broker. 1883 for devices and apps, 9001 for browsers (WebSocket) |
-| io7 API Server | 2009 | Device registry and lifecycle. Creates broker credentials when you register a device |
-| Management Web | 3000 | Where you register devices, issue app IDs, and watch events arrive |
-| Node-RED | 1880 | Where your automation lives, and where the dashboard is served |
-| Redis | 6379 | Device Shadow — the last value each device reported |
-| InfluxDB | 8086 | Time series history |
-| Grafana | 3003 | Charts over that history |
-
-### The contract
-
-A device is anything that follows this topic convention. That is the whole definition — the
-platform never asks what language it was written in or what board it runs on.
-
-```text
-iot3/<deviceId>/evt/<eventId>/fmt/json     device → platform   (events)
-iot3/<deviceId>/cmd/<cmdId>/fmt/json       platform → device   (commands)
-```
-
-The payload is always JSON wrapped in a `d` object:
-
-```json
-{"d": {"lamp": "on"}}
-```
-
-That one rule is why Step 5 and Step 6 can replace the devices from Step 3 without touching
-a single node in your flow.
-
-### Two kinds of credentials
-
-| Credential | Held by | Can do |
-|---|---|---|
-| **Device ID + token** | one device | publish and subscribe on its own `iot3/<deviceId>/…` topics only |
-| **App ID + token** | an application (Node-RED, io7app) | subscribe to device events and publish commands |
-
-A device cannot impersonate another device — the broker's access control is generated from
-the registry when you register it.
-
----
-
-## 2 · Install the platform
+## 1 · Install the platform
 
 Any Linux box with Docker will do. These instructions use AWS EC2 because that is what most
 people reach for, but a home server or a VM works the same.
@@ -179,7 +128,7 @@ two are the only things worth backing up; the containers are disposable.
 
 ---
 
-## 3 · Verify with a dummy device
+## 2 · Verify with a dummy device
 
 Before wiring anything, prove the whole path works. A dummy device is a terminal program
 that behaves exactly like real hardware — same topics, same payloads, same registration.
@@ -215,11 +164,67 @@ events streaming in.
 If the values on screen change within a second or two of pressing an arrow key, every layer
 is working: device → broker → API server → browser.
 
-You can also see the Device Shadow the platform keeps:
+The platform also kept the last value it saw — the Device Shadow, which the next section
+puts in context:
 
 ```bash
 docker exec -it redis redis-cli GET lux1
 ```
+
+---
+
+## 3 · How it fits together
+
+You just watched a value travel from a program on your laptop to a web page in your browser.
+Here is what it passed through.
+
+io7 is a small set of open-source services wired together by one MQTT broker. They arrive as
+containers and you never edit them — but knowing which is which makes the lessons ahead, and
+any troubleshooting, much easier.
+
+![io7 platform architecture](images/architecture.png)
+
+Everything a device does is MQTT publish and subscribe. Everything an application does is
+the same. The broker sits in the middle and nobody talks to anybody directly.
+
+| Service | Port | What it does |
+|---|---|---|
+| Mosquitto | 1883 · 9001 | MQTT broker. 1883 for devices and apps, 9001 for browsers (WebSocket) |
+| io7 API Server | 2009 | Device registry and lifecycle. Creates broker credentials when you register a device |
+| Management Web | 3000 | Where you register devices, issue app IDs, and watch events arrive |
+| Node-RED | 1880 | Where your automation lives, and where the dashboard is served |
+| Redis | 6379 | Device Shadow — the last value each device reported |
+| InfluxDB | 8086 | Time series history |
+| Grafana | 3003 | Charts over that history |
+
+### The contract
+
+A device is anything that follows this topic convention. That is the whole definition — the
+platform never asks what language it was written in or what board it runs on.
+
+```text
+iot3/<deviceId>/evt/<eventId>/fmt/json     device → platform   (events)
+iot3/<deviceId>/cmd/<cmdId>/fmt/json       platform → device   (commands)
+```
+
+The payload is always JSON wrapped in a `d` object:
+
+```json
+{"d": {"lamp": "on"}}
+```
+
+That one rule is why Step 5 and Step 6 can replace the devices from Step 2 without touching
+a single node in your flow.
+
+### Two kinds of credentials
+
+| Credential | Held by | Can do |
+|---|---|---|
+| **Device ID + token** | one device | publish and subscribe on its own `iot3/<deviceId>/…` topics only |
+| **App ID + token** | an application (Node-RED, io7app) | subscribe to device events and publish commands |
+
+A device cannot impersonate another device — the broker's access control is generated from
+the registry when you register it.
 
 ---
 
@@ -356,7 +361,7 @@ the button terminal; the *widget* follows.
 
 ### Pass 4 — automate on light, and add a gate
 
-Register `lux1` (you already did in Step 3) and run the lux dummy. Add
+Register `lux1` (you already did in Step 2) and run the lux dummy. Add
 **io7 in**(`lux1`) → **function** `Lux` → io7 out(`lamp1`):
 
 ![Lux automation flow](images/flow-3-lux-auto.png)
