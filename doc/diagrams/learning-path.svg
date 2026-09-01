@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 622" width="1000" height="622" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
 <rect width="1000" height="622" fill="#ffffff"/>
 <defs><marker id="ah0" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#2f9e44"/></marker><marker id="ah1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#6741d9"/></marker><marker id="ah2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#e8590c"/></marker></defs>
-<text x="40" y="44.9" font-size="22" fill="#1e1e1e" text-anchor="start">What you build, and what stays the same</text>
-<text x="40" y="69.3" font-size="14" fill="#5c5c5c" text-anchor="start">The Node-RED flow you write in Step 4 never changes. Only the devices under it do.</text>
+<text x="40" y="44.9" font-size="22" fill="#1e1e1e" text-anchor="start">Write the automation once. Swap the devices under it.</text>
+<text x="40" y="69.3" font-size="14" fill="#5c5c5c" text-anchor="start">The platform and your Step 4 flow stay as they are. Only what sits underneath changes.</text>
 <rect x="250" y="100" width="620" height="86" rx="10" fill="#d0ebff" stroke="#1971c2" stroke-width="2"/>
 <text x="560.0" y="132.25" font-size="15" fill="#1971c2" text-anchor="middle">STEP 4  ·  Node-RED flow</text>
 <text x="560.0" y="156.25" font-size="15" fill="#1e1e1e" text-anchor="middle">lamp  →  + switch  →  + lux automation  →  + gate  →  dashboard</text>

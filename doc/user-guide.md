@@ -1,40 +1,52 @@
 # io7 Platform — User Guide
 
-Build a working IoT system on your own cloud, one step at a time.
+**io7 is a ready-made IoT platform.** The MQTT broker, the device registry, Node-RED, the
+dashboard, the time-series store and the charts are already built and packaged as containers.
+You do not assemble any of that. Two scripts put it on a Linux server, and from then on your
+time goes into the part that is actually yours — your devices and your automations.
 
-You start with an empty Linux box and finish with a lamp that a switch turns on, a light
-sensor that turns it on by itself, a dashboard you can open from your phone, and — if you
-want to go that far — the same automation running on a Raspberry Pi at home or written in
-Python instead of Node-RED.
+This guide is about that second part. Setting the platform up takes one section; the other
+seven are about using it.
 
-Nothing here is a toy that only works in a lab. The devices you make in Step 5 and Step 6
-speak the same protocol as the dummy devices in Step 3, so they drop straight into the flow
-you already built.
+By the end you have a lamp that a switch turns on, a light sensor that turns it on by itself,
+and a dashboard you can open from your phone. If you want to go further, the same automation
+can run on a Raspberry Pi at home, or be written in Python instead of Node-RED.
 
 ---
 
 ## The path
 
-![What you build and what stays the same](diagrams/learning-path.svg)
+![Write the automation once, then swap the devices under it](diagrams/learning-path.svg)
+
+**Set up the platform** — once, no hardware, maybe an hour.
+
+| Step | What you do |
+|---|---|
+| [1](#1--architecture) | See what the platform is made of, and the one rule everything follows |
+| [2](#2--install-the-platform) | Install it on Linux or AWS EC2 |
+| [3](#3--verify-with-a-dummy-device) | Confirm it works, end to end, with a simulated device |
+
+**Use it** — this is the guide.
 
 | Step | What you do | Hardware needed |
 |---|---|---|
-| [1](#1--architecture) | Understand how io7 is put together | none |
-| [2](#2--install-the-platform) | Install the platform on Linux or AWS EC2 | none |
-| [3](#3--verify-with-a-dummy-device) | Prove the platform works, end to end | none |
-| [4](#4--build-the-automation-in-node-red) | Build lamp → switch → light sensor → gate → dashboard | none |
-| [5](#5--swap-in-real-devices-micropython) | Replace the dummies with MicroPython devices | 2 × ESP32, relay, button |
-| [6](#6--swap-in-real-devices-arduino-c) | Replace them again with Arduino C++ devices | same boards |
-| [7](#7--move-the-rule-to-an-edge-server) | Move the rule to a Raspberry Pi so it survives an outage | + Raspberry Pi |
-| [8](#8--rebuild-it-in-python-with-io7app) | Rebuild the automation in Python, then vibe-code a web page | none |
+| [4](#4--build-the-automation-in-node-red) | Write your automation: lamp → switch → light sensor → gate → dashboard | none |
+| [5](#5--swap-in-real-devices-micropython) | Put real MicroPython devices under it | 2 × ESP32, relay, button |
+| [6](#6--swap-in-real-devices-arduino-c) | Or Arduino C++ devices instead | same boards |
+| [7](#7--move-the-rule-to-an-edge-server) | Move a rule to a Raspberry Pi so it survives an outage | + Raspberry Pi |
+| [8](#8--rebuild-it-in-python-with-io7app) | Write the same automation in Python, then vibe-code a web page | none |
 
-Steps 1–4 need no hardware at all. If you only have an afternoon, do those.
+Steps 1–4 need no hardware at all. If you only have an afternoon, do those — you will have a
+working automation with simulated devices, and Steps 5 and 6 are then only about replacing
+them.
 
 ---
 
 ## 1 · Architecture
 
-io7 is a small set of open-source services wired together by one MQTT broker.
+io7 is a small set of open-source services wired together by one MQTT broker. They arrive as
+containers and you never edit them — but knowing which is which makes the rest of the guide,
+and any troubleshooting, much easier.
 
 ![io7 platform architecture](images/architecture.png)
 
