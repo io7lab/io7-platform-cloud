@@ -1,45 +1,13 @@
 # io7 Platform — User Guide
 
-**io7 is a ready-made IoT platform.** The MQTT broker, the device registry, Node-RED, the
-dashboard, the time-series store and the charts are already built and packaged as containers.
-You do not assemble any of that. Two scripts put it on a Linux server, and from then on your
-time goes into the part that is actually yours — your devices and your automations.
+This is a follow-along. Do each step, and at the end of it there is a short note on what you
+just did and what it taught you. Nothing to study first.
 
-This guide is about that second part. Get the platform running first — it is two scripts and
-a dummy device, and you can do it in an afternoon without buying anything. The lessons start
-after that.
+io7 itself is already built, so installing it is two scripts and a few answers. The whole
+thing is on video as well, if you would rather watch before you type:
+[io7 platform installation](https://www.youtube.com/watch?v=18xfq__oo4E).
 
-By the end you have a lamp that a switch turns on, a light sensor that turns it on by itself,
-and a dashboard you can open from your phone. If you want to go further, the same automation
-can run on a Raspberry Pi at home, or be written in Python instead of Node-RED.
-
----
-
-## The path
-
-**Get it running** — no hardware, no commitment.
-
-| Step | What you do |
-|---|---|
-| [1](#1--install-the-platform) | Install the platform on Linux or AWS EC2 |
-| [2](#2--verify-with-a-dummy-device) | Watch a simulated device report to it |
-| [3](#3--what-you-just-set-up) | Look back at what just happened |
-
-**The lessons** — build something real. These live in a [second page](user-guide-labs.md).
-
-| Step | What you do | Hardware needed |
-|---|---|---|
-| [4](user-guide-labs.md#4--build-the-automation-in-node-red) | Write your automation: lamp → switch → light sensor → gate → dashboard | none |
-| [5](user-guide-labs.md#5--swap-in-real-devices-micropython) | Put real MicroPython devices under it | 2 × ESP32, relay, button |
-| [6](user-guide-labs.md#6--swap-in-real-devices-arduino-c) | Or Arduino C++ devices instead | same boards |
-| [7](user-guide-labs.md#7--move-the-rule-to-an-edge-server) | Move a rule to a Raspberry Pi so it survives an outage | + Raspberry Pi |
-| [8](user-guide-labs.md#8--rebuild-it-in-python-with-io7app) | Write the same automation in Python, then vibe-code a web page | none |
-
-Steps 1–4 need no hardware at all. If you only have an afternoon, do those — you will have a
-working automation with simulated devices, and Steps 5 and 6 are then only about replacing
-them.
-
----
+Let's put it on a server.
 
 ## 1 · Install the platform
 
