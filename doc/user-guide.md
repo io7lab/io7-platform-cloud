@@ -31,8 +31,6 @@ On a machine on your own network there is often nothing to do here beyond its lo
 
 ### Install
 
-![Quick installation](images/install-quickstart.png)
-
 Two scripts, in order. SSH into the machine and run:
 
 ```bash
@@ -130,8 +128,6 @@ your choosing (`lux1` is fine while learning). Type must be `device`.
 ```bash
 npx github:io7lab/io7dummy-device lux
 ```
-
-![Dummy device first run](images/dummy-startup.png)
 
 ```text
 devId: ? lux1
