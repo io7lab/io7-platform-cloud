@@ -22,21 +22,8 @@ people reach for, but a home server or a VM works the same.
 | Instance | t3.small or larger (t3.micro works but leaves little headroom) |
 | Storage | 20 GB (the 8 GB default fills up once events start accumulating) |
 
-Open these inbound ports in your firewall or EC2 Security Group:
-
-| Port | Service | Opened for |
-|---|---|---|
-| 22 | SSH | you, to run the install |
-| 1883 | MQTT | devices and applications |
-| 9001 | MQTT over WebSocket | the Management Web page in your browser |
-| 2009 | io7 API Server | the Management Web page in your browser |
-| 3000 | Management Web | your browser |
-| 1880 | Node-RED and the dashboard | your browser |
-| 3003 | Grafana | your browser |
-| 8086 | InfluxDB | your browser |
-
-The three the Management Web needs — 3000, 2009 and 9001 — are worth noting together. Miss one
-and the page still loads, but a part of it stops working with no error on screen.
+Open port 22 so you can SSH in. That is all you need to install; the platform's own ports come
+up in a moment, once there is something behind them.
 
 ### Install
 
@@ -87,7 +74,20 @@ docker ps
 Seven containers should be `Up`: `mqtt`, `nodered`, `redis`, `influxdb`, `io7api`, `io7web`,
 `grafana`.
 
-Then open `http://<your-host>:3000` and log in with the admin account.
+Now open it from your laptop. This is the first time anything reaches the server from the
+outside, so the ports have to be open — in your firewall, or in the EC2 Security Group.
+
+| Port | Service | Opened for |
+|---|---|---|
+| 3000 | Management Web | your browser |
+| 2009 | io7 API Server | the Management Web page, behind the scenes |
+| 9001 | MQTT over WebSocket | the Management Web page, behind the scenes |
+| 1883 | MQTT | devices and applications, from Step 2 onwards |
+| 1880 | Node-RED and the dashboard | your browser, once you start building |
+| 3003 | Grafana | your browser, if you want the charts |
+| 8086 | InfluxDB | your browser, if you want the raw data |
+
+Then browse to `http://<your-host>:3000` and log in with the admin account.
 
 ![Management Web home](images/management-web-home.png)
 
