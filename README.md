@@ -38,6 +38,8 @@ Two scripts and a simulated device get the platform running; the rest is about u
 - **[The lessons](doc/user-guide-labs.md)** — build a lamp / switch / light-sensor automation
   with a dashboard in Node-RED, then put real MicroPython or Arduino devices under it, move a
   rule onto an edge server, and rebuild the whole thing in Python with io7app.
+- **[Keeping it running](doc/user-guide-ops.md)** — record the events, chart them in Grafana,
+  get a Telegram alert when a value goes wrong, and put TLS on the platform and its devices.
 
 # GitHub repositories for the io7 Platform
 **Brief overview of the io7 Platform components:**

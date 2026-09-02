@@ -567,6 +567,15 @@ convention. Everything else was yours to choose.
 
 ---
 
+## Next — keeping it running
+
+You have a working system. What it does not yet have is a memory or a lock on the door: the
+data vanishes as it arrives, and everything crosses the network in plain text.
+
+**[Continue to logging and security →](user-guide-ops.md)**
+
+---
+
 ## Running Node-RED somewhere else
 
 Everything above used the Node-RED that came with the platform. You can just as well point

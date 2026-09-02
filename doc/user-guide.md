@@ -236,3 +236,6 @@ and moving the pieces around to see what the platform actually buys you.
 
 **[Continue to the lessons →](user-guide-labs.md)**
 
+After those, a third page covers [logging and security](user-guide-ops.md) — keeping the data
+and putting TLS on everything.
+
