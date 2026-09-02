@@ -1,6 +1,6 @@
 # io7 Platform — 2 · Build an automation
 
-*Guide: [Install and verify · 1–3](1-install-and-verify.md) · **Build an automation · 4–8** · [Logging and security · 9–12](3-logging-and-security.md)*
+*Guide: [Install and verify · Steps 1–3](1-install-and-verify.md) · **Build an automation · Steps 4–8** · [Logging and security · Steps 9–12](3-logging-and-security.md)*
 
 This picks up where [Part 1](1-install-and-verify.md) left off, with a platform running and a
 dummy device reporting to it.
@@ -11,15 +11,15 @@ Step 4 needs no hardware; Steps 5 and 6 put real boards under what you built, an
 
 | | What you do | Hardware needed |
 |---|---|---|
-| Step [4](#4--build-the-automation-in-node-red) | Write your automation: lamp → switch → light sensor → gate → dashboard | none |
-| Step [5](#5--swap-in-real-devices-micropython) | Put real MicroPython devices under it | 2 × ESP32, relay, button |
-| Step [6](#6--swap-in-real-devices-arduino-c) | Or Arduino C++ devices instead | same boards |
-| Step [7](#7--move-the-rule-to-an-edge-server) | Move a rule to a Raspberry Pi so it survives an outage | + Raspberry Pi |
-| Step [8](#8--rebuild-it-in-python-with-io7app) | Write the same automation in Python, then vibe-code a web page | none |
+| Step [4](#step-4--build-the-automation-in-node-red) | Write your automation: lamp → switch → light sensor → gate → dashboard | none |
+| Step [5](#step-5--swap-in-real-devices-micropython) | Put real MicroPython devices under it | 2 × ESP32, relay, button |
+| Step [6](#step-6--swap-in-real-devices-arduino-c) | Or Arduino C++ devices instead | same boards |
+| Step [7](#step-7--move-the-rule-to-an-edge-server) | Move a rule to a Raspberry Pi so it survives an outage | + Raspberry Pi |
+| Step [8](#step-8--rebuild-it-in-python-with-io7app) | Write the same automation in Python, then vibe-code a web page | none |
 
 ---
 
-## 4 · Build the automation in Node-RED
+## Step 4 · Build the automation in Node-RED
 
 This is the heart of the guide. You build one flow in four passes, each pass adding a
 capability. Open Node-RED at `http://<your-host>:1880`.
@@ -132,7 +132,7 @@ the button terminal; the *widget* follows.
 
 ### Pass 4 — automate on light, and add a gate
 
-Register `lux1` (you already did in [Step 2](1-install-and-verify.md#2--verify-with-a-dummy-device)) and run the lux dummy. Add
+Register `lux1` (you already did in [Step 2](1-install-and-verify.md#step-2--verify-with-a-dummy-device)) and run the lux dummy. Add
 **io7 in**(`lux1`) → **function** `Lux` → io7 out(`lamp1`):
 
 ![Lux automation flow](images/flow-3-lux-auto.png)
@@ -195,7 +195,7 @@ still right when someone presses the physical button. And **put a gate on anythi
 
 ---
 
-## 5 · Swap in real devices (MicroPython)
+## Step 5 · Swap in real devices (MicroPython)
 
 Now replace the dummy lamp and switch with two ESP32 boards. **Do not change the flow.**
 Register the same device IDs, or reuse `lamp1` and `button1` directly.
@@ -308,7 +308,7 @@ language too.
 
 ---
 
-## 6 · Swap in real devices (Arduino C++)
+## Step 6 · Swap in real devices (Arduino C++)
 
 Same two devices again, this time in C++ with the **IO7F32** framework. Use this path if your
 team is more comfortable in Arduino, or run it alongside Step 5 to compare.
@@ -376,7 +376,7 @@ and they are what to write down first when two people build the two halves.
 
 ---
 
-## 7 · Move the rule to an Edge Server
+## Step 7 · Move the rule to an Edge Server
 
 Everything so far decides in the cloud. Cut the internet and the switch stops working.
 
@@ -451,7 +451,7 @@ rest stays in the cloud** — and the gateway keeps both views in sync.
 
 ---
 
-## 8 · Rebuild it in Python with io7app
+## Step 8 · Rebuild it in Python with io7app
 
 Node-RED is not the only way to write the application. **io7app** is a small Python framework
 that subscribes and publishes with decorators, which suits anyone who would rather diff code

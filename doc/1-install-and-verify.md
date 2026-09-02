@@ -1,6 +1,6 @@
 # io7 Platform — 1 · Install and verify
 
-*Guide: **Install and verify · 1–3** · [Build an automation · 4–8](2-build-an-automation.md) · [Logging and security · 9–12](3-logging-and-security.md)*
+*Guide: **Install and verify · Steps 1–3** · [Build an automation · Steps 4–8](2-build-an-automation.md) · [Logging and security · Steps 9–12](3-logging-and-security.md)*
 
 This is a follow-along. Do each step, and at the end of it there is a short note on what you
 just did and what it taught you. Nothing to study first.
@@ -11,7 +11,7 @@ thing is on video as well, if you would rather watch before you type:
 
 Let's put it on a server.
 
-## 1 · Install the platform
+## Step 1 · Install the platform
 
 Any Linux box with Docker will do. These instructions use AWS EC2 because that is what most
 people reach for, but a home server or a VM works the same.
@@ -117,7 +117,7 @@ you have backed up the platform.
 
 ---
 
-## 2 · Verify with a dummy device
+## Step 2 · Verify with a dummy device
 
 Before wiring anything, prove the whole path works. A dummy device is a terminal program
 that behaves exactly like real hardware — same topics, same payloads, same registration.
@@ -173,7 +173,7 @@ device type, no driver. You registered a name and it started keeping its data.
 
 ---
 
-## 3 · What you just set up
+## Step 3 · What you just set up
 
 You watched a value travel from a program on your laptop to a web page in your browser. It
 passed through six services on the way, and you did not have to know any of them to make it

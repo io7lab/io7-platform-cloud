@@ -1,6 +1,6 @@
 # io7 Platform — 3 · Logging and security
 
-*Guide: [Install and verify · 1–3](1-install-and-verify.md) · [Build an automation · 4–8](2-build-an-automation.md) · **Logging and security · 9–12***
+*Guide: [Install and verify · Steps 1–3](1-install-and-verify.md) · [Build an automation · Steps 4–8](2-build-an-automation.md) · **Logging and security · Steps 9–12***
 
 By now you have a platform, some devices, and an automation you built in
 [Part 2](2-build-an-automation.md).
@@ -13,14 +13,14 @@ Same shape as before, picking up at Step 9: do the step, then read what it taugh
 
 | | What you do | Needs |
 |---|---|---|
-| Step [9](#9--keep-the-data) | Turn on logging and see yesterday's readings | nothing |
-| Step [10](#10--chart-it-in-grafana) | Build a chart, then put it in your dashboard | nothing |
-| Step [11](#11--get-told-when-something-happens) | Have it message you when a value goes wrong | a Telegram bot |
-| Step [12](#12--lock-it-down) | Put TLS on the whole platform, devices included | a domain name |
+| Step [9](#step-9--keep-the-data) | Turn on logging and see yesterday's readings | nothing |
+| Step [10](#step-10--chart-it-in-grafana) | Build a chart, then put it in your dashboard | nothing |
+| Step [11](#step-11--get-told-when-something-happens) | Have it message you when a value goes wrong | a Telegram bot |
+| Step [12](#step-12--lock-it-down) | Put TLS on the whole platform, devices included | a domain name |
 
 ---
 
-## 9 · Keep the data
+## Step 9 · Keep the data
 
 Everything you have built so far only knows *now*. Refresh the dashboard and yesterday is
 gone. The platform can keep the history for you — it just does not do it uninvited.
@@ -63,7 +63,7 @@ ever read.
 
 ---
 
-## 10 · Chart it in Grafana
+## Step 10 · Chart it in Grafana
 
 Grafana came with the platform, on port 3003. It has never seen your data, though — it
 needs to be pointed at InfluxDB once.
@@ -112,7 +112,7 @@ history comes from the database.
 
 ---
 
-## 11 · Get told when something happens
+## Step 11 · Get told when something happens
 
 A dashboard is only useful while someone is looking at it. For anything that matters, the
 system should reach out instead.
@@ -150,7 +150,7 @@ someone.
 
 ---
 
-## 12 · Lock it down
+## Step 12 · Lock it down
 
 Everything so far has been in the clear. Your device tokens, your commands, your admin
 login — all of it crosses the network as plain text on port 1883, and anyone on the path can
@@ -283,9 +283,9 @@ You have the whole platform: devices, automation, a dashboard, history, alerts a
 
 A few directions people take from here.
 
-**The optional steps**, if you skipped them — [Step 7](2-build-an-automation.md#7--move-the-rule-to-an-edge-server)
+**The optional steps**, if you skipped them — [Step 7](2-build-an-automation.md#step-7--move-the-rule-to-an-edge-server)
 puts a rule on a Raspberry Pi so it keeps working when the internet does not, and
-[Step 8](2-build-an-automation.md#8--rebuild-it-in-python-with-io7app) rebuilds the same
+[Step 8](2-build-an-automation.md#step-8--rebuild-it-in-python-with-io7app) rebuilds the same
 automation in Python with io7app.
 
 **Your own devices.** The pattern from Steps 5 and 6 holds for anything: publish
