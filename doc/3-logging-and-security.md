@@ -1,6 +1,6 @@
 # io7 Platform — 3 · Logging and security
 
-*Part 3 of 3 — [1 · Install and verify](1-install-and-verify.md) · [2 · Build an automation](2-build-an-automation.md) · [3 · Logging and security](3-logging-and-security.md)*
+*Guide: [Install and verify](1-install-and-verify.md) · [Build an automation](2-build-an-automation.md) · **Logging and security***
 
 By now you have a platform, some devices, and an automation you built in
 [Part 2](2-build-an-automation.md).
@@ -11,12 +11,12 @@ travels the network in plain text.
 
 Same shape as before: do the step, then read what it taught you.
 
-| Step | What you do | Needs |
+| | What you do | Needs |
 |---|---|---|
-| [9](#9--keep-the-data) | Turn on logging and see yesterday's readings | nothing |
-| [10](#10--chart-it-in-grafana) | Build a chart, then put it in your dashboard | nothing |
-| [11](#11--get-told-when-something-happens) | Have it message you when a value goes wrong | a Telegram bot |
-| [12](#12--lock-it-down) | Put TLS on the whole platform, devices included | a domain name |
+| Step [9](#9--keep-the-data) | Turn on logging and see yesterday's readings | nothing |
+| Step [10](#10--chart-it-in-grafana) | Build a chart, then put it in your dashboard | nothing |
+| Step [11](#11--get-told-when-something-happens) | Have it message you when a value goes wrong | a Telegram bot |
+| Step [12](#12--lock-it-down) | Put TLS on the whole platform, devices included | a domain name |
 
 ---
 
@@ -222,17 +222,71 @@ now while you are thinking about it.
 
 ---
 
+---
+
+## What you learned
+
+Twelve steps, one small system, and a set of ideas that carry over to any IoT work whether or
+not you keep using io7.
+
+**A device is a contract, not a thing.** `iot3/<deviceId>/evt/...` to report,
+`iot3/<deviceId>/cmd/...` to be commanded, `{"d": {...}}` inside. Anything that honours that is
+a device — a Node.js dummy, a MicroPython board, a C++ sketch. That is why you swapped the
+hardware twice and changed the language once without rewriting the application.
+
+**Automation is three moves.** Something reports, the application decides, something is
+commanded. Every flow you built was a variation on it, and nothing in the middle needed to
+know what was on either end.
+
+**Keep the decision out of the device.** You never reflashed a board to change a policy. The
+lamp did not know about the switch; the switch did not know about the light sensor. Changing
+what the system *does* meant editing a flow, not a firmware.
+
+**Report reality, not intention.** The devices published the state of their own pins, not the
+command they received. That single habit is why the dashboard stayed correct no matter who
+pressed what.
+
+**The field names are the real agreement.** The topics are fixed by the framework; the words
+inside the payload are not. `button: "pushed"` and `switch: "on"` cost you a line of code in
+Step 6, and that is the cheap version of a problem that gets expensive between teams.
+
+**Decide where to decide.** Cloud gives you reach, history and one place to change policy;
+local gives you a rule that survives an outage. Step 7 let you have both, and the choice is
+per rule, not per system.
+
+**Both halves are replaceable.** The device layer swapped three ways, and in Step 8 the
+application layer swapped too. What stayed fixed the whole time was the broker and the topic
+convention. Everything else was yours to choose.
+
+---
+
+**Store what you will actually read.** Ticking two boxes started the history, and only numbers
+went in. Left unbounded an IoT system will fill a disk with values nobody ever looks at, so
+deciding what to keep is part of the design, not an afterthought.
+
+**Now and then are different questions.** The broker and the Device Shadow answer what is
+happening; InfluxDB and Grafana answer what happened. You added a whole visualisation layer in
+Step 10 without touching a device, a flow or a topic.
+
+**An alert nobody trusts is not an alert.** Fire too often and it gets muted, and a muted alert
+is the same as none. The threshold is a judgement about what deserves to interrupt someone.
+
+**Security is a switch for the platform, not for each device.** The moment the broker stopped
+accepting 1883 every device had to come across. And a certificate is issued to a name, which
+is why the whole step began with a domain.
+
+---
+
 ## Where to go next
 
 You have the whole platform: devices, automation, a dashboard, history, alerts and TLS.
 
 A few directions people take from here.
 
-**The edge**, if you have not already — [Step 7](2-build-an-automation.md#7--move-the-rule-to-an-edge-server)
-puts a rule on a Raspberry Pi so it keeps working when the internet does not.
-
-**Code instead of flows** — [Step 8](2-build-an-automation.md#8--rebuild-it-in-python-with-io7app)
-rebuilds the same automation in Python with io7app.
+**The optional steps**, if you skipped them — [Step 7](2-build-an-automation.md#7--move-the-rule-to-an-edge-server)
+puts a rule on a Raspberry Pi so it keeps working when the internet does not, and
+[Step 8](2-build-an-automation.md#8--rebuild-it-in-python-with-io7app) rebuilds the same
+automation in Python with io7app.
 
 **Your own devices.** The pattern from Steps 5 and 6 holds for anything: publish
 `{"d": {...}}` to `iot3/<deviceId>/evt/status/fmt/json`, subscribe to the command topic, and
@@ -241,3 +295,93 @@ the platform treats it like everything else you have built.
 **Operational habits.** Back up `~/data` — it is the whole platform. Watch the disk, because
 time-series data grows quietly. Set an InfluxDB retention policy before it becomes urgent.
 And rotate device tokens the way you would any other credential.
+
+---
+
+## Running Node-RED somewhere else
+
+Everything above used the Node-RED that came with the platform. You can just as well point
+your own at it — one you already run, or one on a machine closer to your devices.
+
+Install Node-RED the usual way, then add the io7 nodes from **Manage palette → Install** by
+searching `node-red-contrib-io7`. Two settings differ from the guide:
+
+| Setting | Bundled Node-RED | Your own |
+|---|---|---|
+| io7-hub **Host** | `mqtt` | your platform's hostname |
+| Port 1883 | already reachable inside Docker | must be open to that machine |
+
+`mqtt` is a Docker service name. It resolves only inside the platform's own network, so a
+Node-RED anywhere else has to be given the real address.
+
+For the curious: that is also how the bundled one gets the nodes. `io7-platform-setup.sh`
+finishes by running `npm i` in `~/data/nodered`, where the shipped `package.json` lists
+`node-red-contrib-io7` as a dependency — and since that directory is mounted into the
+container, the nodes are in the palette the moment it starts.
+
+---
+
+---
+
+## Reference
+
+### Ports
+
+| Port | Service |
+|---|---|
+| 1883 | MQTT |
+| 9001 | MQTT over WebSocket (browsers) |
+| 1880 | Node-RED and the dashboard |
+| 2009 | io7 API Server |
+| 3000 | Management Web |
+| 3003 | Grafana |
+| 8086 | InfluxDB |
+| 6379 | Redis (internal) |
+
+### Dummy device modes
+
+```bash
+npx github:io7lab/io7dummy-device <mode>
+```
+
+`lamp` · `switch` · `button` · `lux` · `rotary` · `thermo` · `thermostat` · `valve` ·
+`twoButtons`
+
+Settings are saved as `<mode>.cfg` in the working directory.
+
+### Repositories
+
+| Repo | Contents |
+|---|---|
+| [io7-platform-cloud](https://github.com/io7lab/io7-platform-cloud) | The cloud platform and its install scripts |
+| [io7-platform-edge](https://github.com/io7lab/io7-platform-edge) | The edge server |
+| [IO7FuPython](https://github.com/io7lab/IO7FuPython) | MicroPython device framework |
+| [IO7F32](https://github.com/io7lab/IO7F32) | Arduino C++ device framework (ESP32) |
+| [io7app](https://github.com/io7lab/io7app) | Python application framework |
+| [io7dummy-device](https://github.com/io7lab/io7dummy-device) | Simulated devices |
+| [node-red-contrib-io7](https://github.com/io7lab/node-red-contrib-io7) | The io7 in / io7 out nodes |
+
+Lab flows and device code for each step are under
+[github.com/io7lab-lab](https://github.com/io7lab-lab).
+
+### Troubleshooting
+
+| Symptom | Look at |
+|---|---|
+| Management Web loads, login does nothing | Port 2009 blocked |
+| Device is running but shows offline | Port 9001 blocked |
+| io7 node shows `disconnected` | App ID / token wrong, or Host is not `mqtt` |
+| Device refuses to connect | Device ID or token differs from the registry; port 1883 closed |
+| Dashboard switch flickers | Pass-through is still enabled on the widget |
+| Two apps keep dropping | They share one App ID — issue a second one |
+| A subscribe returns nothing, no error | Typo in the topic. Brokers accept any subscription, valid or not |
+
+### Diagrams
+
+The two diagrams in this guide are editable. Open the `.excalidraw` files in
+[excalidraw.com](https://excalidraw.com) and re-export the SVG next to them.
+
+```text
+diagrams/learning-path.excalidraw   diagrams/learning-path.svg
+diagrams/edge-topology.excalidraw   diagrams/edge-topology.svg
+```

@@ -1,6 +1,6 @@
 # io7 Platform — 2 · Build an automation
 
-*Part 2 of 3 — [1 · Install and verify](1-install-and-verify.md) · [2 · Build an automation](2-build-an-automation.md) · [3 · Logging and security](3-logging-and-security.md)*
+*Guide: [Install and verify](1-install-and-verify.md) · **Build an automation** · [Logging and security](3-logging-and-security.md)*
 
 This picks up where [Part 1](1-install-and-verify.md) left off, with a platform running and a
 dummy device reporting to it.
@@ -8,13 +8,13 @@ dummy device reporting to it.
 Now you build something with it. Step 4 needs no hardware; Steps 5 and 6 are about
 putting real boards under what you built, and Steps 7 and 8 are optional directions to take it.
 
-| Step | What you do | Hardware needed |
+| | What you do | Hardware needed |
 |---|---|---|
-| [4](#4--build-the-automation-in-node-red) | Write your automation: lamp → switch → light sensor → gate → dashboard | none |
-| [5](#5--swap-in-real-devices-micropython) | Put real MicroPython devices under it | 2 × ESP32, relay, button |
-| [6](#6--swap-in-real-devices-arduino-c) | Or Arduino C++ devices instead | same boards |
-| [7](#7--move-the-rule-to-an-edge-server) | Move a rule to a Raspberry Pi so it survives an outage | + Raspberry Pi |
-| [8](#8--rebuild-it-in-python-with-io7app) | Write the same automation in Python, then vibe-code a web page | none |
+| Step [4](#4--build-the-automation-in-node-red) | Write your automation: lamp → switch → light sensor → gate → dashboard | none |
+| Step [5](#5--swap-in-real-devices-micropython) | Put real MicroPython devices under it | 2 × ESP32, relay, button |
+| Step [6](#6--swap-in-real-devices-arduino-c) | Or Arduino C++ devices instead | same boards |
+| Step [7](#7--move-the-rule-to-an-edge-server) | Move a rule to a Raspberry Pi so it survives an outage | + Raspberry Pi |
+| Step [8](#8--rebuild-it-in-python-with-io7app) | Write the same automation in Python, then vibe-code a web page | none |
 
 ---
 
@@ -533,133 +533,9 @@ diff, test and deploy.
 
 ---
 
-## What you learned
-
-You followed eight steps and built one small system. Along the way you picked up the ideas
-that carry over to any IoT work, whether or not you keep using io7.
-
-**A device is a contract, not a thing.** `iot3/<deviceId>/evt/...` to report,
-`iot3/<deviceId>/cmd/...` to be commanded, `{"d": {...}}` inside. Anything that honours that is
-a device — a Node.js dummy, a MicroPython board, a C++ sketch. That is why you swapped the
-hardware twice and changed the language once without rewriting the application.
-
-**Automation is three moves.** Something reports, the application decides, something is
-commanded. Every flow you built was a variation on it, and nothing in the middle needed to
-know what was on either end.
-
-**Keep the decision out of the device.** You never reflashed a board to change a policy. The
-lamp did not know about the switch; the switch did not know about the light sensor. Changing
-what the system *does* meant editing a flow, not a firmware.
-
-**Report reality, not intention.** The devices published the state of their own pins, not the
-command they received. That single habit is why the dashboard stayed correct no matter who
-pressed what.
-
-**The field names are the real agreement.** The topics are fixed by the framework; the words
-inside the payload are not. `button: "pushed"` and `switch: "on"` cost you a line of code in
-Step 6, and that is the cheap version of a problem that gets expensive between teams.
-
-**Decide where to decide.** Cloud gives you reach, history and one place to change policy;
-local gives you a rule that survives an outage. Step 7 let you have both, and the choice is
-per rule, not per system.
-
-**Both halves are replaceable.** The device layer swapped three ways, and in Step 8 the
-application layer swapped too. What stayed fixed the whole time was the broker and the topic
-convention. Everything else was yours to choose.
-
----
-
 ## Next — keeping it running
 
 You have a working system. What it does not yet have is a memory or a lock on the door: the
 data vanishes as it arrives, and everything crosses the network in plain text.
 
 **[Continue to logging and security →](3-logging-and-security.md)**
-
----
-
-## Running Node-RED somewhere else
-
-Everything above used the Node-RED that came with the platform. You can just as well point
-your own at it — one you already run, or one on a machine closer to your devices.
-
-Install Node-RED the usual way, then add the io7 nodes from **Manage palette → Install** by
-searching `node-red-contrib-io7`. Two settings differ from the guide:
-
-| Setting | Bundled Node-RED | Your own |
-|---|---|---|
-| io7-hub **Host** | `mqtt` | your platform's hostname |
-| Port 1883 | already reachable inside Docker | must be open to that machine |
-
-`mqtt` is a Docker service name. It resolves only inside the platform's own network, so a
-Node-RED anywhere else has to be given the real address.
-
-For the curious: that is also how the bundled one gets the nodes. `io7-platform-setup.sh`
-finishes by running `npm i` in `~/data/nodered`, where the shipped `package.json` lists
-`node-red-contrib-io7` as a dependency — and since that directory is mounted into the
-container, the nodes are in the palette the moment it starts.
-
----
-
-## Reference
-
-### Ports
-
-| Port | Service |
-|---|---|
-| 1883 | MQTT |
-| 9001 | MQTT over WebSocket (browsers) |
-| 1880 | Node-RED and the dashboard |
-| 2009 | io7 API Server |
-| 3000 | Management Web |
-| 3003 | Grafana |
-| 8086 | InfluxDB |
-| 6379 | Redis (internal) |
-
-### Dummy device modes
-
-```bash
-npx github:io7lab/io7dummy-device <mode>
-```
-
-`lamp` · `switch` · `button` · `lux` · `rotary` · `thermo` · `thermostat` · `valve` ·
-`twoButtons`
-
-Settings are saved as `<mode>.cfg` in the working directory.
-
-### Repositories
-
-| Repo | Contents |
-|---|---|
-| [io7-platform-cloud](https://github.com/io7lab/io7-platform-cloud) | The cloud platform and its install scripts |
-| [io7-platform-edge](https://github.com/io7lab/io7-platform-edge) | The edge server |
-| [IO7FuPython](https://github.com/io7lab/IO7FuPython) | MicroPython device framework |
-| [IO7F32](https://github.com/io7lab/IO7F32) | Arduino C++ device framework (ESP32) |
-| [io7app](https://github.com/io7lab/io7app) | Python application framework |
-| [io7dummy-device](https://github.com/io7lab/io7dummy-device) | Simulated devices |
-| [node-red-contrib-io7](https://github.com/io7lab/node-red-contrib-io7) | The io7 in / io7 out nodes |
-
-Lab flows and device code for each step are under
-[github.com/io7lab-lab](https://github.com/io7lab-lab).
-
-### Troubleshooting
-
-| Symptom | Look at |
-|---|---|
-| Management Web loads, login does nothing | Port 2009 blocked |
-| Device is running but shows offline | Port 9001 blocked |
-| io7 node shows `disconnected` | App ID / token wrong, or Host is not `mqtt` |
-| Device refuses to connect | Device ID or token differs from the registry; port 1883 closed |
-| Dashboard switch flickers | Pass-through is still enabled on the widget |
-| Two apps keep dropping | They share one App ID — issue a second one |
-| A subscribe returns nothing, no error | Typo in the topic. Brokers accept any subscription, valid or not |
-
-### Diagrams
-
-The two diagrams in this guide are editable. Open the `.excalidraw` files in
-[excalidraw.com](https://excalidraw.com) and re-export the SVG next to them.
-
-```text
-diagrams/learning-path.excalidraw   diagrams/learning-path.svg
-diagrams/edge-topology.excalidraw   diagrams/edge-topology.svg
-```
