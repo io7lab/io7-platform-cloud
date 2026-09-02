@@ -26,34 +26,15 @@ uses this to talk to the broker.
 
 ### Set up the io7 nodes
 
-**The io7 nodes are already there.** You did not install them by hand because the platform
-installer did it for you — `io7-platform-setup.sh` ends by running `npm i` in `~/data/nodered`,
-and the `package.json` shipped in that directory lists `node-red-contrib-io7` as a dependency:
-
-```json
-"dependencies": {
-    "io7-nodered-auth": "github:io7lab/io7-nodered-auth",
-    "node-red-contrib-io7": "github:io7lab/node-red-contrib-io7",
-    "redis": "^4.6.13"
-}
-```
-
-Since `~/data/nodered` is mounted into the Node-RED container, the nodes appear in the palette
-the moment the container starts.
-
-You get three of them. **io7 in** subscribes to a device's events, **io7 out** publishes a
-command, and **io7-hub** holds the connection settings both share. Pick a device ID and an
-event name; the nodes assemble the topic and parse the JSON for you.
+Three io7 nodes are already in the palette; the platform installer put them there. **io7 in**
+subscribes to a device's events, **io7 out** publishes a command, and **io7-hub** holds the
+connection settings both share. Pick a device ID and an event name; the nodes assemble the
+topic and parse the JSON for you.
 
 You could do the same with the generic `mqtt in` / `mqtt out` nodes, but then you type
 `iot3/lux1/evt/status/fmt/json` by hand in every flow — and a single wrong character produces
 no error at all, just silence. That failure mode costs more debugging time than anything else
 in this guide.
-
-> **Running Node-RED on your own?** A plain Node-RED install has none of this. Add the nodes
-> from Manage palette → Install by searching `node-red-contrib-io7`, and set the io7-hub
-> **Host** to your platform's hostname instead of `mqtt` — your Node-RED is outside the
-> platform's Docker network, so the service name will not resolve.
 
 ![io7-hub configuration](images/io7-hub-config.png)
 
@@ -63,9 +44,8 @@ in this guide.
 | Host | `mqtt` |
 | Port | 1883 |
 
-> **Host is `mqtt`, not your domain name.** The bundled Node-RED runs in the same Docker
-> network as the broker, so it reaches it by service name. Use your real hostname only when
-> you run Node-RED outside the platform.
+> **Host is `mqtt`, not your domain name.** Node-RED runs in the same Docker network as the
+> broker, so it reaches it by service name.
 
 ### Pass 1 — turn the lamp on and off
 
@@ -584,6 +564,29 @@ per rule, not per system.
 **Both halves are replaceable.** The device layer swapped three ways, and in Step 8 the
 application layer swapped too. What stayed fixed the whole time was the broker and the topic
 convention. Everything else was yours to choose.
+
+---
+
+## Running Node-RED somewhere else
+
+Everything above used the Node-RED that came with the platform. You can just as well point
+your own at it — one you already run, or one on a machine closer to your devices.
+
+Install Node-RED the usual way, then add the io7 nodes from **Manage palette → Install** by
+searching `node-red-contrib-io7`. Two settings differ from the guide:
+
+| Setting | Bundled Node-RED | Your own |
+|---|---|---|
+| io7-hub **Host** | `mqtt` | your platform's hostname |
+| Port 1883 | already reachable inside Docker | must be open to that machine |
+
+`mqtt` is a Docker service name. It resolves only inside the platform's own network, so a
+Node-RED anywhere else has to be given the real address.
+
+For the curious: that is also how the bundled one gets the nodes. `io7-platform-setup.sh`
+finishes by running `npm i` in `~/data/nodered`, where the shipped `package.json` lists
+`node-red-contrib-io7` as a dependency — and since that directory is mounted into the
+container, the nodes are in the palette the moment it starts.
 
 ---
 
