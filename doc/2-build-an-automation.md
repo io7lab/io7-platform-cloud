@@ -1,9 +1,11 @@
-# io7 Platform — the lessons
+# io7 Platform — 2 · Build an automation
 
-This is the second half of the [io7 user guide](user-guide.md). It assumes you have a platform
-running and have watched a dummy device report to it — [Steps 1 to 3](user-guide.md).
+*Part 2 of 3 — [1 · Install and verify](1-install-and-verify.md) · [2 · Build an automation](2-build-an-automation.md) · [3 · Logging and security](3-logging-and-security.md)*
 
-From here you build something with it. Step 4 needs no hardware; Steps 5 and 6 are about
+This picks up where [Part 1](1-install-and-verify.md) left off, with a platform running and a
+dummy device reporting to it.
+
+Now you build something with it. Step 4 needs no hardware; Steps 5 and 6 are about
 putting real boards under what you built, and Steps 7 and 8 are optional directions to take it.
 
 | Step | What you do | Hardware needed |
@@ -129,7 +131,7 @@ the button terminal; the *widget* follows.
 
 ### Pass 4 — automate on light, and add a gate
 
-Register `lux1` (you already did in [Step 2](user-guide.md#2--verify-with-a-dummy-device)) and run the lux dummy. Add
+Register `lux1` (you already did in [Step 2](1-install-and-verify.md#2--verify-with-a-dummy-device)) and run the lux dummy. Add
 **io7 in**(`lux1`) → **function** `Lux` → io7 out(`lamp1`):
 
 ![Lux automation flow](images/flow-3-lux-auto.png)
@@ -572,7 +574,7 @@ convention. Everything else was yours to choose.
 You have a working system. What it does not yet have is a memory or a lock on the door: the
 data vanishes as it arrives, and everything crosses the network in plain text.
 
-**[Continue to logging and security →](user-guide-ops.md)**
+**[Continue to logging and security →](3-logging-and-security.md)**
 
 ---
 

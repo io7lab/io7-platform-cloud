@@ -1,4 +1,6 @@
-# io7 Platform — User Guide
+# io7 Platform — 1 · Install and verify
+
+*Part 1 of 3 — [1 · Install and verify](1-install-and-verify.md) · [2 · Build an automation](2-build-an-automation.md) · [3 · Logging and security](3-logging-and-security.md)*
 
 This is a follow-along. Do each step, and at the end of it there is a short note on what you
 just did and what it taught you. Nothing to study first.
@@ -234,8 +236,8 @@ you will not have to touch it again.
 Everything from here is about using it: writing an automation, putting real devices under it,
 and moving the pieces around to see what the platform actually buys you.
 
-**[Continue to the lessons →](user-guide-labs.md)**
+**[Continue to the lessons →](2-build-an-automation.md)**
 
-After those, a third page covers [logging and security](user-guide-ops.md) — keeping the data
+After those, a third page covers [logging and security](3-logging-and-security.md) — keeping the data
 and putting TLS on everything.
 

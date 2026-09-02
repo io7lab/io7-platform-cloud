@@ -29,16 +29,16 @@ The main purpose of developing this platform and its submodules is to extract th
 
 # User Guide
 
-**New to io7? Start here → [doc/user-guide.md](doc/user-guide.md)**
+**New to io7? Start here → [doc/user-guide.md](doc/1-install-and-verify.md)**
 
 Two scripts and a simulated device get the platform running; the rest is about using it.
 
-- **[Set it up](doc/user-guide.md)** — install the platform on Linux or AWS EC2, watch a dummy
+- **[Set it up](doc/1-install-and-verify.md)** — install the platform on Linux or AWS EC2, watch a dummy
   device report to it, and see what the parts are. No hardware, about an hour.
-- **[The lessons](doc/user-guide-labs.md)** — build a lamp / switch / light-sensor automation
+- **[The lessons](doc/2-build-an-automation.md)** — build a lamp / switch / light-sensor automation
   with a dashboard in Node-RED, then put real MicroPython or Arduino devices under it, move a
   rule onto an edge server, and rebuild the whole thing in Python with io7app.
-- **[Keeping it running](doc/user-guide-ops.md)** — record the events, chart them in Grafana,
+- **[Keeping it running](doc/3-logging-and-security.md)** — record the events, chart them in Grafana,
   get a Telegram alert when a value goes wrong, and put TLS on the platform and its devices.
 
 # GitHub repositories for the io7 Platform
@@ -58,7 +58,7 @@ Two scripts and a simulated device get the platform running; the rest is about u
 6. https://github.com/io7lab/io7dummy-device : io7 dummy IoT device. Emulates an io7 IoT device and can be used for quick checks after io7 Platform setup.
 7. https://github.com/io7lab/io7app : Python application-server framework for the io7 IoT Platform — a code-first alternative to NodeRED for building IoT apps. 
 
-The [user guide](doc/user-guide.md) walks through most of these repositories in the order you would actually meet them.
+The [user guide](doc/1-install-and-verify.md) walks through most of these repositories in the order you would actually meet them.
 
 
 # Quick Installation

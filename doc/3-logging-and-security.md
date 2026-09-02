@@ -1,7 +1,9 @@
-# io7 Platform — keeping it running
+# io7 Platform — 3 · Logging and security
 
-This is the third page of the [io7 user guide](user-guide.md). By now you have a platform,
-some devices and an automation ([the lessons](user-guide-labs.md)).
+*Part 3 of 3 — [1 · Install and verify](1-install-and-verify.md) · [2 · Build an automation](2-build-an-automation.md) · [3 · Logging and security](3-logging-and-security.md)*
+
+By now you have a platform, some devices, and an automation you built in
+[Part 2](2-build-an-automation.md).
 
 Two things are still missing, and both are the kind you notice only when it is too late.
 Your data disappears the moment nobody is looking, and everything you have built so far
@@ -226,10 +228,10 @@ You have the whole platform: devices, automation, a dashboard, history, alerts a
 
 A few directions people take from here.
 
-**The edge**, if you have not already — [Step 7](user-guide-labs.md#7--move-the-rule-to-an-edge-server)
+**The edge**, if you have not already — [Step 7](2-build-an-automation.md#7--move-the-rule-to-an-edge-server)
 puts a rule on a Raspberry Pi so it keeps working when the internet does not.
 
-**Code instead of flows** — [Step 8](user-guide-labs.md#8--rebuild-it-in-python-with-io7app)
+**Code instead of flows** — [Step 8](2-build-an-automation.md#8--rebuild-it-in-python-with-io7app)
 rebuilds the same automation in Python with io7app.
 
 **Your own devices.** The pattern from Steps 5 and 6 holds for anything: publish
