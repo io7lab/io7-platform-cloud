@@ -22,8 +22,12 @@ people reach for, but a home server or a VM works the same.
 | Instance | t3.small or larger (t3.micro works but leaves little headroom) |
 | Storage | 20 GB (the 8 GB default fills up once events start accumulating) |
 
-Open port 22 so you can SSH in. That is all you need to install; the platform's own ports come
-up in a moment, once there is something behind them.
+On a cloud instance — AWS EC2, Google Cloud, Azure, Oracle and the rest — nothing reaches the
+machine from outside until you allow it, so open port 22 to SSH in. The creation wizard usually
+offers SSH as a tick box. That is all you need to install; the platform's own ports come up in
+a moment, once there is something behind them.
+
+On a machine on your own network there is often nothing to do here beyond its local firewall.
 
 ### Install
 
@@ -74,8 +78,10 @@ docker ps
 Seven containers should be `Up`: `mqtt`, `nodered`, `redis`, `influxdb`, `io7api`, `io7web`,
 `grafana`.
 
-Now open it from your laptop. This is the first time anything reaches the server from the
-outside, so the ports have to be open — in your firewall, or in the EC2 Security Group.
+Now open it from your laptop. This is the first time anything reaches the server from outside,
+so on a cloud instance the ports have to be allowed first — on AWS that is the instance's
+**Security Group**, on other providers a VPC firewall or network rule under a different name.
+On your own network, check the machine's firewall if it has one.
 
 | Port | Service | Opened for |
 |---|---|---|
