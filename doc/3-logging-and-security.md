@@ -1,6 +1,6 @@
 # io7 Platform — 3 · Logging and security
 
-*Guide: [Install and verify](1-install-and-verify.md) · [Build an automation](2-build-an-automation.md) · **Logging and security***
+*Guide: [Install and verify · 1–3](1-install-and-verify.md) · [Build an automation · 4–8](2-build-an-automation.md) · **Logging and security · 9–12***
 
 By now you have a platform, some devices, and an automation you built in
 [Part 2](2-build-an-automation.md).
@@ -9,7 +9,7 @@ Two things are still missing, and both are the kind you notice only when it is t
 Your data disappears the moment nobody is looking, and everything you have built so far
 travels the network in plain text.
 
-Same shape as before: do the step, then read what it taught you.
+Same shape as before, picking up at Step 9: do the step, then read what it taught you.
 
 | | What you do | Needs |
 |---|---|---|

@@ -1,6 +1,6 @@
 # io7 Platform — 1 · Install and verify
 
-*Guide: **Install and verify** · [Build an automation](2-build-an-automation.md) · [Logging and security](3-logging-and-security.md)*
+*Guide: **Install and verify · 1–3** · [Build an automation · 4–8](2-build-an-automation.md) · [Logging and security · 9–12](3-logging-and-security.md)*
 
 This is a follow-along. Do each step, and at the end of it there is a short note on what you
 just did and what it taught you. Nothing to study first.

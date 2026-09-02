@@ -1,12 +1,13 @@
 # io7 Platform — 2 · Build an automation
 
-*Guide: [Install and verify](1-install-and-verify.md) · **Build an automation** · [Logging and security](3-logging-and-security.md)*
+*Guide: [Install and verify · 1–3](1-install-and-verify.md) · **Build an automation · 4–8** · [Logging and security · 9–12](3-logging-and-security.md)*
 
 This picks up where [Part 1](1-install-and-verify.md) left off, with a platform running and a
 dummy device reporting to it.
 
-Now you build something with it. Step 4 needs no hardware; Steps 5 and 6 are about
-putting real boards under what you built, and Steps 7 and 8 are optional directions to take it.
+Now you build something with it. Steps 1 to 3 were Part 1, so this page runs from 4 to 8.
+Step 4 needs no hardware; Steps 5 and 6 put real boards under what you built, and Steps 7 and
+8 are optional directions to take it.
 
 | | What you do | Hardware needed |
 |---|---|---|
